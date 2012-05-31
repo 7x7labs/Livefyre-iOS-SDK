@@ -1,1 +1,0 @@
-../../../Livefyre/LivefyreClient/Author.h
