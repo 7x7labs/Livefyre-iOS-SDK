@@ -11,15 +11,15 @@ If you'd like to see the Livefyre SDK in action, the simplest way to see somethi
 Building the SDK requires Xcode 4.3 and [CocoaPods](http://cocoapods.org/),
 which can be installed with the following commands:
 
-  $ sudo gem install cocoapods
-  $ pod setup
+    $ sudo gem install cocoapods
+    $ pod setup
 
 Next, to build the framework:
 
-  $ git clone git://github.com/Livefyre/Livefyre-iOS-SDK.git
-  $ cd Livefyre-iOS-SDK
-  $ pod install
-  $ open LivefyreClient.xcodeproj
+    $ git clone git://github.com/Livefyre/Livefyre-iOS-SDK.git
+    $ cd Livefyre-iOS-SDK
+    $ pod install
+    $ open LivefyreClient.xcodeproj
 
 Set the target to Universal Framework (which device doesn't matter). Build. If
 it fails, make sure it's using `clang` and not `llvm-gcc`.
