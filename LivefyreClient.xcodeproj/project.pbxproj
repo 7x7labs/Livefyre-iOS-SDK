@@ -31,6 +31,7 @@
 		3F4C54C6157535BE00854F2D /* ARC4Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F4C54C5157535BE00854F2D /* ARC4Tests.m */; };
 		3F4C54C91575471900854F2D /* FopenBugWorkaround.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F4C54C81575471900854F2D /* FopenBugWorkaround.m */; };
 		3F7963D61575AA470096E6EB /* LivefyreClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F7963D51575AA470096E6EB /* LivefyreClientTests.m */; };
+		3F7963E11576E7BB0096E6EB /* init-sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F7963E01576E7BB0096E6EB /* init-sample.json */; };
 		3FD7290A156EA47B006DD6A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD72909156EA47B006DD6A1 /* Foundation.framework */; };
 		3FD72910156EA47B006DD6A1 /* LivefyreClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD7290F156EA47B006DD6A1 /* LivefyreClient.m */; };
 		3FD72918156EA47B006DD6A1 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD72917156EA47B006DD6A1 /* SenTestingKit.framework */; };
@@ -104,6 +105,7 @@
 		3F4C54C81575471900854F2D /* FopenBugWorkaround.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FopenBugWorkaround.m; sourceTree = "<group>"; };
 		3F7963D41575AA470096E6EB /* LivefyreClientTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LivefyreClientTests.h; sourceTree = "<group>"; };
 		3F7963D51575AA470096E6EB /* LivefyreClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LivefyreClientTests.m; sourceTree = "<group>"; };
+		3F7963E01576E7BB0096E6EB /* init-sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "init-sample.json"; sourceTree = "<group>"; };
 		3FB0370F6D78411889D31B65 /* Pods.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		3FD72906156EA47B006DD6A1 /* libLivefyreClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLivefyreClient.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD72909156EA47B006DD6A1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -232,6 +234,8 @@
 		3FD7291F156EA47B006DD6A1 /* LivefyreClientTests */ = {
 			isa = PBXGroup;
 			children = (
+				3FF215271572FDA5009B5C95 /* Helpers */,
+				3FD72920156EA47B006DD6A1 /* Supporting Files */,
 				3F4C54C4157535BE00854F2D /* ARC4Tests.h */,
 				3F4C54C5157535BE00854F2D /* ARC4Tests.m */,
 				3F4C54BE15752A9B00854F2D /* AuthorTests.h */,
@@ -242,10 +246,8 @@
 				3F4439B5157401C900B41B22 /* CollectionTests.m */,
 				3FDFEFD815754BB2009CBB7E /* EntryTests.h */,
 				3FDFEFD915754BB2009CBB7E /* EntryTests.m */,
-				3FF215271572FDA5009B5C95 /* Helpers */,
 				3F7963D41575AA470096E6EB /* LivefyreClientTests.h */,
 				3F7963D51575AA470096E6EB /* LivefyreClientTests.m */,
-				3FD72920156EA47B006DD6A1 /* Supporting Files */,
 				3F4C54C115752BE600854F2D /* UserTests.h */,
 				3F4C54C215752BE600854F2D /* UserTests.m */,
 			);
@@ -270,6 +272,7 @@
 				3FF215291572FDBF009B5C95 /* Config.m */,
 				3F4C54C81575471900854F2D /* FopenBugWorkaround.m */,
 				3FF2151E1572FD36009B5C95 /* TestConfig.plist */,
+				3F7963E01576E7BB0096E6EB /* init-sample.json */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 			files = (
 				3FD72924156EA47B006DD6A1 /* InfoPlist.strings in Resources */,
 				3FF2151F1572FD36009B5C95 /* TestConfig.plist in Resources */,
+				3F7963E11576E7BB0096E6EB /* init-sample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,5 +9,5 @@
 #import "AsyncTestBase.h"
 
 @interface CollectionTests : AsyncTestBase
-
+- (Collection *)basicCollection;
 @end

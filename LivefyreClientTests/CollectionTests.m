@@ -603,4 +603,494 @@
     STAssertEquals([collection.posts count], 1u, nil);
 }
 
+// Too many @try/@catch blocks in a program makes ld die with the error
+// GENERIC_RELOC_SECTDIFF missing following pair for architecture i386
+// http://openradar.appspot.com/radar?id=1499403
+#undef STAssertEquals
+#define STAssertEquals(a1, a2, description, ...) \
+do { \
+    if (strcmp(@encode(__typeof__(a1)), @encode(__typeof__(a2))) != 0) { \
+        [self failWithException:([NSException failureInFile:[NSString stringWithUTF8String:__FILE__] \
+                                                     atLine:__LINE__ \
+                                            withDescription:@"%@", [@"Type mismatch -- " stringByAppendingString:STComposeString(description, ##__VA_ARGS__)]])]; \
+    } \
+    else { \
+        __typeof__(a1) a1value = (a1); \
+        __typeof__(a2) a2value = (a2); \
+        NSValue *a1encoded = [NSValue value:&a1value withObjCType:@encode(__typeof__(a1))]; \
+        NSValue *a2encoded = [NSValue value:&a2value withObjCType:@encode(__typeof__(a2))]; \
+        if (![a1encoded isEqualToValue:a2encoded]) { \
+            [self failWithException:([NSException failureInEqualityBetweenValue:a1encoded \
+                                                                       andValue:a2encoded \
+                                                                   withAccuracy:nil \
+                                                                         inFile:[NSString stringWithUTF8String:__FILE__] \
+                                                                         atLine:__LINE__ \
+                                                                withDescription:@"%@", STComposeString(description, ##__VA_ARGS__)])]; \
+        } \
+    } \
+} while(0)
+
+- (void)testComplexBootstrap {
+    NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"init-sample" ofType:@"json"];
+    NSString *initJson = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+
+    Collection *collection = [self basicCollection];
+    [collection addCollectionContent:[initJson objectFromJSONString] erefFetcher:nil];
+
+    NSArray *followers = [NSArray arrayWithObjects:@"4@7x7-1.fyre.co", @"dev00@7x7-1.fyre.co", @"6@7x7-1.fyre.co", @"2@7x7-1.fyre.co", @"5@7x7-1.fyre.co", nil];
+    STAssertEqualObjects(followers, collection.followers, nil);
+
+    STAssertEquals([collection.posts count], 12u, nil);
+
+    Post *post, *parent;
+
+    STAssertTrue([collection.posts count] > 0, nil);
+    if ([collection.posts count] > 0) {
+        post = [collection.posts objectAtIndex:0];
+        STAssertEqualObjects(post.entryId, @"25802160", nil);
+        STAssertNil(post.parent, nil);
+        STAssertFalse(post.deleted, nil);
+        if (!post.deleted) {
+            STAssertEqualObjects([post body], @"<p> new post</p>", nil);
+            STAssertEqualObjects(post.author.authorId, @"5@7x7-1.fyre.co", nil);
+            STAssertEqualObjects(post.author.displayName, @"netownerUser", nil);
+            STAssertEquals(post.createdAt, 1338400700, nil);
+            STAssertEquals(post.editedAt, 1338400700, nil);
+            STAssertEquals(post.source, 5, nil);
+            STAssertEquals(post.contentType, 0, nil);
+            STAssertEquals(post.visibility, 1, nil);
+            STAssertEquals([post.embed count], 0u, nil);
+        }
+    }
+
+    STAssertTrue([collection.posts count] > 1, nil);
+    if ([collection.posts count] > 1) {
+        post = [collection.posts objectAtIndex:1];
+        STAssertEqualObjects(post.entryId, @"25802158", nil);
+        STAssertNil(post.parent, nil);
+        STAssertTrue(post.deleted, nil);
+
+        parent = post;
+        STAssertTrue([post.children count] > 0, nil);
+        if ([post.children count] > 0) {
+            post = [post.children objectAtIndex:0];
+            STAssertEquals(parent, post.parent, nil);
+            STAssertEqualObjects(post.entryId, @"25802159", nil);
+            STAssertTrue(post.deleted, nil);
+        }
+
+    }
+
+    STAssertTrue([collection.posts count] > 2, nil);
+    if ([collection.posts count] > 2) {
+        post = [collection.posts objectAtIndex:2];
+        STAssertNil(post.parent, nil);
+        STAssertEqualObjects(post.entryId, @"25802156.fbc98b9317094c8f964084923a901c77", nil);
+        STAssertFalse(post.deleted, nil);
+        if (!post.deleted) {
+            STAssertEqualObjects([post body], @"<p>edited post</p>", nil);
+            STAssertEqualObjects(post.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEqualObjects(post.author.displayName, @"dev00", nil);
+            STAssertEquals(post.createdAt, 1338396532, nil);
+            STAssertEquals(post.editedAt, 1338396561, nil);
+            STAssertEquals(post.source, 5, nil);
+            STAssertEquals(post.contentType, 0, nil);
+            STAssertEquals(post.visibility, 1, nil);
+            STAssertEquals([post.embed count], 0u, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.children count] > 0, nil);
+        if ([post.children count] > 0) {
+            post = [post.children objectAtIndex:0];
+            STAssertEquals(parent, post.parent, nil);
+            STAssertEqualObjects(post.entryId, @"25802157", nil);
+            STAssertFalse(post.deleted, nil);
+            if (!post.deleted) {
+                STAssertEqualObjects([post body], @"<a vocab=\"http://schema.org\" typeof=\"Person\" rel=\"nofollow\" resource=\"acct:dev00@7x7-1.fyre.co\" data-lf-provider=\"livefyre\" property=\"url\"  target=\"_blank\" class=\"fyre-mention fyre-mention-livefyre\">@<span property=\"name\">dev00</span></a> reply to edited post<p> </p>", nil);
+                STAssertEqualObjects(post.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+                STAssertEqualObjects(post.author.displayName, @"dev00", nil);
+                STAssertEquals(post.createdAt, 1338396574, nil);
+                STAssertEquals(post.editedAt, 1338396574, nil);
+                STAssertEquals(post.source, 5, nil);
+                STAssertEquals(post.contentType, 0, nil);
+                STAssertEquals(post.visibility, 1, nil);
+                STAssertEquals([post.embed count], 0u, nil);
+            }
+        }
+    }
+
+    STAssertTrue([collection.posts count] > 3, nil);
+    if ([collection.posts count] > 3) {
+        post = [collection.posts objectAtIndex:3];
+        STAssertEqualObjects(post.entryId, @"25802152", nil);
+        STAssertNil(post.parent, nil);
+        STAssertFalse(post.deleted, nil);
+        if (!post.deleted) {
+            STAssertEqualObjects([post body], @"<p>test post body 1338344129</p>", nil);
+            STAssertEqualObjects(post.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEqualObjects(post.author.displayName, @"dev00", nil);
+            STAssertEquals(post.createdAt, 1338344129, nil);
+            STAssertEquals(post.editedAt, 1338344129, nil);
+            STAssertEquals(post.source, 5, nil);
+            STAssertEquals(post.contentType, 0, nil);
+            STAssertEquals(post.visibility, 1, nil);
+            STAssertEquals([post.embed count], 0u, nil);
+        }
+    }
+
+    STAssertTrue([collection.posts count] > 4, nil);
+    if ([collection.posts count] > 4) {
+        post = [collection.posts objectAtIndex:4];
+        STAssertEqualObjects(post.entryId, @"25802151", nil);
+        STAssertNil(post.parent, nil);
+        STAssertFalse(post.deleted, nil);
+        if (!post.deleted) {
+            STAssertEqualObjects([post body], @"<p>test post body 1338344015</p>", nil);
+            STAssertEqualObjects(post.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEqualObjects(post.author.displayName, @"dev00", nil);
+            STAssertEquals(post.createdAt, 1338344015, nil);
+            STAssertEquals(post.editedAt, 1338344015, nil);
+            STAssertEquals(post.source, 5, nil);
+            STAssertEquals(post.contentType, 0, nil);
+            STAssertEquals(post.visibility, 1, nil);
+            STAssertEquals([post.embed count], 0u, nil);
+        }
+    }
+
+    STAssertTrue([collection.posts count] > 5, nil);
+    if ([collection.posts count] > 5) {
+        post = [collection.posts objectAtIndex:5];
+        STAssertEqualObjects(post.entryId, @"25802145", nil);
+        STAssertNil(post.parent, nil);
+        STAssertFalse(post.deleted, nil);
+        if (!post.deleted) {
+            STAssertEqualObjects([post body], @"<p> a</p>", nil);
+            STAssertEqualObjects(post.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEqualObjects(post.author.displayName, @"dev00", nil);
+            STAssertEquals(post.createdAt, 1338321998, nil);
+            STAssertEquals(post.editedAt, 1338321998, nil);
+            STAssertEquals(post.source, 5, nil);
+            STAssertEquals(post.contentType, 0, nil);
+            STAssertEquals(post.visibility, 1, nil);
+            STAssertEquals([post.embed count], 0u, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 0, nil);
+        if ([post.likes count] > 0) {
+            Like *like = [post.likes objectAtIndex:0];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"d0bb9bf32ac94a35b8cdf76d8c68e755", nil);
+            STAssertEqualObjects(like.author.authorId, @"2@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 1, nil);
+        }
+
+    }
+
+    STAssertTrue([collection.posts count] > 6, nil);
+    if ([collection.posts count] > 6) {
+        post = [collection.posts objectAtIndex:6];
+        STAssertEqualObjects(post.entryId, @"25802144", nil);
+        STAssertNil(post.parent, nil);
+        STAssertFalse(post.deleted, nil);
+        if (!post.deleted) {
+            STAssertEqualObjects([post body], @"<p>cool</p>", nil);
+            STAssertEqualObjects(post.author.authorId, @"6@7x7-1.fyre.co", nil);
+            STAssertEqualObjects(post.author.displayName, @"modUser", nil);
+            STAssertEquals(post.createdAt, 1338321902, nil);
+            STAssertEquals(post.editedAt, 1338321902, nil);
+            STAssertEquals(post.source, 5, nil);
+            STAssertEquals(post.contentType, 0, nil);
+            STAssertEquals(post.visibility, 1, nil);
+            STAssertEquals([post.embed count], 0u, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 0, nil);
+        if ([post.likes count] > 0) {
+            Like *like = [post.likes objectAtIndex:0];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"e5734c6596194dc4a366ca4b8bcc70c4", nil);
+            STAssertEqualObjects(like.author.authorId, @"2@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 1, nil);
+        }
+
+    }
+
+    STAssertTrue([collection.posts count] > 7, nil);
+    if ([collection.posts count] > 7) {
+        post = [collection.posts objectAtIndex:7];
+        STAssertEqualObjects(post.entryId, @"25802143", nil);
+        STAssertNil(post.parent, nil);
+        STAssertFalse(post.deleted, nil);
+        if (!post.deleted) {
+            STAssertEqualObjects([post body], @"<p> woah</p>", nil);
+            STAssertEqualObjects(post.author.authorId, @"6@7x7-1.fyre.co", nil);
+            STAssertEqualObjects(post.author.displayName, @"modUser", nil);
+            STAssertEquals(post.createdAt, 1338321741, nil);
+            STAssertEquals(post.editedAt, 1338321741, nil);
+            STAssertEquals(post.source, 5, nil);
+            STAssertEquals(post.contentType, 0, nil);
+            STAssertEquals(post.visibility, 1, nil);
+            STAssertEquals([post.embed count], 0u, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 0, nil);
+        if ([post.likes count] > 0) {
+            Like *like = [post.likes objectAtIndex:0];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"d05a158fcbf240d2b7f4bf363e175ad2", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 1, nil);
+        if ([post.likes count] > 1) {
+            Like *like = [post.likes objectAtIndex:1];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"e563b75837e4454a9177046c04273d68", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 2, nil);
+        if ([post.likes count] > 2) {
+            Like *like = [post.likes objectAtIndex:2];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"70163de394b04b21b504caee3137eae5", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 3, nil);
+        if ([post.likes count] > 3) {
+            Like *like = [post.likes objectAtIndex:3];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"5419fca11459461985b924c90400c513", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 4, nil);
+        if ([post.likes count] > 4) {
+            Like *like = [post.likes objectAtIndex:4];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"736cf5f1cfdf4272ba9c4a04a2060dc0", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 5, nil);
+        if ([post.likes count] > 5) {
+            Like *like = [post.likes objectAtIndex:5];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"8c6de4996eed4d069c716643fcefa6fb", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 6, nil);
+        if ([post.likes count] > 6) {
+            Like *like = [post.likes objectAtIndex:6];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"3fce4c1565bc41248285e8805f3b6611", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 7, nil);
+        if ([post.likes count] > 7) {
+            Like *like = [post.likes objectAtIndex:7];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"63ac6d174b3f49368c9359a960ae00db", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 8, nil);
+        if ([post.likes count] > 8) {
+            Like *like = [post.likes objectAtIndex:8];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"4588d785b43c4c1bba46978bc0aa9451", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 9, nil);
+        if ([post.likes count] > 9) {
+            Like *like = [post.likes objectAtIndex:9];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"d2c6860bb3434c52859503bcc33e5c1f", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 10, nil);
+        if ([post.likes count] > 10) {
+            Like *like = [post.likes objectAtIndex:10];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"8c2b7343e73b436285227b524af7a3d9", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 11, nil);
+        if ([post.likes count] > 11) {
+            Like *like = [post.likes objectAtIndex:11];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"7d041b8234104788878492f7314f0fd3", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 12, nil);
+        if ([post.likes count] > 12) {
+            Like *like = [post.likes objectAtIndex:12];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"6667b7513f1d4602b1ca4ca28d97b39a", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 13, nil);
+        if ([post.likes count] > 13) {
+            Like *like = [post.likes objectAtIndex:13];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"cfa5ab9c7523445ca3f080da9c721794", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 14, nil);
+        if ([post.likes count] > 14) {
+            Like *like = [post.likes objectAtIndex:14];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"3929516f177e4dcaa21291ca2c37c300", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 15, nil);
+        if ([post.likes count] > 15) {
+            Like *like = [post.likes objectAtIndex:15];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"33a6bc73555a4c86bff9ef171a33070a", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+        parent = post;
+        STAssertTrue([post.likes count] > 16, nil);
+        if ([post.likes count] > 16) {
+            Like *like = [post.likes objectAtIndex:16];
+            STAssertEquals(like.contentType, ContentTypeOpine, nil);
+            STAssertEqualObjects(like.entryId, @"b5018cf856b7441dba9473249c27bef7", nil);
+            STAssertEqualObjects(like.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEquals(like.source, 5, nil);
+            STAssertEquals(like.visibility, 0, nil);
+        }
+
+    }
+
+    STAssertTrue([collection.posts count] > 8, nil);
+    if ([collection.posts count] > 8) {
+        post = [collection.posts objectAtIndex:8];
+        STAssertEqualObjects(post.entryId, @"25802142", nil);
+        STAssertNil(post.parent, nil);
+        STAssertTrue(post.deleted, nil);
+
+        parent = post;
+        STAssertTrue([post.children count] > 0, nil);
+        if ([post.children count] > 0) {
+            post = [post.children objectAtIndex:0];
+            STAssertEquals(parent, post.parent, nil);
+            STAssertEqualObjects(post.entryId, @"25802165", nil);
+            STAssertFalse(post.deleted, nil);
+            if (!post.deleted) {
+                STAssertEqualObjects([post body], @"<a vocab=\"http://schema.org\" typeof=\"Person\" rel=\"nofollow\" resource=\"acct:6@7x7-1.fyre.co\" data-lf-provider=\"livefyre\" property=\"url\"  target=\"_blank\" class=\"fyre-mention fyre-mention-livefyre\">@<span property=\"name\">modUser</span></a> reply to deleted posted<p> </p>", nil);
+                STAssertEqualObjects(post.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+                STAssertEqualObjects(post.author.displayName, @"dev00", nil);
+                STAssertEquals(post.createdAt, 1338419969, nil);
+                STAssertEquals(post.editedAt, 1338419969, nil);
+                STAssertEquals(post.source, 5, nil);
+                STAssertEquals(post.contentType, 0, nil);
+                STAssertEquals(post.visibility, 1, nil);
+                STAssertEquals([post.embed count], 0u, nil);
+            }
+        }
+
+    }
+
+    STAssertTrue([collection.posts count] > 9, nil);
+    if ([collection.posts count] > 9) {
+        post = [collection.posts objectAtIndex:9];
+        STAssertEqualObjects(post.entryId, @"25802141", nil);
+        STAssertNil(post.parent, nil);
+        STAssertTrue(post.deleted, nil);
+    }
+
+    STAssertTrue([collection.posts count] > 10, nil);
+    if ([collection.posts count] > 10) {
+        post = [collection.posts objectAtIndex:10];
+        STAssertEqualObjects(post.entryId, @"25802140", nil);
+        STAssertNil(post.parent, nil);
+        STAssertFalse(post.deleted, nil);
+        if (!post.deleted) {
+            STAssertEqualObjects([post body], @"<p> Hi!</p>", nil);
+            STAssertEqualObjects(post.author.authorId, @"dev00@7x7-1.fyre.co", nil);
+            STAssertEqualObjects(post.author.displayName, @"dev00", nil);
+            STAssertEquals(post.createdAt, 1338321412, nil);
+            STAssertEquals(post.editedAt, 1338321412, nil);
+            STAssertEquals(post.source, 5, nil);
+            STAssertEquals(post.contentType, 0, nil);
+            STAssertEquals(post.visibility, 1, nil);
+            STAssertEquals([post.embed count], 0u, nil);
+        }
+    }
+
+    STAssertTrue([collection.posts count] > 11, nil);
+    if ([collection.posts count] > 11) {
+        post = [collection.posts objectAtIndex:11];
+        STAssertEqualObjects(post.entryId, @"25802065", nil);
+        STAssertNil(post.parent, nil);
+        STAssertTrue(post.deleted, nil);
+    }
+
+
+}
 @end
