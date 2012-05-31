@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>domain</key>
+	<string>7x7-1.fyre.co</string>
+	<key>domain key</key>
+	<string>eTvNxyEDiCV8OGuH6m4lk5q//C8=</string>
+	<key>site</key>
+	<string>303617</string>
+	<key>site key</key>
+	<string>bNyBbN0BWAZ46w3fGBGg9ziB0U4=</string>
+	<key>invalid site</key>
+	<string>not a site id</string>
+	<key>moderator user</key>
+	<string>dev01</string>
+	<key>non-moderator user</key>
+	<string>dev02</string>
+	<key>unknown user</key>
+	<string>asdfasdfsdfadf</string>
+	<key>existing article</key>
+	<string>test-article-id</string>
+	<key>nonexistant article</key>
+	<string>please don&apos;t make an article with this id</string>
+</dict>
+</plist>
