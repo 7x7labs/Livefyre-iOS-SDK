@@ -383,6 +383,11 @@ static NSString *bootstrapRoot = @"https://bootstrap-v2-json.s3.amazonaws.com";
                  onComplete:(RequestComplete)callback
                    endpoint:(NSString *)endpoint
 {
+    if (!collection.user) {
+        callback(YES, [NSString stringWithFormat:@"Must be logged in to %@ postsß", endpoint, nil]);
+        return;
+    }
+
     NSString *url = [NSString stringWithFormat:@"http://quill.%@/api/v3.0/message/%@/%@/",
                      domain,
                      [HttpRequest urlEscape:entry.entryId],
@@ -428,6 +433,11 @@ static NSString *bootstrapRoot = @"https://bootstrap-v2-json.s3.amazonaws.com";
       inCollection:(Collection *)collection
         onComplete:(RequestComplete)callback
 {
+    if (!collection.user) {
+        callback(YES, @"Must be logged in to create a new post");
+        return;
+    }
+
     NSString *url = [NSString stringWithFormat:@"http://quill.%@/api/v3.0/collection/%@/post/",
                      domain, collection.collectionId];
 

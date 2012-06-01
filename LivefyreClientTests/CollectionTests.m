@@ -585,4 +585,22 @@
     STAssertEquals(child, [firstPost.children objectAtIndex:0], nil);
 }
 
+- (void)testCollectionWithoutUser {
+    Collection *collection = [Collection collectionWithId:@"collection id"
+                                                     user:nil
+                                                nestLevel:4
+                                            numberVisible:20
+                                        numberOfFollowers:11
+                                                lastEvent:1234
+                                                bootstrap:nil
+                                          additionalPages:nil];
+
+    NSString *content = @"{\"states\":{\"25802158\":{\"content\":{\"replaces\":\"\", \"bodyHtml\":\"<p>\\u00a0new post</p>\", \"annotations\":{}, \"authorId\":\"2@7x7-1.fyre.co\", \"parentId\":\"\", \"id\":\"25802158\", \"createdAt\":1338400428}, \"source\":5, \"type\":0, \"event\":1338400428925945, \"vis\":1}}, \"authors\":{\"2@7x7-1.fyre.co\":{\"profileUrl\":\"\", \"avatar\":\"http://t402-avatars.s3.amazonaws.com/a/anon/50.jpg\", \"displayName\":\"regUser\", \"id\":\"2@7x7-1.fyre.co\"}}, \"jsver\":\"00003\", \"maxEventId\":1338400428925945}";
+
+    [collection addCollectionContent:[content objectFromJSONString]
+                         erefFetcher:nil];
+
+    STAssertEquals([collection.posts count], 1u, nil);
+}
+
 @end

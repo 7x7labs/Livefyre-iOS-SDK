@@ -195,7 +195,7 @@
 
         [self insertEntry:entry replaceId:entry.entryId];
     }
-    else if ([self.user canViewEntry:entry] && ![self entryForKey:entry.entryId]) {
+    else if ([self userCanViewEntry:entry] && ![self entryForKey:entry.entryId]) {
         [self insertEntry:entry replaceId:entry.replaces];
     }
 
@@ -212,6 +212,12 @@
     }
 
     return entry;
+}
+
+- (BOOL)userCanViewEntry:(Entry *)entry {
+    if (self.user)
+        return [self.user canViewEntry:entry];
+    return entry.visibility == ContentVisibilityEveryone;
 }
 
 - (Entry *)entryForKey:(NSString *)entryId {
