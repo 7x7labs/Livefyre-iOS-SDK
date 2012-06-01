@@ -189,6 +189,9 @@ static NSArray *replaceEntryInArray(NSArray *array, NSString *key, id newValue) 
     for (NSUInteger i = [self.embed count]; i > 0; --i) {
         [newParent addChild:[self.embed objectAtIndex:(i - 1)]];
     }
+    for (NSUInteger i = [self.likes count]; i > 0; --i) {
+        [newParent addChild:[self.likes objectAtIndex:(i - 1)]];
+    }
 }
 @end
 
