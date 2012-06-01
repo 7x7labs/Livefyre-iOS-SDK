@@ -234,6 +234,7 @@ static NSArray *replaceEntryInArray(NSArray *array, NSString *key, id newValue) 
     self = [super initWithDictionary:eventData];
     if (self) {
         NSDictionary *content = [eventData objectForKey:@"content"];
+        self.author = [authorData authorForId:[content objectForKey:@"authorId"]];
         self.parentId = [self fixNull:[content objectForKey:@"targetId"]];
     }
     return self;
