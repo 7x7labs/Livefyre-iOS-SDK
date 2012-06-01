@@ -95,20 +95,22 @@ static NSArray *replaceEntryInArray(NSArray *array, NSString *key, id newValue) 
                    authorsFrom:(id <AuthorLookup>)authorData
                     withParent:(Entry *)parent
 {
-    NSDictionary *content = [eventData objectForKey:@"content"];
-    if ([content objectForKey:@"oembed"])
-        return [[Embed alloc] initWithDictionary:eventData];
+    switch ([[eventData objectForKey:@"type"] intValue]) {
+        case ContentTypeOpine:
+            return [[Like alloc] initWithDictionary:eventData authorsFrom:authorData];
+        case ContentTypeEmbed:
+            return [[Embed alloc] initWithDictionary:eventData];
+        case ContentTypeMessage: {
+            Post *post = [[Post alloc] initWithDictionary:eventData authorsFrom:authorData];
+            if (post.deleted)
+                post.parentId = parent.entryId;
+            return post;
+        }
+        default:
+            NSLog(@"Unrecognized content type: %d", [[eventData objectForKey:@"type"] intValue]);
+            return nil;
 
-    if ([content objectForKey:@"bodyHtml"])
-        return [[Post alloc] initWithDictionary:eventData authorsFrom:authorData];
-
-    if ([[eventData objectForKey:@"type"] intValue] == ContentTypeOpine)
-        return [[Like alloc] initWithDictionary:eventData authorsFrom:authorData];
-
-    Entry *entry = [[Entry alloc] initWithDictionary:eventData];
-    entry.deleted = YES;
-    entry.parentId = parent.entryId;
-    return entry;
+    }
 }
 
 - (Entry *)initWithDictionary:(NSDictionary *)eventData {
@@ -129,10 +131,6 @@ static NSArray *replaceEntryInArray(NSArray *array, NSString *key, id newValue) 
         if (self.source > 8) {
             NSLog(@"Unrecognized source: %d", self.source);
             self.source = 0;
-        }
-        if (self.contentType > ContentTypeEmbed || self.contentType == 2) {
-            NSLog(@"Unrecognized content type: %d", self.contentType);
-            self.contentType = ContentTypeMessage;
         }
         if (self.visibility > ContentVisibilityGroup) {
             NSLog(@"Unrecognized visibility: %d", self.visibility);

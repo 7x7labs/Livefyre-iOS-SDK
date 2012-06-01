@@ -65,8 +65,12 @@
 - (void)testPostBadValues {
     AuthorLookup *authorLookup = [[AuthorLookup alloc] init];
 
-    NSString *postJson = @"{\"vis\":8,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"<p>I love portobellos.</p>\",\"authorId\":\"-\",\"parentId\":\"\",\"permissionScope\":8,\"authorPermission\":8,\"id\":\"23788087\",\"createdAt\":1336604424},\"childContent\":[],\"source\":9,\"type\":8,\"event\":1336604424890719}";
-    Entry *entry = [Entry entryWithDictionary:[postJson objectFromJSONString] authorsFrom:authorLookup];
+    NSString *badContentTypeJson = @"{\"vis\":8,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"<p>I love portobellos.</p>\",\"authorId\":\"-\",\"parentId\":\"\",\"permissionScope\":8,\"authorPermission\":8,\"id\":\"23788087\",\"createdAt\":1336604424},\"childContent\":[],\"source\":9,\"type\":8,\"event\":1336604424890719}";
+    Entry *entry = [Entry entryWithDictionary:[badContentTypeJson objectFromJSONString] authorsFrom:authorLookup];
+    STAssertNil(entry, nil);
+
+    NSString *postJson = @"{\"vis\":8,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"<p>I love portobellos.</p>\",\"authorId\":\"-\",\"parentId\":\"\",\"permissionScope\":8,\"authorPermission\":8,\"id\":\"23788087\",\"createdAt\":1336604424},\"childContent\":[],\"source\":9,\"type\":0,\"event\":1336604424890719}";
+    entry = [Entry entryWithDictionary:[postJson objectFromJSONString] authorsFrom:authorLookup];
 
     STAssertNotNil(entry, nil);
     STAssertTrue([entry isKindOfClass:[Post class]], nil);
