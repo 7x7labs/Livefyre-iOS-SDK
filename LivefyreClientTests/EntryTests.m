@@ -174,47 +174,44 @@
 
     NSString *parentJson = @"{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"parent\",\"authorId\":\"author id\",\"parentId\":\"\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"1\",\"createdAt\":0},\"childContent\":[],\"source\":5,\"type\":0,\"event\":0}";
     NSString *originalChild = @"{\"content\":{\"targetId\":\"1\", \"authorId\":\"-\", \"link\":\"\", \"oembed\":{\"title\":\"original title\"}, \"position\":3, \"id\":\"2\"}, \"vis\":1, \"type\":3, \"event\":1337210428274340, \"source\":1}";
-    NSString *replacementChild = @"{\"content\":{\"replaces\":\"2\",\"targetId\":\"1\", \"authorId\":\"-\", \"link\":\"\", \"oembed\":{\"title\":\"replacement title\"}, \"position\":3, \"id\":\"3\"}, \"vis\":1, \"type\":3, \"event\":1337210428274340, \"source\":1}";
+    NSString *replacementChild = @"{\"content\":{\"replaces\":\"2\",\"targetId\":\"1\", \"authorId\":\"-\", \"link\":\"\", \"oembed\":{\"title\":\"replacement title\"}, \"position\":3, \"id\":\"3\"}, \"vis\":1, \"type\":3, \"event\":1337210429274340, \"source\":1}";
 
 
     Entry *entry = [Entry entryWithDictionary:[parentJson objectFromJSONString]
                                   authorsFrom:authorLookup];
     [entry addChild:[Entry entryWithDictionary:[originalChild objectFromJSONString]
                                    authorsFrom:authorLookup]];
-    Post *post = (Post *)entry;
+    STAssertEquals([entry.embed count], 1u, nil);
+    STAssertEqualObjects([[entry.embed objectAtIndex:0] title], @"original title", nil);
 
-    STAssertEquals([post.embed count], 1u, nil);
-    STAssertEqualObjects([[post.embed objectAtIndex:0] title], @"original title", nil);
+    [[entry.embed objectAtIndex:0] copyFrom:[Entry entryWithDictionary:[replacementChild objectFromJSONString]
+                                                              authorsFrom:authorLookup]];
 
-    [entry replaceChild:[Entry entryWithDictionary:[replacementChild objectFromJSONString]
-                                       authorsFrom:authorLookup]];
-
-    STAssertEquals([post.embed count], 1u, nil);
-    STAssertEqualObjects([[post.embed objectAtIndex:0] title], @"replacement title", nil);
+    STAssertEquals([entry.embed count], 1u, nil);
+    STAssertEqualObjects([[entry.embed objectAtIndex:0] title], @"replacement title", nil);
 }
 
 - (void)testReplacePost {
     AuthorLookup *authorLookup = [[AuthorLookup alloc] init];
 
     NSString *parentJson = @"{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"parent\",\"authorId\":\"author id\",\"parentId\":\"\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"1\",\"createdAt\":0},\"childContent\":[],\"source\":5,\"type\":0,\"event\":0}";
-    NSString *originalChild = @"{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"child\",\"authorId\":\"author id\",\"parentId\":\"1\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"2\",\"createdAt\":0},\"childContent\":[],\"source\":5,\"type\":0,\"event\":0}";
-    NSString *replacementChild = @"{\"vis\":1,\"content\":{\"replaces\":\"2\",\"bodyHtml\":\"replacement\",\"authorId\":\"author id\",\"parentId\":\"1\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"3\",\"createdAt\":0},\"childContent\":[],\"source\":5,\"type\":0,\"event\":0}";
+    NSString *originalChild = @"{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"child\",\"authorId\":\"author id\",\"parentId\":\"1\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"2\",\"createdAt\":1},\"childContent\":[],\"source\":5,\"type\":0,\"event\":0}";
+    NSString *replacementChild = @"{\"vis\":1,\"content\":{\"replaces\":\"2\",\"bodyHtml\":\"replacement\",\"authorId\":\"author id\",\"parentId\":\"1\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"3\",\"createdAt\":2},\"childContent\":[],\"source\":5,\"type\":0,\"event\":0}";
 
 
     Entry *entry = [Entry entryWithDictionary:[parentJson objectFromJSONString]
                                   authorsFrom:authorLookup];
     [entry addChild:[Entry entryWithDictionary:[originalChild objectFromJSONString]
                                    authorsFrom:authorLookup]];
-    Post *post = (Post *)entry;
 
-    STAssertEquals([post.children count], 1u, nil);
-    STAssertEqualObjects([[post.children objectAtIndex:0] body], @"child", nil);
+    STAssertEquals([entry.children count], 1u, nil);
+    STAssertEqualObjects([[entry.children objectAtIndex:0] body], @"child", nil);
 
-    [entry replaceChild:[Entry entryWithDictionary:[replacementChild objectFromJSONString]
-                                       authorsFrom:authorLookup]];
+    [[entry.children objectAtIndex:0] copyFrom:[Entry entryWithDictionary:[replacementChild objectFromJSONString]
+                                                           authorsFrom:authorLookup]];
 
-    STAssertEquals([post.children count], 1u, nil);
-    STAssertEqualObjects([[post.children objectAtIndex:0] body], @"replacement", nil);
+    STAssertEquals([entry.children count], 1u, nil);
+    STAssertEqualObjects([[entry.children objectAtIndex:0] body], @"replacement", nil);
 }
 
 - (void)testAddLike {

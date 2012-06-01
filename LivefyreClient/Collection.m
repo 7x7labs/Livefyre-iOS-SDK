@@ -125,43 +125,85 @@
     return [self.authors objectForKey:authorId];
 }
 
-- (BOOL)replaceEntryWithId:(NSString *)entryId withEntry:(Entry *)entry {
-    if (!entryId)
-        return NO;
-
-    Entry *replaced = [self entryForKey:entryId];
-    if (!replaced) {
-        // edit stream responses come with a suffix on the entry id of
-        // unknown meaning
-        NSUInteger dotPos = [entryId rangeOfString:@"."].location;
-        if (dotPos != NSNotFound) {
-            NSString *prefix = [entryId substringToIndex:dotPos];
-            replaced = [self entryForKey:prefix];
-            [entries_ setObject:entry.entryId forKey:prefix];
-        }
-    }
-
-    if (replaced) {
-        [[self entryForKey:entry.parentId] replaceChild:entry];
-        [self.topLevelPosts removeObject:replaced];
-        if (entry.parentId)
-            [[self.orphans objectForKey:entry.parentId] removeObject:replaced];
-        [replaced moveChildrenTo:entry];
-    }
-
-    [entries_ setObject:entry.entryId forKey:entryId];
-    return !!replaced;
+- (NSString *)removeEntryIdSuffix:(NSString *)string {
+    NSUInteger pos = [string rangeOfString:@"."].location;
+    if (pos == NSNotFound)
+        return nil;
+    return [string substringToIndex:pos];
 }
 
-- (void)insertEntry:(Entry *)entry replaceId:(NSString *)replaceId {
-    Entry *parent = [self entryForKey:entry.parentId];
-    BOOL didReplace = [self replaceEntryWithId:replaceId withEntry:entry];
+- (Entry *)insertEntry:(Entry *)entry withParent:(Entry *)parent {
+    if (entry.deleted) {
+        // In stream responses, deleted posts have the same ID as the original
+        // post. In bootstrap responses, deleted posts have the original ID,
+        // plus a child with the suffixed version of the original ID
+        Entry *original = [self entryForKey:entry.entryId];
+        if (original) {
+            [original copyFrom:entry];
+            return original;
+        }
+
+        if (parent && [entry.entryId hasPrefix:parent.entryId] && parent.deleted) {
+            [entries_ setObject:parent forKey:entry.entryId];
+            return parent;
+        }
+
+        // Otherwise either the undeleted one was never seen, or we've gotten
+        // an unrecognized delete format
+        [entries_ setObject:entry forKey:entry.entryId];
+        if (parent)
+            [parent addChild:entry];
+        else
+            [self.topLevelPosts addObject:entry];
+        return entry;
+    }
+
+    // We might already have this entry, as there's some overlap between the
+    // init data and the first page or if we have multiple stream requests at
+    // once
+    if ([self entryForKey:entry.entryId])
+        return [self entryForKey:entry.entryId];
+
+    // Add any children of this node which arrived before it
+    NSMutableArray *children = [self.orphans objectForKey:entry.entryId];
+    if (children) {
+        for (Entry *child in children)
+            [entry addChild:child];
+        [self.orphans removeObjectForKey:entry.entryId];
+    }
+
+    // The replaces ID for edits has a suffix of unknown meaning, so try to
+    // find an entry whose ID is the prefix of the target ID
+    NSString *replaces = entry.replaces;
+    Entry *original = nil;
+    while (replaces && !original) {
+        original = [self entryForKey:replaces];
+        replaces = [self removeEntryIdSuffix:replaces];
+    }
+
+    if (original) {
+        // what if the visibility changed?
+        [original copyFrom:entry];
+        [entries_ setObject:original forKey:entry.entryId];
+        return original;
+    }
+
+    if (![self userCanViewEntry:entry])
+        return nil;
+
     [entries_ setObject:entry forKey:entry.entryId];
 
-    if (parent) {
-        if (!didReplace)
-            [parent addChild:entry];
+    replaces = entry.replaces;
+    while (replaces && !original) {
+        [entries_ setObject:entry forKey:replaces];
+        original = [self entryForKey:replaces];
+        replaces = [self removeEntryIdSuffix:replaces];
     }
+
+    if (!parent)
+        parent = [self entryForKey:entry.parentId];
+    if (parent)
+        [parent addChild:entry];
     else if (entry.parentId) {
         // Has a parent but we haven't read the parent yet, so remember it until
         // the parent arrives
@@ -172,8 +214,10 @@
         }
         [siblings addObject:entry];
     }
-    else if (![entry isKindOfClass:[Embed class]])
+    else
         [self.topLevelPosts addObject:entry];
+
+    return entry;
 }
 
 - (Entry *)addEntry:(NSDictionary *)entryData withParent:(Entry *)parent {
@@ -184,34 +228,12 @@
     if (!entry)
         return nil;
 
-    if (entry.deleted) {
-        // Deleted posts have entries in the bootstrap data for both the
-        // pre-delete and post-delete IDs. Barring replies made after the parent
-        // was deleted, the post-delete ID is never useful.
-        NSUInteger dotPos = [entry.entryId rangeOfString:@"."].location;
-        if (dotPos != NSNotFound) {
-            NSString *prefix = [entry.entryId substringToIndex:dotPos];
-            if ([[self entryForKey:prefix] deleted])
-                return nil;
-        }
+    entry = [self insertEntry:entry withParent:parent];
+    if (!entry)
+        return nil;
 
-        [self insertEntry:entry replaceId:entry.entryId];
-    }
-    else if ([self userCanViewEntry:entry] && ![self entryForKey:entry.entryId]) {
-        [self insertEntry:entry replaceId:entry.replaces];
-    }
-
-    for (NSDictionary *child in [entryData objectForKey:@"childContent"]) {
+    for (NSDictionary *child in [entryData objectForKey:@"childContent"])
         [self addEntry:child withParent:entry];
-    }
-
-    NSMutableArray *children = [self.orphans objectForKey:entry.entryId];
-    if (children) {
-        for (Entry *child in children) {
-            [entry addChild:child];
-        }
-        [self.orphans removeObjectForKey:entry.entryId];
-    }
 
     return entry;
 }
@@ -228,11 +250,7 @@
     if (!entryId)
         return nil;
 
-    id entry = [entries_ objectForKey:entryId];
-    while ([entry isKindOfClass:[NSString class]]) {
-        entry = [entries_ objectForKey:entry];
-    }
-    return entry;
+    return [entries_ objectForKey:entryId];
 }
 
 - (NSArray *)addCollectionContent:(NSDictionary *)content

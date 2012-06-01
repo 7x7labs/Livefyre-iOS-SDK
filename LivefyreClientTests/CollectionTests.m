@@ -256,7 +256,7 @@
 
     post = [collection.posts objectAtIndex:0];
     STAssertEqualObjects(post.body, @"replacement body", nil);
-    STAssertEqualObjects(post.entryId, @"tweet-200315761892392961@twitter.com", nil);
+    STAssertEqualObjects(post.entryId, @"tweet-200315761892392960@twitter.com", nil);
 
     // note: using original post id
     [collection addAuthors:nil
@@ -326,7 +326,7 @@
 
     NSString *author = @"{\"author id\":{\"profileUrl\":\"\",\"displayName\":\"Author\",\"id\":\"author id\",\"avatar\":\"\"}}";
     NSString *originalChild = @"[{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"original child\",\"authorId\":\"author id\",\"parentId\":\"parent id\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"original child\",\"createdAt\":1336593974},\"childContent\":[],\"source\":1,\"type\":0,\"event\":1336593974662154}]";
-    NSString *replacementChild = @"[{\"vis\":1,\"content\":{\"replaces\":\"original child\",\"bodyHtml\":\"replacement child\",\"authorId\":\"author id\",\"parentId\":\"parent id\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"replacement child\",\"createdAt\":1336593974},\"childContent\":[],\"source\":1,\"type\":0,\"event\":1336593974662154}]";
+    NSString *replacementChild = @"[{\"vis\":1,\"content\":{\"replaces\":\"original child\",\"bodyHtml\":\"replacement child\",\"authorId\":\"author id\",\"parentId\":\"parent id\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"replacement child\",\"createdAt\":1336593975},\"childContent\":[],\"source\":1,\"type\":0,\"event\":1336593974662154}]";
     NSString *parentPost = @"[{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"parent body\",\"authorId\":\"author id\",\"parentId\":\"\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"parent id\",\"createdAt\":1336593974},\"childContent\":[],\"source\":1,\"type\":0,\"event\":1336593974662154}]";
 
     [collection addAuthors:[author objectFromJSONString]
@@ -564,9 +564,9 @@
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals(collection.lastEvent, 1338400967479010LL, nil);
     STAssertEquals([collection.posts count], 1u, nil);
-    STAssertFalse(firstPost == [collection.posts objectAtIndex:0], nil);
+    STAssertTrue(firstPost == [collection.posts objectAtIndex:0], nil);
     firstPost = [collection.posts objectAtIndex:0];
-    STAssertEqualObjects(firstPost.entryId, @"a9cebf68aa8111e18a421231390eae31@7x7-1.fyre.co", nil);
+    STAssertEqualObjects(firstPost.entryId, @"25802158", nil);
     STAssertEqualObjects(firstPost.body, @"<p>edit post with reply</p>", nil);
     STAssertEqualObjects(firstPost.author.displayName, @"regUser", nil);
     STAssertEquals([firstPost.children count], 1u, nil);
@@ -576,11 +576,11 @@
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals(collection.lastEvent, 1338413150921195LL, nil);
     STAssertEquals([collection.posts count], 1u, nil);
-    STAssertFalse(firstPost == [collection.posts objectAtIndex:0], nil);
+    STAssertTrue(firstPost == [collection.posts objectAtIndex:0], nil);
     firstPost = [collection.posts objectAtIndex:0];
-    STAssertEqualObjects(firstPost.entryId, @"a9cebf68aa8111e18a421231390eae31@7x7-1.fyre.co", nil);
+    STAssertEqualObjects(firstPost.entryId, @"25802158", nil);
     STAssertTrue(firstPost.deleted, nil);
-    STAssertNil(firstPost.author, nil);
+    STAssertNotNil(firstPost.author, nil);
     STAssertEquals([firstPost.children count], 1u, nil);
     STAssertEquals(child, [firstPost.children objectAtIndex:0], nil);
 }
@@ -685,7 +685,7 @@ do { \
     if ([collection.posts count] > 2) {
         post = [collection.posts objectAtIndex:2];
         STAssertNil(post.parent, nil);
-        STAssertEqualObjects(post.entryId, @"25802156.fbc98b9317094c8f964084923a901c77", nil);
+        STAssertEqualObjects(post.entryId, @"25802156", nil);
         STAssertFalse(post.deleted, nil);
         if (!post.deleted) {
             STAssertEqualObjects([post body], @"<p>edited post</p>", nil);

@@ -8,21 +8,6 @@
 
 #import "Entry.h"
 
-static NSArray *replaceEntryInArray(NSArray *array, NSString *key, id newValue) {
-    NSUInteger index = [array indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-        return [[obj entryId] isEqualToString:key];
-    }];
-    if (index == NSNotFound)
-        return array;
-
-    NSMutableArray *mutable = [NSMutableArray arrayWithArray:array];
-    if (newValue)
-        [mutable replaceObjectAtIndex:index withObject:newValue];
-    else
-        [mutable removeObjectAtIndex:index];
-    return mutable;
-}
-
 @interface Entry ()
 @property (strong, nonatomic) NSString *entryId;
 @property (weak, nonatomic) Author *author;
@@ -40,8 +25,6 @@ static NSArray *replaceEntryInArray(NSArray *array, NSString *key, id newValue) 
 @property (nonatomic) BOOL deleted;
 
 - (void)addToParent:(Entry *)parent;
-- (void)replaceInParent:(Entry *)parent;
-- (void)removeFromParent;
 @end
 
 @interface Post ()
@@ -155,41 +138,35 @@ static NSArray *replaceEntryInArray(NSArray *array, NSString *key, id newValue) 
     parent.children = [parent.children arrayByAddingObject:self];
 }
 
-- (void)replaceInParent:(Entry *)parent {
-    parent.children = replaceEntryInArray(parent.children, self.replaces, self);
-}
-
-- (void)removeFromParent {
-    self.parent.children = replaceEntryInArray(self.parent.children, self.entryId, nil);
-}
-
 - (void)addChild:(Entry *)child {
-    if (child.parent)
-        [child removeFromParent];
     child.parent = self;
     [child addToParent:self];
 }
 
-- (void)replaceChild:(Entry *)child {
-    if (child.parent)
-        [child removeFromParent];
-    child.parent = self;
-    [child replaceInParent:self];
-}
+- (void)copyFrom:(Entry *)entry {
+    if (entry.deleted)
+        self.deleted = YES;
 
-- (void)moveChildrenTo:(Entry *)newParent {
-    newParent.createdAt = MIN(self.createdAt, newParent.createdAt);
-    newParent.editedAt = MAX(self.editedAt, newParent.editedAt);
+    if ([self.entryId hasPrefix:entry.entryId])
+        self.entryId = entry.entryId;
 
-    for (NSUInteger i = [self.children count]; i > 0; --i) {
-        [newParent addChild:[self.children objectAtIndex:(i - 1)]];
+    if (entry.editedAt > self.editedAt) {
+        self.source = entry.source;
+        self.visibility = entry.visibility;
     }
-    for (NSUInteger i = [self.embed count]; i > 0; --i) {
-        [newParent addChild:[self.embed objectAtIndex:(i - 1)]];
-    }
-    for (NSUInteger i = [self.likes count]; i > 0; --i) {
-        [newParent addChild:[self.likes objectAtIndex:(i - 1)]];
-    }
+    if (!self.createdAt || !entry.createdAt)
+        self.createdAt = MAX(self.createdAt, entry.createdAt);
+    else
+        self.createdAt = MIN(self.createdAt, entry.createdAt);
+
+    self.editedAt = MAX(self.editedAt, entry.editedAt);
+
+    for (Entry *child in entry.children)
+        [self addChild:child];
+    for (Entry *child in entry.embed)
+        [self addChild:child];
+    for (Entry *child in entry.likes)
+        [self addChild:child];
 }
 @end
 
@@ -226,6 +203,12 @@ static NSArray *replaceEntryInArray(NSArray *array, NSString *key, id newValue) 
     }
     return self;
 }
+
+- (void)copyFrom:(Entry *)entry {
+    if ([entry isKindOfClass:[self class]] && entry.editedAt > self.editedAt)
+        self.body = [(Post *)entry body];
+    [super copyFrom:entry];
+}
 @end
 
 @implementation Like
@@ -243,14 +226,6 @@ static NSArray *replaceEntryInArray(NSArray *array, NSString *key, id newValue) 
 
 - (void)addToParent:(Entry *)parent {
     parent.likes = [parent.likes arrayByAddingObject:self];
-}
-
-- (void)replaceInParent:(Entry *)parent {
-    parent.likes = replaceEntryInArray(parent.likes, self.replaces, self);
-}
-
-- (void)removeFromParent {
-    self.parent.likes = replaceEntryInArray(self.parent.likes, self.entryId, nil);
 }
 @end
 
@@ -295,6 +270,8 @@ static NSArray *replaceEntryInArray(NSArray *array, NSString *key, id newValue) 
         self.thumbnailWidth = [[oembed objectForKey:@"thumbnail_width"] intValue];
         self.position = [[content objectForKey:@"position"] intValue];
         self.parentId = [self fixNull:[content objectForKey:@"targetId"]];
+        self.createdAt = (int)([[eventData objectForKey:@"event"] longLongValue] / 1000000);
+        self.editedAt = self.createdAt;
     }
     return self;
 }
@@ -304,12 +281,28 @@ static NSArray *replaceEntryInArray(NSArray *array, NSString *key, id newValue) 
     parent.embed = [parent.embed arrayByAddingObject:self];
 }
 
-- (void)replaceInParent:(Entry *)parent {
-    self.author = parent.author;
-    parent.embed = replaceEntryInArray(parent.embed, self.replaces, self);
+- (void)copyFrom:(Entry *)entry {
+    if ([entry isKindOfClass:[self class]] && entry.editedAt > self.editedAt) {
+        Embed *embed = (Embed *)entry;
+        self.link = embed.link;
+        self.providerUrl = embed.providerUrl;
+        self.title = embed.title;
+        self.url = embed.url;
+        self.type = embed.type;
+        self.authorName = embed.authorName;
+        self.html = embed.html;
+        self.version = embed.version;
+        self.authorUrl = embed.authorUrl;
+        self.providerName = embed.providerName;
+        self.thumbnailUrl = embed.thumbnailUrl;
+        self.height = embed.height;
+        self.width = embed.width;
+        self.thumbnailHeight = embed.thumbnailHeight;
+        self.thumbnailWidth = embed.thumbnailWidth;
+        self.position = embed.position;
+    }
+
+    [super copyFrom:entry];
 }
 
-- (void)removeFromParent {
-    self.parent.embed = replaceEntryInArray(self.parent.embed, self.entryId, nil);
-}
 @end
