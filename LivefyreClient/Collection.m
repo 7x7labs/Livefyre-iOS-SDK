@@ -217,6 +217,8 @@
 }
 
 - (BOOL)userCanViewEntry:(Entry *)entry {
+    if ([entry isKindOfClass:[Like class]])
+        return YES;
     if (self.user)
         return [self.user canViewEntry:entry];
     return entry.visibility == ContentVisibilityEveryone;
