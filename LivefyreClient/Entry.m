@@ -88,6 +88,13 @@ static NSArray *replaceEntryInArray(NSArray *array, NSString *key, id newValue) 
 + (Entry *)entryWithDictionary:(NSDictionary *)eventData
                    authorsFrom:(id <AuthorLookup>)authorData
 {
+    return [self entryWithDictionary:eventData authorsFrom:authorData withParent:nil];
+}
+
++ (Entry *)entryWithDictionary:(NSDictionary *)eventData
+                   authorsFrom:(id <AuthorLookup>)authorData
+                    withParent:(Entry *)parent
+{
     NSDictionary *content = [eventData objectForKey:@"content"];
     if ([content objectForKey:@"oembed"])
         return [[Embed alloc] initWithDictionary:eventData];
@@ -100,6 +107,7 @@ static NSArray *replaceEntryInArray(NSArray *array, NSString *key, id newValue) 
 
     Entry *entry = [[Entry alloc] initWithDictionary:eventData];
     entry.deleted = YES;
+    entry.parentId = parent.entryId;
     return entry;
 }
 

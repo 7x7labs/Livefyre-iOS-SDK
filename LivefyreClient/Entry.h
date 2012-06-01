@@ -62,6 +62,10 @@ enum PermissionScope {
 + (Entry *)entryWithDictionary:(NSDictionary *)eventData
                    authorsFrom:(id <AuthorLookup>)authorData;
 
++ (Entry *)entryWithDictionary:(NSDictionary *)eventData
+                   authorsFrom:(id <AuthorLookup>)authorData
+                    withParent:(Entry *)parent;
+
 - (Entry *)initWithDictionary:(NSDictionary *)eventData;
 
 - (void)addChild:(Entry *)child;

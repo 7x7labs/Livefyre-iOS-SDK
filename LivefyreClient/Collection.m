@@ -176,8 +176,10 @@
         [self.topLevelPosts addObject:entry];
 }
 
-- (Entry *)addEntry:(NSDictionary *)entryData {
-    Entry *entry = [Entry entryWithDictionary:entryData authorsFrom:self];
+- (Entry *)addEntry:(NSDictionary *)entryData withParent:(Entry *)parent {
+    Entry *entry = [Entry entryWithDictionary:entryData
+                                  authorsFrom:self
+                                   withParent:parent];
 
     if (!entry)
         return nil;
@@ -200,7 +202,7 @@
     }
 
     for (NSDictionary *child in [entryData objectForKey:@"childContent"]) {
-        [self addEntry:child];
+        [self addEntry:child withParent:entry];
     }
 
     NSMutableArray *children = [self.orphans objectForKey:entry.entryId];
@@ -283,7 +285,7 @@
 
     NSMutableArray *newEntries = [[NSMutableArray alloc] initWithCapacity:[postData count]];
     for (NSDictionary *post in postData) {
-        Entry *newEntry = [self addEntry:post];
+        Entry *newEntry = [self addEntry:post withParent:nil];
         if (newEntry)
             [newEntries addObject:newEntry];
     }
