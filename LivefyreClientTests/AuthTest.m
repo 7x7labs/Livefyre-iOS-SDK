@@ -59,16 +59,6 @@
          [self completedTest];
      }];
 
-
-    [self.client authenticateUser:[Config objectForKey:@"unknown user"]
-                          forSite:[Config objectForKey:@"site"]
-                       forArticle:[Config objectForKey:@"existing article"]
-                          gotUser:^(BOOL error, id result)
-     {
-         STAssertTrue(error, @"Should not get user object for nonexistent user");
-         [self completedTest];
-     }];
-
     [self waitForTests];
 }
 @end
