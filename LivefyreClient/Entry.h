@@ -13,7 +13,8 @@
 
 enum ContentType {
     ContentTypeMessage = 0,
-    ContentTypeOpine = 1
+    ContentTypeOpine = 1,
+    ContentTypeEmbed = 3
 };
 
 enum ContentVisibility {

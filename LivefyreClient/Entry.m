@@ -130,7 +130,7 @@ static NSArray *replaceEntryInArray(NSArray *array, NSString *key, id newValue) 
             NSLog(@"Unrecognized source: %d", self.source);
             self.source = 0;
         }
-        if (self.contentType > ContentTypeOpine) {
+        if (self.contentType > ContentTypeEmbed || self.contentType == 2) {
             NSLog(@"Unrecognized content type: %d", self.contentType);
             self.contentType = ContentTypeMessage;
         }
