@@ -68,7 +68,7 @@
     NSDate *timeoutDate = [NSDate dateWithTimeIntervalSinceNow:60];
 
     do {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:timeoutDate];
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:1]];
         if([timeoutDate timeIntervalSinceNow] < 0.0)
             break;
     } while ([self.client testsRunning]);
