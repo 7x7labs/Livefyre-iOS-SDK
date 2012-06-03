@@ -20,6 +20,9 @@
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
                            domainKey:(NSString *)key;
 
+/// Are there currently any running asynchronous requests triggered by this client?
+- (BOOL)pendingAsyncRequests;
+
 /// Authenticate a user for accessing and posting to a collection
 /// @param userName The user's ID
 /// @param collectionId The ID of the collection to get access to
@@ -55,6 +58,13 @@
        collectionCreated:(RequestComplete)callback;
 
 /// Update the metadata for an existing collection
+/// @param title New title of the article
+/// @param articleId Unique ID of the article
+/// @param url New URL of the article
+/// @param siteId ID of the site the article is in
+/// @param siteKey Livefyre API key for the site
+/// @param tags New comma separated list of tags for the collection
+/// @param callback Block to call with the ID of the updated collection
 - (void)updateCollection:(NSString *)title
               forArticle:(NSString *)articleId
                    atUrl:(NSString *)url

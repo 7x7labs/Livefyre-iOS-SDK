@@ -10,6 +10,8 @@
 
 #import "ASIFormDataRequest.h"
 
+static int pendingRequests = 0;
+
 @implementation HttpRequest
 + (NSString*)urlEscape:(NSString *)string {
 	return (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
@@ -17,6 +19,10 @@
                                                                                  NULL,
                                                                                  (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",
                                                                                  kCFStringEncodingUTF8);
+}
+
++ (BOOL)hasPendingRequests {
+    return pendingRequests > 0;
 }
 
 + (NSString *)buildQueryString:(NSString *)url withParamters:(NSDictionary *)parameters {
@@ -35,12 +41,17 @@
            onError:(ResponseBlock)onError
          onSuccess:(ResponseBlock)onSuccess
 {
+    ++pendingRequests;
     NSLog(@"GET %@", url);
     __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
     __weak ASIHTTPRequest *weakReq = request;
     [request setRequestMethod:@"GET"];
-    [request setCompletionBlock:^{ onSuccess(weakReq.responseString, weakReq.responseStatusCode); }];
+    [request setCompletionBlock:^{
+        --pendingRequests;
+        onSuccess(weakReq.responseString, weakReq.responseStatusCode);
+    }];
     [request setFailedBlock:^{
+        --pendingRequests;
         NSLog(@"ERROR %d %@", weakReq.responseStatusCode, weakReq.error.description);
         onError(weakReq.error.description, weakReq.responseStatusCode);
     }];
@@ -62,11 +73,16 @@
                                   onError:(ResponseBlock)onError
                                 onSuccess:(ResponseBlock)onSuccess
 {
+    ++pendingRequests;
     NSLog(@"POST %@", url);
     __block ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
     __weak ASIHTTPRequest *weakReq = request;
-    [request setCompletionBlock:^{ onSuccess(weakReq.responseString, weakReq.responseStatusCode); }];
+    [request setCompletionBlock:^{
+        --pendingRequests;
+        onSuccess(weakReq.responseString, weakReq.responseStatusCode);
+    }];
     [request setFailedBlock:^{
+        --pendingRequests;
         NSLog(@"ERROR %d %@", weakReq.responseStatusCode, weakReq.error.description);
         onError(weakReq.error.description, weakReq.responseStatusCode);
     }];

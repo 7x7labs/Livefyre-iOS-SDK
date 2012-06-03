@@ -86,6 +86,10 @@ static NSString *bootstrapRoot = @"https://bootstrap-v2-json.s3.amazonaws.com";
     return client;
 }
 
+- (BOOL)pendingAsyncRequests {
+    return [HttpRequest hasPendingRequests];
+}
+
 - (void)authenticateUser:(NSDictionary *)parameters gotUser:(RequestComplete)callback {
     [HttpRequest getRequest:[NSString stringWithFormat:@"http://admin.%@/api/v3.0/auth/", domain]
                   withQuery:parameters

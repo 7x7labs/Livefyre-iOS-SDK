@@ -35,4 +35,6 @@ typedef void (^ResponseBlock)(NSString *message, int statusCode);
           onSuccess:(ResponseBlock)onSuccess;
 
 + (NSString *)urlEscape:(NSString *)string;
+
++ (BOOL)hasPendingRequests;
 @end
