@@ -437,6 +437,14 @@ static NSString *bootstrapRoot = @"https://bootstrap-v2-json.s3.amazonaws.com";
       inCollection:(Collection *)collection
         onComplete:(RequestComplete)callback
 {
+    [self createPost:body inReplyTo:nil inCollection:collection onComplete:callback];
+}
+
+- (void)createPost:(NSString *)body
+         inReplyTo:(Post *)parent
+      inCollection:(Collection *)collection
+        onComplete:(RequestComplete)callback
+{
     if (!collection.user) {
         callback(YES, @"Must be logged in to create a new post");
         return;
@@ -445,10 +453,20 @@ static NSString *bootstrapRoot = @"https://bootstrap-v2-json.s3.amazonaws.com";
     NSString *url = [NSString stringWithFormat:@"http://quill.%@/api/v3.0/collection/%@/post/",
                      domain, collection.collectionId];
 
-    NSDictionary *postBody = [NSDictionary dictionaryWithObjectsAndKeys:body, @"body",
-                              collection.user.token, @"lftoken",
-                              uuid, @"_bi",
-                              nil];
+    NSDictionary *postBody;
+    if (parent) {
+        postBody = [NSDictionary dictionaryWithObjectsAndKeys:body, @"body",
+                    collection.user.token, @"lftoken",
+                    parent.entryId, @"parent_id",
+                    uuid, @"_bi",
+                    nil];
+    }
+    else {
+        postBody = [NSDictionary dictionaryWithObjectsAndKeys:body, @"body",
+                    collection.user.token, @"lftoken",
+                    uuid, @"_bi",
+                    nil];
+    }
 
     [HttpRequest postRequest:url
                 withFormData:postBody

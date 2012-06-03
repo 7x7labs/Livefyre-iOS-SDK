@@ -104,4 +104,14 @@
       inCollection:(Collection *)collection
         onComplete:(RequestComplete)callback;
 
+/// Create a reply to an existing post in a collection
+/// @param body HTML body of the new post
+/// @param parent Parent post to reply to
+/// @param collection Collection to add the post to
+/// @param callback Callback called with the new `Post`
+- (void)createPost:(NSString *)body
+         inReplyTo:(Post *)parent
+      inCollection:(Collection *)collection
+        onComplete:(RequestComplete)callback;
+
 @end
