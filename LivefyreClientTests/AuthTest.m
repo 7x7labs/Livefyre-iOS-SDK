@@ -33,8 +33,6 @@
                                     [Config objectForKey:@"domain"]]),
                                   nil);
          }
-
-         [self completedTest];
      }];
 
     [self.client authenticateUser:[Config objectForKey:@"non-moderator user"]
@@ -55,8 +53,6 @@
                                     [Config objectForKey:@"domain"]]),
                                   nil);
          }
-
-         [self completedTest];
      }];
 
     [self waitForTests];

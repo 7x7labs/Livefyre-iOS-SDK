@@ -34,8 +34,6 @@
                                   authorsFrom:nil];
 
     [self.client likeContent:entry inCollection:collection onComplete:^(BOOL error, id resultOrError) {
-        [self completedTest];
-
         if (error) {
             STFail(resultOrError);
         }
@@ -54,8 +52,6 @@
                                   authorsFrom:nil];
 
     [self.client unlikeContent:entry inCollection:collection onComplete:^(BOOL error, id resultOrError) {
-        [self completedTest];
-
         if (error) {
             STFail(resultOrError);
         }

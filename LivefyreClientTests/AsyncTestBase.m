@@ -10,58 +10,12 @@
 
 #import "Config.h"
 
-@interface ClientWrapper : NSObject {
-    LivefyreClient *client;
-    int pendingRequests;
-}
-
-- (id)init;
-- (id)forwardingTargetForSelector:(SEL)aSelector;
-
-- (BOOL)testsRunning;
-- (void)testComplete;
-@end
-
-@implementation ClientWrapper
-- (id)init {
-    self = [super init];
-    if (self) {
-        client = [LivefyreClient clientWithDomain:[Config objectForKey:@"domain"]
-                                        domainKey:[Config objectForKey:@"domain key"]];
-        pendingRequests = 0;
-    }
-    return self;
-}
-
-- (id)forwardingTargetForSelector:(SEL)aSelector {
-    // this only works because LivefyreClient has no synchronous methods not
-    // from NSObject
-    if ([client respondsToSelector:aSelector]) {
-        ++pendingRequests;
-        return client;
-    }
-    return nil;
-}
-
-- (BOOL)testsRunning {
-    return pendingRequests > 0;
-}
-
-- (void)testComplete {
-    --pendingRequests;
-}
-@end
-
-
 @implementation AsyncTestBase
 @synthesize client;
 
 - (void)setUp {
-    self.client = [[ClientWrapper alloc] init];
-}
-
-- (void)completedTest {
-    [self.client testComplete];
+    self.client = [LivefyreClient clientWithDomain:[Config objectForKey:@"domain"]
+                                         domainKey:[Config objectForKey:@"domain key"]];
 }
 
 - (void)waitForTests {
@@ -71,7 +25,7 @@
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:1]];
         if([timeoutDate timeIntervalSinceNow] < 0.0)
             break;
-    } while ([self.client testsRunning]);
+    } while ([self.client pendingAsyncRequests]);
 }
 
 @end

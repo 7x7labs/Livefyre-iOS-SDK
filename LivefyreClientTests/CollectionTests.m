@@ -29,8 +29,6 @@
                                  forUser:user
                            gotCollection:^(BOOL error, id resultOrError)
      {
-         [self completedTest];
-
          if (error) {
              STFail(resultOrError);
          }
@@ -61,7 +59,6 @@
                                  forUser:nil
                            gotCollection:^(BOOL error, id resultOrError)
      {
-         [self completedTest];
          STAssertTrue(error, @"Should not get a collection for a nonexistant article");
      }];
 
@@ -73,7 +70,6 @@
         [collection fetchPage:collection.numberOfPages
                       gotPage:^(BOOL error, id resultOrError) {
                           STAssertTrue(error, nil);
-                          [self completedTest];
                       }];
         [self waitForTests];
     }];
@@ -86,8 +82,6 @@
             [collection fetchPage:i
                           gotPage:^(BOOL error, id resultOrError)
              {
-                 [self completedTest];
-
                  STAssertFalse(error, nil);
                  STAssertTrue([collection.posts count] >= postCount, @"Fetching a page removed data");
                  STAssertTrue([resultOrError count] >= [collection.posts count] - postCount, @"Not all new posts were returned");

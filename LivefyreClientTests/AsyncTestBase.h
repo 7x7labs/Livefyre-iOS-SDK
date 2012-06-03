@@ -10,8 +10,7 @@
 #import <SenTestingKit/SenTestingKit.h>
 
 @interface AsyncTestBase : SenTestCase
-@property (strong, nonatomic) id client;
+@property (strong, nonatomic) LivefyreClient *client;
 
 - (void)waitForTests;
-- (void)completedTest;
 @end
