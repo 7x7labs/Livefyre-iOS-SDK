@@ -162,7 +162,7 @@
     // init data and the first page or if we have multiple stream requests at
     // once
     if ([self entryForKey:entry.entryId])
-        return [self entryForKey:entry.entryId];
+        return nil;
 
     // Add any children of this node which arrived before it
     NSMutableArray *children = [self.orphans objectForKey:entry.entryId];
