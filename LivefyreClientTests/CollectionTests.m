@@ -531,7 +531,7 @@
     STAssertNotNil(collection.posts, nil);
     STAssertEquals([collection.posts count], 0u, nil);
 
-    [collection addCollectionContent:[initialPostJson objectFromJSONString] erefFetcher:nil];
+    NSArray *newData = [collection addCollectionContent:[initialPostJson objectFromJSONString] erefFetcher:nil];
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals(collection.lastEvent, 1338400428925945LL, nil);
     STAssertEquals([collection.posts count], 1u, nil);
@@ -541,11 +541,15 @@
     STAssertEqualObjects(firstPost.author.displayName, @"regUser", nil);
     STAssertEquals([firstPost.children count], 0u, nil);
 
-    // Adding data twice shouldn't do anything
-    [collection addCollectionContent:[initialPostJson objectFromJSONString] erefFetcher:nil];
-    STAssertEquals([collection.posts count], 1u, nil);
+    STAssertEquals([newData count], 1u, nil);
+    STAssertEquals([newData objectAtIndex:0], firstPost, nil);
 
-    [collection addCollectionContent:[replyJson objectFromJSONString] erefFetcher:nil];
+    // Adding data twice shouldn't do anything
+    newData = [collection addCollectionContent:[initialPostJson objectFromJSONString] erefFetcher:nil];
+    STAssertEquals([collection.posts count], 1u, nil);
+    STAssertEquals([newData count], 0u, nil);
+
+    newData = [collection addCollectionContent:[replyJson objectFromJSONString] erefFetcher:nil];
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals(collection.lastEvent, 1338400452481309LL, nil);
     STAssertEquals([collection.posts count], 1u, nil);
@@ -555,29 +559,36 @@
     STAssertEqualObjects(child.entryId, @"25802159", nil);
     STAssertEqualObjects(child.body,  @"<p>\u00a0 <a vocab=\"http://schema.org\" typeof=\"Person\" rel=\"nofollow\" resource=\"acct:2@7x7-1.fyre.co\" data-lf-provider=\"livefyre\" property=\"url\"  target=\"_blank\" class=\"fyre-mention fyre-mention-livefyre\">@<span property=\"name\">regUser</span></a>\u00a0reply to new post</p>", nil);
 
-    [collection addCollectionContent:[editParent objectFromJSONString] erefFetcher:nil];
+    STAssertEquals([newData count], 1u, nil);
+    STAssertEquals([newData objectAtIndex:0], child, nil);
+
+    newData = [collection addCollectionContent:[editParent objectFromJSONString] erefFetcher:nil];
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals(collection.lastEvent, 1338400967479010LL, nil);
     STAssertEquals([collection.posts count], 1u, nil);
     STAssertTrue(firstPost == [collection.posts objectAtIndex:0], nil);
-    firstPost = [collection.posts objectAtIndex:0];
     STAssertEqualObjects(firstPost.entryId, @"25802158", nil);
     STAssertEqualObjects(firstPost.body, @"<p>edit post with reply</p>", nil);
     STAssertEqualObjects(firstPost.author.displayName, @"regUser", nil);
     STAssertEquals([firstPost.children count], 1u, nil);
     STAssertEquals(child, [firstPost.children objectAtIndex:0], nil);
 
-    [collection addCollectionContent:[deleteParent objectFromJSONString] erefFetcher:nil];
+    STAssertEquals([newData count], 1u, nil);
+    STAssertEquals([newData objectAtIndex:0], firstPost, nil);
+
+    newData = [collection addCollectionContent:[deleteParent objectFromJSONString] erefFetcher:nil];
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals(collection.lastEvent, 1338413150921195LL, nil);
     STAssertEquals([collection.posts count], 1u, nil);
     STAssertTrue(firstPost == [collection.posts objectAtIndex:0], nil);
-    firstPost = [collection.posts objectAtIndex:0];
     STAssertEqualObjects(firstPost.entryId, @"25802158", nil);
     STAssertTrue(firstPost.deleted, nil);
     STAssertNotNil(firstPost.author, nil);
     STAssertEquals([firstPost.children count], 1u, nil);
     STAssertEquals(child, [firstPost.children objectAtIndex:0], nil);
+
+    STAssertEquals([newData count], 1u, nil);
+    STAssertEquals([newData objectAtIndex:0], firstPost, nil);
 }
 
 - (void)testCollectionWithoutUser {

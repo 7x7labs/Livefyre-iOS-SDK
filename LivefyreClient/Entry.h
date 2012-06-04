@@ -99,7 +99,7 @@ enum PermissionScope {
 
 - (Entry *)initWithDictionary:(NSDictionary *)eventData;
 
-- (void)addChild:(Entry *)child;
+- (Entry *)addChild:(Entry *)child;
 - (void)copyFrom:(Entry *)entry;
 @end
 

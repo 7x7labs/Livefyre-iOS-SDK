@@ -28,7 +28,7 @@
 @property (nonatomic) BOOL deleted;
 @property (weak, nonatomic) Collection *collection;
 
-- (void)addToParent:(Entry *)parent;
+- (Entry *)addToParent:(Entry *)parent;
 @end
 
 @interface Post ()
@@ -149,13 +149,14 @@
     return value;
 }
 
-- (void)addToParent:(Entry *)parent {
+- (Entry *)addToParent:(Entry *)parent {
     parent.children = [parent.children arrayByAddingObject:self];
+    return self;
 }
 
-- (void)addChild:(Entry *)child {
+- (Entry *)addChild:(Entry *)child {
     child.parent = self;
-    [child addToParent:self];
+    return [child addToParent:self];
 }
 
 - (void)copyFrom:(Entry *)entry {
@@ -239,7 +240,7 @@
     return self;
 }
 
-- (void)addToParent:(Entry *)parent {
+- (Entry *)addToParent:(Entry *)parent {
     if (self.visibility == ContentVisibilityNone) {
         parent.likes = [parent.likes reject:^BOOL(id obj) {
             return [[obj author] authorId] == self.author.authorId;
@@ -248,6 +249,7 @@
     else {
         parent.likes = [parent.likes arrayByAddingObject:self];
     }
+    return parent;
 }
 @end
 
@@ -298,9 +300,10 @@
     return self;
 }
 
-- (void)addToParent:(Entry *)parent {
+- (Entry *)addToParent:(Entry *)parent {
     self.author = parent.author;
     parent.embed = [parent.embed arrayByAddingObject:self];
+    return self;
 }
 
 - (void)copyFrom:(Entry *)entry {

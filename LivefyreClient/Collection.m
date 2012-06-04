@@ -203,8 +203,9 @@
     if (!parent)
         parent = [self entryForKey:entry.parentId];
     if (parent)
-        [parent addChild:entry];
-    else if (entry.parentId) {
+        return [parent addChild:entry];
+
+    if (entry.parentId) {
         // Has a parent but we haven't read the parent yet, so remember it until
         // the parent arrives
         NSMutableArray *siblings = [self.orphans objectForKey:entry.parentId];
@@ -213,10 +214,10 @@
             [self.orphans setObject:siblings forKey:entry.parentId];
         }
         [siblings addObject:entry];
+        return nil;
     }
-    else
-        [self.topLevelPosts addObject:entry];
 
+    [self.topLevelPosts addObject:entry];
     return entry;
 }
 
