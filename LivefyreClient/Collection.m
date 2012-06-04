@@ -132,12 +132,17 @@
     return [string substringToIndex:pos];
 }
 
-- (Entry *)handleDeletion:(Entry *)entry parent:(Entry *)parent {
+- (Entry *)handleDeletion:(Entry *)entry
+                   parent:(Entry *)parent
+          updatePostCount:(BOOL)updatePostCount
+{
     // In stream responses, deleted posts have the same ID as the original
     // post. In bootstrap responses, deleted posts have the original ID,
     // plus a child with the suffixed version of the original ID
     Entry *original = [self entryForKey:entry.entryId];
     if (original) {
+        if (!original.deleted)
+            --numberVisible_;
         [original copyFrom:entry];
         return original;
     }
@@ -158,8 +163,10 @@
 }
 
 - (Entry *)insertEntry:(Entry *)entry withParent:(Entry *)parent {
+    BOOL updatePostCount = entry.event > self.lastEvent;
+
     if (entry.deleted)
-        return [self handleDeletion:entry parent:parent];
+        return [self handleDeletion:entry parent:parent updatePostCount:updatePostCount];
 
     // We might already have this entry, as there's some overlap between the
     // init data and the first page or if we have multiple stream requests at
@@ -195,6 +202,8 @@
         return nil;
 
     [entries_ setObject:entry forKey:entry.entryId];
+    if (updatePostCount && [entry isKindOfClass:[Post class]])
+        ++numberVisible_;
 
     // Register each prefix
     replaces = entry.replaces;

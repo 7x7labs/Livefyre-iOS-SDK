@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSArray *likes;
 @property (nonatomic) BOOL deleted;
 @property (weak, nonatomic) Collection *collection;
+@property (nonatomic) int64_t event;
 
 - (Entry *)addToParent:(Entry *)parent;
 @end
@@ -57,21 +58,22 @@
 @end
 
 @implementation Entry
-@synthesize entryId = entryId_;
 @synthesize author = author_;
-@synthesize createdAt = createdAt_;
-@synthesize editedAt = editedAt_;
-@synthesize source = source_;
-@synthesize contentType = contentType_;
-@synthesize visibility = visibility_;
-@synthesize replaces = replaces_;
-@synthesize parentId = parentId_;
-@synthesize parent = parent_;
 @synthesize children = children_;
-@synthesize embed = embed_;
-@synthesize likes = likes_;
-@synthesize deleted = deleted_;
 @synthesize collection = collection_;
+@synthesize contentType = contentType_;
+@synthesize createdAt = createdAt_;
+@synthesize deleted = deleted_;
+@synthesize editedAt = editedAt_;
+@synthesize embed = embed_;
+@synthesize entryId = entryId_;
+@synthesize event = event_;
+@synthesize likes = likes_;
+@synthesize parent = parent_;
+@synthesize parentId = parentId_;
+@synthesize replaces = replaces_;
+@synthesize source = source_;
+@synthesize visibility = visibility_;
 
 + (Entry *)entryWithDictionary:(NSDictionary *)eventData
                    authorsFrom:(id <AuthorLookup>)authorData
@@ -115,16 +117,17 @@
     self = [super init];
     if (self) {
         NSDictionary *content = [eventData objectForKey:@"content"];
-        self.entryId = [content objectForKey:@"id"];
+        self.children = [[NSArray alloc] init];
+        self.contentType = [[eventData objectForKey:@"type"] intValue];
         self.createdAt = [[content objectForKey:@"createdAt"] intValue];
         self.editedAt = self.createdAt;
-        self.source = [[eventData objectForKey:@"source"] intValue];
-        self.contentType = [[eventData objectForKey:@"type"] intValue];
-        self.visibility = [[eventData objectForKey:@"vis"] intValue];
-        self.replaces = [self fixNull:[content objectForKey:@"replaces"]];
-        self.children = [[NSArray alloc] init];
         self.embed = [[NSArray alloc] init];
+        self.entryId = [content objectForKey:@"id"];
+        self.event = [[eventData objectForKey:@"event"] longLongValue];
         self.likes = [[NSArray alloc] init];
+        self.replaces = [self fixNull:[content objectForKey:@"replaces"]];
+        self.source = [[eventData objectForKey:@"source"] intValue];
+        self.visibility = [[eventData objectForKey:@"vis"] intValue];
 
         if (self.source > 8) {
             NSLog(@"Unrecognized source: %d", self.source);

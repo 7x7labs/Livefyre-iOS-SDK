@@ -88,6 +88,7 @@ enum PermissionScope {
 
 @property (strong, nonatomic, readonly) NSString *replaces;
 @property (strong, nonatomic, readonly) NSString *parentId;
+@property (nonatomic, readonly) int64_t event;
 
 + (Entry *)entryWithDictionary:(NSDictionary *)eventData
                    authorsFrom:(id <AuthorLookup>)authorData
