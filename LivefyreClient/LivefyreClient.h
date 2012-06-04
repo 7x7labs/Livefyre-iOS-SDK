@@ -16,8 +16,14 @@
 /// LivefyreClient is the top-level interface to the Livefyre SDK.
 @interface LivefyreClient : NSObject
 /// Create a new Livefyre client.
-/// @param domain The Livefyre domain, including TLD, but not protocol.
-/// @param key    The Livefyre API key for the domain.
+/// @param domain The Livefyre domain, including TLD, but not protocol (e.g.
+/// @"7x7-1.fyre.co").
+/// @param key The Livefyre API key for authenticating users on the domain.
+///
+/// The domain key is optional; if not supplied then authenticateUserWithToken
+/// must be used rather than authenticateUser. Not supplying the key is
+/// potentially more secure, as it makes it possible to avoid ever having the
+/// domain key on the user's device.
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
                            domainKey:(NSString *)key;
 
@@ -42,6 +48,24 @@
                  forSite:(NSString *)siteId
               forArticle:(NSString *)articleId
                  gotUser:(RequestComplete)callback;
+
+/// Authenticate a user for accessing and posting to a collection.
+/// @param userToken The user's Livefyre token.
+/// @param collectionId The ID of the collection to get access to.
+/// @param callback Block to call with the `User` object.
+- (void)authenticateUserWithToken:(NSString *)userToken
+                    forCollection:(NSString *)collectionId
+                          gotUser:(RequestComplete)callback;
+
+/// Authenticate a user for accessing and posting to a collection.
+/// @param userToken The user's Livefyre token.
+/// @param siteId The site containing the desired collection.
+/// @param articleId The article which the collection is for.
+/// @param callback Block to call with the `User` object.
+- (void)authenticateUserWithToken:(NSString *)userToken
+                          forSite:(NSString *)siteId
+                       forArticle:(NSString *)articleId
+                          gotUser:(RequestComplete)callback;
 
 /// Create a new collection for comments on an article.
 /// @param title Title of the article.

@@ -109,6 +109,11 @@ static NSString *bootstrapRoot = @"https://bootstrap-v2-json.s3.amazonaws.com";
            forCollection:(NSString *)collectionId
                  gotUser:(RequestComplete)callback
 {
+    if (!key) {
+        callback(YES, @"Cannot authenticate with a user name without a domain key");
+        return;
+    }
+
     [self authenticateUser:[NSDictionary dictionaryWithObjectsAndKeys:authToken(userName, domain, key), @"lftoken",
                             collectionId, @"collectionId",
                             nil]
@@ -120,7 +125,34 @@ static NSString *bootstrapRoot = @"https://bootstrap-v2-json.s3.amazonaws.com";
               forArticle:(NSString *)articleId
                  gotUser:(RequestComplete)callback
 {
+    if (!key) {
+        callback(YES, @"Cannot authenticate with a user name without a domain key");
+        return;
+    }
+
     [self authenticateUser:[NSDictionary dictionaryWithObjectsAndKeys:authToken(userName, domain, key), @"lftoken",
+                            siteId, @"siteId",
+                            [NSString base64StringFromData:[articleId dataUsingEncoding:NSUTF8StringEncoding]], @"articleId",
+                            nil]
+                   gotUser:callback];
+}
+
+- (void)authenticateUserWithToken:(NSString *)userToken
+           forCollection:(NSString *)collectionId
+                 gotUser:(RequestComplete)callback
+{
+    [self authenticateUser:[NSDictionary dictionaryWithObjectsAndKeys:userToken, @"lftoken",
+                            collectionId, @"collectionId",
+                            nil]
+                   gotUser:callback];
+}
+
+- (void)authenticateUserWithToken:(NSString *)userToken
+                 forSite:(NSString *)siteId
+              forArticle:(NSString *)articleId
+                 gotUser:(RequestComplete)callback
+{
+    [self authenticateUser:[NSDictionary dictionaryWithObjectsAndKeys:userToken, @"lftoken",
                             siteId, @"siteId",
                             [NSString base64StringFromData:[articleId dataUsingEncoding:NSUTF8StringEncoding]], @"articleId",
                             nil]
