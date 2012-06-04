@@ -78,11 +78,13 @@
 - (void)testGetPage {
     __block int postCount = 0;
     [self getCollection:^(Collection *collection) {
+        int totalPosts = collection.numberVisible;
         for (NSUInteger i = 0; i < collection.numberOfPages; ++i) {
             [collection fetchPage:i
                           gotPage:^(BOOL error, id resultOrError)
              {
                  STAssertFalse(error, nil);
+                 STAssertEquals(collection.numberVisible, totalPosts, nil);
                  STAssertTrue([collection.posts count] >= postCount, @"Fetching a page removed data");
                  STAssertTrue([resultOrError count] >= [collection.posts count] - postCount, @"Not all new posts were returned");
                  postCount = [collection.posts count];
@@ -109,7 +111,7 @@
     return [Collection collectionWithId:@"collection id"
                                    user:user
                               nestLevel:4
-                          numberVisible:20
+                          numberVisible:0
                       numberOfFollowers:11
                               lastEvent:1234
                               bootstrap:[bootstrap copy]
@@ -144,6 +146,7 @@
     STAssertEquals([collection.authors count], 2u, nil);
     STAssertEquals([collection.posts count], 1u, nil);
     STAssertEqualObjects([[[collection.posts objectAtIndex:0] author] authorId], @"306445453@twitter.com", nil);
+    STAssertEquals(collection.numberVisible, 1, nil);
 }
 
 - (void)testChildAfterParent {
@@ -165,6 +168,7 @@
 
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals([collection.posts count], 1u, nil);
+    STAssertEquals(collection.numberVisible, 1, nil);
 
     Post *parent = [collection.posts objectAtIndex:0];
     STAssertEquals([parent.children count], 0u, nil);
@@ -176,6 +180,7 @@
 
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals([collection.posts count], 1u, nil);
+    STAssertEquals(collection.numberVisible, 2, nil);
 
     STAssertEquals([parent.children count], 1u, nil);
     STAssertEqualObjects([[parent.children objectAtIndex:0] body], @"child body", nil);
@@ -201,6 +206,7 @@
 
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals([collection.posts count], 0u, nil);
+    STAssertEquals(collection.numberVisible, 1, nil);
 
     [collection addAuthors:[author objectFromJSONString]
                   andPosts:[parentPost objectFromJSONString]
@@ -209,6 +215,7 @@
 
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals([collection.posts count], 1u, nil);
+    STAssertEquals(collection.numberVisible, 2, nil);
 
     Post *parent = [collection.posts objectAtIndex:0];
     STAssertEquals([parent.children count], 1u, nil);
@@ -235,6 +242,7 @@
 
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals([collection.posts count], 1u, nil);
+    STAssertEquals(collection.numberVisible, 1, nil);
 
     Post *post = [collection.posts objectAtIndex:0];
     STAssertEquals([post.children count], 0u, nil);
@@ -248,6 +256,7 @@
 
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals([collection.posts count], 1u, nil);
+    STAssertEquals(collection.numberVisible, 1, nil);
 
     post = [collection.posts objectAtIndex:0];
     STAssertEqualObjects(post.body, @"replacement body", nil);
@@ -261,6 +270,7 @@
 
     STAssertEquals([post.children count], 1u, nil);
     STAssertEqualObjects([[post.children objectAtIndex:0] body], @"child body", nil);
+    STAssertEquals(collection.numberVisible, 2, nil);
 }
 
 - (void)testReplaceBeforeOriginal {
@@ -284,6 +294,7 @@
 
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals([collection.posts count], 1u, nil);
+    STAssertEquals(collection.numberVisible, 1, nil);
 
     Post *post = [collection.posts objectAtIndex:0];
     STAssertEqualObjects(post.body, @"replacement body", nil);
@@ -296,6 +307,7 @@
 
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals([collection.posts count], 1u, nil);
+    STAssertEquals(collection.numberVisible, 1, nil);
 
     post = [collection.posts objectAtIndex:0];
     STAssertEqualObjects(post.body, @"replacement body", nil);
@@ -309,6 +321,7 @@
 
     STAssertEquals([post.children count], 1u, nil);
     STAssertEqualObjects([[post.children objectAtIndex:0] body], @"child body", nil);
+    STAssertEquals(collection.numberVisible, 2, nil);
 }
 
 - (void)testReplaceChildWaitingForParent {
@@ -331,6 +344,7 @@
 
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals([collection.posts count], 0u, nil);
+    STAssertEquals(collection.numberVisible, 1, nil);
 
     [collection addAuthors:nil
                   andPosts:[replacementChild objectFromJSONString]
@@ -339,6 +353,7 @@
 
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals([collection.posts count], 0u, nil);
+    STAssertEquals(collection.numberVisible, 1, nil);
 
     [collection addAuthors:nil
                   andPosts:[parentPost objectFromJSONString]
@@ -347,12 +362,60 @@
 
     STAssertEquals([collection.authors count], 1u, nil);
     STAssertEquals([collection.posts count], 1u, nil);
+    STAssertEquals(collection.numberVisible, 2, nil);
 
     Post *post = [collection.posts objectAtIndex:0];
     STAssertEqualObjects(post.body, @"parent body", nil);
 
     STAssertEquals([post.children count], 1u, nil);
     STAssertEqualObjects([[post.children objectAtIndex:0] body], @"replacement child", nil);
+}
+
+- (void)testDeleteChildWaitingForParent {
+    Collection *collection = [self basicCollection];
+
+    STAssertNotNil(collection.posts, nil);
+    STAssertEquals([collection.posts count], 0u, nil);
+    STAssertNotNil(collection.authors, nil);
+    STAssertEquals([collection.authors count], 0u, nil);
+
+    NSString *author = @"{\"author id\":{\"profileUrl\":\"\",\"displayName\":\"Author\",\"id\":\"author id\",\"avatar\":\"\"}}";
+    NSString *originalChild = @"[{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"original child\",\"authorId\":\"author id\",\"parentId\":\"parent id\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"original child\",\"createdAt\":1336593974},\"childContent\":[],\"source\":1,\"type\":0,\"event\":1336593974662154}]";
+    NSString *replacementChild = @"[{\"vis\":0,\"content\":{\"id\":\"original child\"},\"source\":1,\"type\":0,\"event\":1336593974662154}]";
+    NSString *parentPost = @"[{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"parent body\",\"authorId\":\"author id\",\"parentId\":\"\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"parent id\",\"createdAt\":1336593974},\"childContent\":[],\"source\":1,\"type\":0,\"event\":1336593974662154}]";
+
+    [collection addAuthors:[author objectFromJSONString]
+                  andPosts:[originalChild objectFromJSONString]
+              andFollowers:nil
+                 lastEvent:0];
+
+    STAssertEquals([collection.authors count], 1u, nil);
+    STAssertEquals([collection.posts count], 0u, nil);
+    STAssertEquals(collection.numberVisible, 1, nil);
+
+    [collection addAuthors:nil
+                  andPosts:[replacementChild objectFromJSONString]
+              andFollowers:nil
+                 lastEvent:0];
+
+    STAssertEquals([collection.authors count], 1u, nil);
+    STAssertEquals([collection.posts count], 0u, nil);
+    STAssertEquals(collection.numberVisible, 0, nil);
+
+    [collection addAuthors:nil
+                  andPosts:[parentPost objectFromJSONString]
+              andFollowers:nil
+                 lastEvent:0];
+
+    STAssertEquals([collection.authors count], 1u, nil);
+    STAssertEquals([collection.posts count], 1u, nil);
+    STAssertEquals(collection.numberVisible, 1, nil);
+
+    Post *post = [collection.posts objectAtIndex:0];
+    STAssertEqualObjects(post.body, @"parent body", nil);
+
+    STAssertEquals([post.children count], 1u, nil);
+    STAssertTrue([[post.children objectAtIndex:0] deleted], nil);
 }
 
 - (void)testCollectionConstruction {
@@ -362,7 +425,7 @@
     STAssertEqualObjects(collection.collectionId, @"collection id", nil);
     STAssertNotNil(collection.user, nil);
     STAssertEquals(collection.nestLevel, 4, nil);
-    STAssertEquals(collection.numberVisible, 20, nil);
+    STAssertEquals(collection.numberVisible, 0, nil);
     STAssertEquals(collection.numberOfFollowers, 11, nil);
     STAssertEquals(collection.lastEvent, 1234LL, nil);
     STAssertEquals(collection.numberOfPages, 1u, nil);
