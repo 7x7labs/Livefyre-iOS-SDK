@@ -111,6 +111,29 @@
                         forUser:(User *)user
                   gotCollection:(RequestComplete)callback;
 
+/// Get the collection for an article.
+/// @param articleId The ID of the article to get the collection for.
+/// @param siteId    The ID of the site the article is in.
+/// @param userName  The ID of the user to get the collection for. Must not be nil.
+/// @param callback Callback called with the Collection once the metadata has
+/// been retrieved.
+- (void)getCollectionForArticle:(NSString *)articleId
+                         inSite:(NSString *)siteId
+                    forUserName:(NSString *)userName
+                  gotCollection:(RequestComplete)callback;
+
+/// Get the collection for an article.
+/// @param articleId The ID of the article to get the collection for.
+/// @param siteId    The ID of the site the article is in.
+/// @param userToken A signed Livefyre token for the user to get the collection
+/// for. Must not be nil.
+/// @param callback Callback called with the Collection once the metadata has
+/// been retrieved.
+- (void)getCollectionForArticle:(NSString *)articleId
+                         inSite:(NSString *)siteId
+                   forUserToken:(NSString *)userToken
+                  gotCollection:(RequestComplete)callback;
+
 /// Start polling for updates made to the contents of a Collection.
 /// @param collection Collection to start polling for updates.
 /// @param frequency How often in seconds to check for new content.

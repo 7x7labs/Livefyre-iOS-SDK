@@ -265,6 +265,48 @@ static NSString *bootstrapRoot = @"https://bootstrap-v2-json.s3.amazonaws.com";
      }];
 }
 
+- (void)getCollectionForArticle:(NSString *)articleId
+                         inSite:(NSString *)siteId
+                    forUserName:(NSString *)userName
+                  gotCollection:(RequestComplete)callback
+{
+    [self authenticateUser:userName
+                   forSite:siteId
+                forArticle:articleId
+                   gotUser:^(BOOL error, id resultOrError)
+     {
+         if (error)
+             callback(YES, resultOrError);
+         else {
+             [self getCollectionForArticle:articleId
+                                    inSite:siteId
+                                   forUser:resultOrError
+                             gotCollection:callback];
+         }
+     }];
+}
+
+- (void)getCollectionForArticle:(NSString *)articleId
+                         inSite:(NSString *)siteId
+                    forUserToken:(NSString *)userToken
+                  gotCollection:(RequestComplete)callback
+{
+    [self authenticateUserWithToken:userToken
+                            forSite:siteId
+                         forArticle:articleId
+                            gotUser:^(BOOL error, id resultOrError)
+     {
+         if (error)
+             callback(YES, resultOrError);
+         else {
+             [self getCollectionForArticle:articleId
+                                    inSite:siteId
+                                   forUser:resultOrError
+                             gotCollection:callback];
+         }
+     }];
+}
+
 - (void (^)(Collection *collection, RequestComplete callback))pageRequest:(NSString *)url {
     url = [NSString stringWithFormat:@"%@%@", bootstrapRoot, url];
     __weak LivefyreClient *weakSelf = self;
