@@ -221,9 +221,15 @@
 }
 
 - (Entry *)addEntry:(NSDictionary *)entryData withParent:(Entry *)parent {
-    Entry *entry = [Entry entryWithDictionary:entryData
-                                  authorsFrom:self
-                                   withParent:parent];
+    Entry *entry = nil;
+    if (parent)
+        entry = [Entry entryWithDictionary:entryData
+                               authorsFrom:self
+                                withParent:parent];
+    else
+        entry = [Entry entryWithDictionary:entryData
+                               authorsFrom:self
+                              inCollection:self];
 
     if (!entry)
         return nil;

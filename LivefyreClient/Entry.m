@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSArray *embed;
 @property (strong, nonatomic) NSArray *likes;
 @property (nonatomic) BOOL deleted;
+@property (weak, nonatomic) Collection *collection;
 
 - (void)addToParent:(Entry *)parent;
 @end
@@ -67,33 +68,44 @@
 @synthesize embed = embed_;
 @synthesize likes = likes_;
 @synthesize deleted = deleted_;
+@synthesize collection = collection_;
 
 + (Entry *)entryWithDictionary:(NSDictionary *)eventData
                    authorsFrom:(id <AuthorLookup>)authorData
+                  inCollection:(Collection *)collection
 {
-    return [self entryWithDictionary:eventData authorsFrom:authorData withParent:nil];
+    Entry *newEntry = [self entryWithDictionary:eventData
+                                    authorsFrom:authorData
+                                     withParent:nil];
+    newEntry.collection = collection;
+    return newEntry;
 }
 
 + (Entry *)entryWithDictionary:(NSDictionary *)eventData
                    authorsFrom:(id <AuthorLookup>)authorData
                     withParent:(Entry *)parent
 {
+    Entry *newEntry = nil;
     switch ([[eventData objectForKey:@"type"] intValue]) {
         case ContentTypeOpine:
-            return [[Like alloc] initWithDictionary:eventData authorsFrom:authorData];
+            newEntry = [[Like alloc] initWithDictionary:eventData
+                                            authorsFrom:authorData];
+            break;
         case ContentTypeEmbed:
-            return [[Embed alloc] initWithDictionary:eventData];
+            newEntry = [[Embed alloc] initWithDictionary:eventData];
+            break;
         case ContentTypeMessage: {
-            Post *post = [[Post alloc] initWithDictionary:eventData authorsFrom:authorData];
-            if (post.deleted)
-                post.parentId = parent.entryId;
-            return post;
+            newEntry = [[Post alloc] initWithDictionary:eventData authorsFrom:authorData];
+            if (newEntry.deleted)
+                newEntry.parentId = parent.entryId;
+            break;
         }
         default:
             NSLog(@"Unrecognized content type: %d", [[eventData objectForKey:@"type"] intValue]);
             return nil;
-
     }
+    newEntry.collection = parent.collection;
+    return newEntry;
 }
 
 - (Entry *)initWithDictionary:(NSDictionary *)eventData {

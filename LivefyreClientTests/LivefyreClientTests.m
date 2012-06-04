@@ -31,9 +31,10 @@
     Collection *collection = [self collection];
 
     Entry *entry = [Entry entryWithDictionary:[@"{\"vis\":1, \"content\":{\"replaces\":\"\", \"bodyHtml\":\"<p>\\u00a0woah</p>\", \"authorId\":\"6@7x7-1.fyre.co\", \"parentId\":\"\", \"id\":\"25802143\", \"createdAt\":1338321741}, \"childContent\":[], \"source\":5, \"type\":0, \"event\":1338321741951711}" objectFromJSONString]
-                                  authorsFrom:nil];
+                                  authorsFrom:nil
+                                 inCollection:collection];
 
-    [self.client likeContent:entry inCollection:collection onComplete:^(BOOL error, id resultOrError) {
+    [self.client likeContent:entry onComplete:^(BOOL error, id resultOrError) {
         if (error) {
             STFail(resultOrError);
         }
@@ -49,9 +50,10 @@
     Collection *collection = [self collection];
 
     Entry *entry = [Entry entryWithDictionary:[@"{\"vis\":1, \"content\":{\"replaces\":\"\", \"bodyHtml\":\"<p>\\u00a0woah</p>\", \"authorId\":\"6@7x7-1.fyre.co\", \"parentId\":\"\", \"id\":\"25802143\", \"createdAt\":1338321741}, \"childContent\":[], \"source\":5, \"type\":0, \"event\":1338321741951711}" objectFromJSONString]
-                                  authorsFrom:nil];
+                                  authorsFrom:nil
+                                 inCollection:collection];
 
-    [self.client unlikeContent:entry inCollection:collection onComplete:^(BOOL error, id resultOrError) {
+    [self.client unlikeContent:entry onComplete:^(BOOL error, id resultOrError) {
         if (error) {
             STFail(resultOrError);
         }

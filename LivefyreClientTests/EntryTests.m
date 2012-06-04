@@ -39,7 +39,9 @@
     AuthorLookup *authorLookup = [[AuthorLookup alloc] init];
 
     NSString *postJson = @"{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"<p>I love portobellos.</p>\",\"authorId\":\"author id\",\"parentId\":\"\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"23788087\",\"createdAt\":1336604424},\"childContent\":[],\"source\":5,\"type\":0,\"event\":1336604424890719}";
-    Entry *entry = [Entry entryWithDictionary:[postJson objectFromJSONString] authorsFrom:authorLookup];
+    Entry *entry = [Entry entryWithDictionary:[postJson objectFromJSONString]
+                                  authorsFrom:authorLookup
+                                 inCollection:nil];
 
     STAssertNotNil(entry, nil);
     STAssertTrue([entry isKindOfClass:[Post class]], nil);
@@ -66,11 +68,15 @@
     AuthorLookup *authorLookup = [[AuthorLookup alloc] init];
 
     NSString *badContentTypeJson = @"{\"vis\":8,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"<p>I love portobellos.</p>\",\"authorId\":\"-\",\"parentId\":\"\",\"permissionScope\":8,\"authorPermission\":8,\"id\":\"23788087\",\"createdAt\":1336604424},\"childContent\":[],\"source\":9,\"type\":8,\"event\":1336604424890719}";
-    Entry *entry = [Entry entryWithDictionary:[badContentTypeJson objectFromJSONString] authorsFrom:authorLookup];
+    Entry *entry = [Entry entryWithDictionary:[badContentTypeJson objectFromJSONString]
+                                  authorsFrom:authorLookup
+                                 inCollection:nil];
     STAssertNil(entry, nil);
 
     NSString *postJson = @"{\"vis\":8,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"<p>I love portobellos.</p>\",\"authorId\":\"-\",\"parentId\":\"\",\"permissionScope\":8,\"authorPermission\":8,\"id\":\"23788087\",\"createdAt\":1336604424},\"childContent\":[],\"source\":9,\"type\":0,\"event\":1336604424890719}";
-    entry = [Entry entryWithDictionary:[postJson objectFromJSONString] authorsFrom:authorLookup];
+    entry = [Entry entryWithDictionary:[postJson objectFromJSONString]
+                           authorsFrom:authorLookup
+                          inCollection:nil];
 
     STAssertNotNil(entry, nil);
     STAssertTrue([entry isKindOfClass:[Post class]], nil);
@@ -89,9 +95,12 @@
 
     NSString *postJson = @"{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"parent\",\"authorId\":\"author id\",\"parentId\":\"\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"1\",\"createdAt\":0},\"childContent\":[{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"child\",\"authorId\":\"author id\",\"parentId\":\"1\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"2\",\"createdAt\":0},\"childContent\":[],\"source\":5,\"type\":0,\"event\":0}],\"source\":5,\"type\":0,\"event\":0}";
     NSDictionary *postDict = [postJson objectFromJSONString];
-    Entry *entry = [Entry entryWithDictionary:postDict authorsFrom:authorLookup];
+    Entry *entry = [Entry entryWithDictionary:postDict
+                                  authorsFrom:authorLookup
+                                 inCollection:nil];
     [entry addChild:[Entry entryWithDictionary:[[postDict objectForKey:@"childContent"] objectAtIndex:0]
-                                   authorsFrom:authorLookup]];
+                                   authorsFrom:authorLookup
+                                  inCollection:nil]];
     STAssertNotNil(entry, nil);
     STAssertTrue([entry isKindOfClass:[Post class]], nil);
     STAssertEqualObjects(entry.entryId, @"1", nil);
@@ -125,9 +134,12 @@
 
     NSString *postJson = @"{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"parent\",\"authorId\":\"author id\",\"parentId\":\"\",\"permissionScope\":0,\"authorPermission\":0,\"id\":\"1\",\"createdAt\":0},\"childContent\":[{\"content\":{\"targetId\":\"1\", \"authorId\":\"-\", \"link\":\"http://twitter.com/HannahRobbb29/status/202895710654431232/photo/1\", \"oembed\":{\"provider_url\":\"http://twitter.com\", \"title\":\"Hannah Robinson's Twitter Photo\", \"url\":\"http://p.twimg.com/AtDUkuhCAAA9oQh.jpg:large\", \"type\":\"photo\", \"html\":\"\", \"author_name\":\"Hannah Robinson\", \"height\":960, \"thumbnail_width\":150, \"width\":640, \"version\":\"1.0\", \"author_url\":\"http://twitter.com/HannahRobbb29\", \"provider_name\":\"Twitter\", \"thumbnail_url\":\"http://p.twimg.com/AtDUkuhCAAA9oQh.jpg:thumb\", \"thumbnail_height\":150}, \"position\":3, \"id\":\"2\"}, \"vis\":1, \"type\":3, \"event\":1337210428274340, \"source\":1}],\"source\":5,\"type\":0,\"event\":0}";
     NSDictionary *postDict = [postJson objectFromJSONString];
-    Entry *entry = [Entry entryWithDictionary:postDict authorsFrom:authorLookup];
+    Entry *entry = [Entry entryWithDictionary:postDict
+                                  authorsFrom:authorLookup
+                                 inCollection:nil];
     [entry addChild:[Entry entryWithDictionary:[[postDict objectForKey:@"childContent"] objectAtIndex:0]
-                                   authorsFrom:authorLookup]];
+                                   authorsFrom:authorLookup
+                                  inCollection:nil]];
 
     STAssertNotNil(entry, nil);
     STAssertTrue([entry isKindOfClass:[Post class]], nil);
@@ -178,14 +190,17 @@
 
 
     Entry *entry = [Entry entryWithDictionary:[parentJson objectFromJSONString]
-                                  authorsFrom:authorLookup];
+                                  authorsFrom:authorLookup
+                                 inCollection:nil];
     [entry addChild:[Entry entryWithDictionary:[originalChild objectFromJSONString]
-                                   authorsFrom:authorLookup]];
+                                   authorsFrom:authorLookup
+                                  inCollection:nil]];
     STAssertEquals([entry.embed count], 1u, nil);
     STAssertEqualObjects([[entry.embed objectAtIndex:0] title], @"original title", nil);
 
     [[entry.embed objectAtIndex:0] copyFrom:[Entry entryWithDictionary:[replacementChild objectFromJSONString]
-                                                              authorsFrom:authorLookup]];
+                                                           authorsFrom:authorLookup
+                                                          inCollection:nil]];
 
     STAssertEquals([entry.embed count], 1u, nil);
     STAssertEqualObjects([[entry.embed objectAtIndex:0] title], @"replacement title", nil);
@@ -200,15 +215,18 @@
 
 
     Entry *entry = [Entry entryWithDictionary:[parentJson objectFromJSONString]
-                                  authorsFrom:authorLookup];
+                                  authorsFrom:authorLookup
+                                 inCollection:nil];
     [entry addChild:[Entry entryWithDictionary:[originalChild objectFromJSONString]
-                                   authorsFrom:authorLookup]];
+                                   authorsFrom:authorLookup
+                                  inCollection:nil]];
 
     STAssertEquals([entry.children count], 1u, nil);
     STAssertEqualObjects([[entry.children objectAtIndex:0] body], @"child", nil);
 
     [[entry.children objectAtIndex:0] copyFrom:[Entry entryWithDictionary:[replacementChild objectFromJSONString]
-                                                           authorsFrom:authorLookup]];
+                                                              authorsFrom:authorLookup
+                                                             inCollection:nil]];
 
     STAssertEquals([entry.children count], 1u, nil);
     STAssertEqualObjects([[entry.children objectAtIndex:0] body], @"replacement", nil);
@@ -221,13 +239,15 @@
     NSString *likeJson = @"{\"vis\":1,\"content\":{\"targetId\":\"1\",\"authorId\":\"author id\",\"id\":\"2\"},\"source\":5,\"type\":1,\"event\":1}";
 
     Entry *entry = [Entry entryWithDictionary:[postJson objectFromJSONString]
-                                  authorsFrom:authorLookup];
+                                  authorsFrom:authorLookup
+                                 inCollection:nil];
 
     STAssertNotNil(entry, nil);
     STAssertEquals([entry.likes count], 0u, nil);
 
     [entry addChild:[Entry entryWithDictionary:[likeJson objectFromJSONString]
-                                   authorsFrom:authorLookup]];
+                                   authorsFrom:authorLookup
+                                  inCollection:nil]];
 
     STAssertEquals([entry.likes count], 1u, nil);
     STAssertEqualObjects([[entry.likes objectAtIndex:0] entryId], @"2", nil);

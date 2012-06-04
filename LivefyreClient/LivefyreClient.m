@@ -384,10 +384,11 @@ static NSString *bootstrapRoot = @"https://bootstrap-v2-json.s3.amazonaws.com";
 }
 
 - (void)likeOrUnlikeContent:(Entry *)entry
-               inCollection:(Collection *)collection
                  onComplete:(RequestComplete)callback
                    endpoint:(NSString *)endpoint
 {
+    Collection *collection = entry.collection;
+
     if (!collection.user) {
         callback(YES, [NSString stringWithFormat:@"Must be logged in to %@ postsß", endpoint, nil]);
         return;
@@ -415,21 +416,17 @@ static NSString *bootstrapRoot = @"https://bootstrap-v2-json.s3.amazonaws.com";
 }
 
 - (void)likeContent:(Entry *)entry
-       inCollection:(Collection *)collection
          onComplete:(RequestComplete)callback
 {
     [self likeOrUnlikeContent:entry
-                 inCollection:collection
                    onComplete:callback
                      endpoint:@"like"];
 }
 
 - (void)unlikeContent:(Entry *)entry
-         inCollection:(Collection *)collection
            onComplete:(RequestComplete)callback
 {
     [self likeOrUnlikeContent:entry
-                 inCollection:collection
                    onComplete:callback
                      endpoint:@"unlike"];
 }
@@ -439,6 +436,13 @@ static NSString *bootstrapRoot = @"https://bootstrap-v2-json.s3.amazonaws.com";
         onComplete:(RequestComplete)callback
 {
     [self createPost:body inReplyTo:nil inCollection:collection onComplete:callback];
+}
+
+- (void)createPost:(NSString *)body
+      inReplyTo:(Post *)parent
+        onComplete:(RequestComplete)callback
+{
+    [self createPost:body inReplyTo:parent inCollection:parent.collection onComplete:callback];
 }
 
 - (void)createPost:(NSString *)body

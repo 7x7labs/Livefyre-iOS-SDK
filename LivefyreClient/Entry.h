@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class Author;
+@class Collection;
 @class Post;
 
 enum ContentType {
@@ -46,7 +47,10 @@ enum PermissionScope {
 
 @interface Entry : NSObject
 @property (strong, nonatomic, readonly) NSString *entryId;
+@property (weak, nonatomic, readonly) Entry *parent;
+@property (weak, nonatomic, readonly) Collection *collection;
 @property (weak, nonatomic, readonly) Author *author;
+
 @property (nonatomic, readonly) int createdAt;
 @property (nonatomic, readonly) int editedAt;
 @property (nonatomic, readonly) int source;
@@ -54,14 +58,15 @@ enum PermissionScope {
 @property (nonatomic, readonly) enum ContentVisibility visibility;
 @property (strong, nonatomic, readonly) NSString *replaces;
 @property (strong, nonatomic, readonly) NSString *parentId;
-@property (weak, nonatomic, readonly) Entry *parent;
+@property (nonatomic, readonly) BOOL deleted;
+
 @property (strong, nonatomic, readonly) NSArray *children;
 @property (strong, nonatomic, readonly) NSArray *embed;
 @property (strong, nonatomic, readonly) NSArray *likes;
-@property (nonatomic, readonly) BOOL deleted;
 
 + (Entry *)entryWithDictionary:(NSDictionary *)eventData
-                   authorsFrom:(id <AuthorLookup>)authorData;
+                   authorsFrom:(id <AuthorLookup>)authorData
+                  inCollection:(Collection *)collection;
 
 + (Entry *)entryWithDictionary:(NSDictionary *)eventData
                    authorsFrom:(id <AuthorLookup>)authorData

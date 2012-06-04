@@ -89,11 +89,9 @@
 - (void)stopPollingForUpdates:(Collection *)collection;
 
 - (void)likeContent:(Entry *)entry
-       inCollection:(Collection *)collection
          onComplete:(RequestComplete)callback;
 
 - (void)unlikeContent:(Entry *)entry
-         inCollection:(Collection *)collection
            onComplete:(RequestComplete)callback;
 
 /// Create a new post in a collection
@@ -107,11 +105,9 @@
 /// Create a reply to an existing post in a collection
 /// @param body HTML body of the new post
 /// @param parent Parent post to reply to
-/// @param collection Collection to add the post to
 /// @param callback Callback called with the new `Post`
 - (void)createPost:(NSString *)body
          inReplyTo:(Post *)parent
-      inCollection:(Collection *)collection
         onComplete:(RequestComplete)callback;
 
 @end
