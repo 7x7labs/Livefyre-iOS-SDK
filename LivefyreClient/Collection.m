@@ -245,6 +245,8 @@
 }
 
 - (BOOL)userCanViewEntry:(Entry *)entry {
+    // Unlikes show up as likes with visibility none, so we don't want to filter
+    // them out
     if ([entry isKindOfClass:[Like class]])
         return YES;
     if (self.user)

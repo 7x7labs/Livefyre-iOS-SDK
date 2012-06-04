@@ -8,6 +8,9 @@
 
 #import "Entry.h"
 
+#import "Author.h"
+#import "NSArray+BlocksKit.h"
+
 @interface Entry ()
 @property (strong, nonatomic) NSString *entryId;
 @property (weak, nonatomic) Author *author;
@@ -237,7 +240,14 @@
 }
 
 - (void)addToParent:(Entry *)parent {
-    parent.likes = [parent.likes arrayByAddingObject:self];
+    if (self.visibility == ContentVisibilityNone) {
+        parent.likes = [parent.likes reject:^BOOL(id obj) {
+            return [[obj author] authorId] == self.author.authorId;
+        }];
+    }
+    else {
+        parent.likes = [parent.likes arrayByAddingObject:self];
+    }
 }
 @end
 
