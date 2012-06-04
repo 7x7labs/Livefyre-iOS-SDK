@@ -371,6 +371,7 @@ static NSString *bootstrapRoot = @"https://bootstrap-v2-json.s3.amazonaws.com";
 
     [[pollingCollections objectForKey:collection.collectionId] invalidate];
     [pollingCollections setObject:timer forKey:collection.collectionId];
+    poll();
 }
 
 - (void)stopPollingForUpdates:(Collection *)collection {
