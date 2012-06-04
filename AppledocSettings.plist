@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>--input</key>
+	<array>
+		<string>LivefyreClient</string>
+	</array>
+	<key>--project-name</key>
+	<string>Livefyre iOS SDK</string>
+	<key>--project-company</key>
+	<string>Livefyre, Inc.</string>
+	<key>--company-id</key>
+	<string>com.livefyre</string>
+	<key>--docsetutil-path</key>
+	<string>/Applications/Xcode.app/Contents/Developer/usr/bin/docsetutil</string>
+	<key>--output</key>
+	<string>doc</string>
+</dict>
+</plist>

@@ -107,6 +107,7 @@
 		3F7963D51575AA470096E6EB /* LivefyreClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LivefyreClientTests.m; sourceTree = "<group>"; };
 		3F7963E01576E7BB0096E6EB /* init-sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "init-sample.json"; sourceTree = "<group>"; };
 		3FB0370F6D78411889D31B65 /* Pods.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		3FD2DE78157D7D66008F7E25 /* AppledocSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AppledocSettings.plist; sourceTree = "<group>"; };
 		3FD72906156EA47B006DD6A1 /* libLivefyreClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLivefyreClient.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD72909156EA47B006DD6A1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3FD7290D156EA47B006DD6A1 /* LivefyreClient-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LivefyreClient-Prefix.pch"; sourceTree = "<group>"; };
@@ -178,6 +179,7 @@
 				3FD72908156EA47B006DD6A1 /* Frameworks */,
 				3FD72907156EA47B006DD6A1 /* Products */,
 				3FB0370F6D78411889D31B65 /* Pods.xcconfig */,
+				3FD2DE78157D7D66008F7E25 /* AppledocSettings.plist */,
 			);
 			sourceTree = "<group>";
 		};
