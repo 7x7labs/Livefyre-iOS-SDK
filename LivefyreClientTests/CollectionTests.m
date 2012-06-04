@@ -88,7 +88,8 @@
                  postCount = [collection.posts count];
 
                  for (Post *post in collection.posts) {
-                     STAssertNotNil(post.author, nil);
+                     if (!post.deleted)
+                         STAssertNotNil(post.author, nil);
                  }
              }];
         }
