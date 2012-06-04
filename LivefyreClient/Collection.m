@@ -132,31 +132,34 @@
     return [string substringToIndex:pos];
 }
 
-- (Entry *)insertEntry:(Entry *)entry withParent:(Entry *)parent {
-    if (entry.deleted) {
-        // In stream responses, deleted posts have the same ID as the original
-        // post. In bootstrap responses, deleted posts have the original ID,
-        // plus a child with the suffixed version of the original ID
-        Entry *original = [self entryForKey:entry.entryId];
-        if (original) {
-            [original copyFrom:entry];
-            return original;
-        }
-
-        if (parent && [entry.entryId hasPrefix:parent.entryId] && parent.deleted) {
-            [entries_ setObject:parent forKey:entry.entryId];
-            return parent;
-        }
-
-        // Otherwise either the undeleted one was never seen, or we've gotten
-        // an unrecognized delete format
-        [entries_ setObject:entry forKey:entry.entryId];
-        if (parent)
-            [parent addChild:entry];
-        else
-            [self.topLevelPosts addObject:entry];
-        return entry;
+- (Entry *)handleDeletion:(Entry *)entry parent:(Entry *)parent {
+    // In stream responses, deleted posts have the same ID as the original
+    // post. In bootstrap responses, deleted posts have the original ID,
+    // plus a child with the suffixed version of the original ID
+    Entry *original = [self entryForKey:entry.entryId];
+    if (original) {
+        [original copyFrom:entry];
+        return original;
     }
+
+    if (parent && [entry.entryId hasPrefix:parent.entryId] && parent.deleted) {
+        [entries_ setObject:parent forKey:entry.entryId];
+        return parent;
+    }
+
+    // Otherwise either the undeleted one was never seen, or we've gotten
+    // an unrecognized delete format
+    [entries_ setObject:entry forKey:entry.entryId];
+    if (parent)
+        [parent addChild:entry];
+    else
+        [self.topLevelPosts addObject:entry];
+    return entry;
+}
+
+- (Entry *)insertEntry:(Entry *)entry withParent:(Entry *)parent {
+    if (entry.deleted)
+        return [self handleDeletion:entry parent:parent];
 
     // We might already have this entry, as there's some overlap between the
     // init data and the first page or if we have multiple stream requests at
@@ -193,6 +196,7 @@
 
     [entries_ setObject:entry forKey:entry.entryId];
 
+    // Register each prefix
     replaces = entry.replaces;
     while (replaces && !original) {
         [entries_ setObject:entry forKey:replaces];
@@ -221,17 +225,19 @@
     return entry;
 }
 
-- (Entry *)addEntry:(NSDictionary *)entryData withParent:(Entry *)parent {
-    Entry *entry = nil;
+- (Entry *)createEntry:(NSDictionary *)entryData parent:(Entry *)parent {
     if (parent)
-        entry = [Entry entryWithDictionary:entryData
-                               authorsFrom:self
-                                withParent:parent];
-    else
-        entry = [Entry entryWithDictionary:entryData
-                               authorsFrom:self
-                              inCollection:self];
+        return [Entry entryWithDictionary:entryData
+                              authorsFrom:self
+                               withParent:parent];
 
+    return [Entry entryWithDictionary:entryData
+                          authorsFrom:self
+                         inCollection:self];
+}
+
+- (Entry *)addEntry:(NSDictionary *)entryData withParent:(Entry *)parent {
+    Entry *entry = [self createEntry:entryData parent:parent];
     if (!entry)
         return nil;
 
@@ -256,10 +262,7 @@
 }
 
 - (Entry *)entryForKey:(NSString *)entryId {
-    if (!entryId)
-        return nil;
-
-    return [entries_ objectForKey:entryId];
+    return entryId ? [entries_ objectForKey:entryId] : nil;
 }
 
 - (NSArray *)addCollectionContent:(NSDictionary *)content
