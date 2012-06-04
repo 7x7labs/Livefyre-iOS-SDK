@@ -13,15 +13,23 @@
 @class Post;
 
 enum ContentType {
+    /// A message posted by a user in reply to an article or another comment.
     ContentTypeMessage = 0,
+    /// An opinion from a user indicating that they like a comment or an embed.
     ContentTypeOpine = 1,
+    /// An embedded image which is part of a comment.
     ContentTypeEmbed = 3
 };
 
 enum ContentVisibility {
+    /// The entry is visible to no one, usually due to being deleted.
     ContentVisibilityNone = 0,
+    /// The entry is visible to everyone.
     ContentVisibilityEveryone = 1,
+    /// The entry is visible to only the author due to hellbanning.
     ContentVisibilityOwner = 2,
+    /// The entry is visible to the author and any moderators for the
+    /// collection, usually meaning that it's waiting for approval.
     ContentVisibilityGroup = 3
 };
 
@@ -41,28 +49,45 @@ enum PermissionScope {
     PermissionScopeCollectionRule = 4
 };
 
+/// A author ID -> author data mapping.
 @protocol AuthorLookup <NSObject>
 - (Author *)authorForId:(NSString *)authorId;
 @end
 
+/// An entry in a collection, such as a comment or an image embedded in a
+/// comment.
 @interface Entry : NSObject
+/// The unique Livefyre ID of this entry.
 @property (strong, nonatomic, readonly) NSString *entryId;
+/// The entry's parent entry for replies, likes and embeds. `nil` for top-level
+/// comments.
 @property (weak, nonatomic, readonly) Entry *parent;
+/// The collection this entry is in.
 @property (weak, nonatomic, readonly) Collection *collection;
+/// The author of this entry.
 @property (weak, nonatomic, readonly) Author *author;
 
+/// Creation date of this entry in epoch time.
 @property (nonatomic, readonly) int createdAt;
+/// Time that this entry was last edited, in epoch time.
 @property (nonatomic, readonly) int editedAt;
 @property (nonatomic, readonly) int source;
 @property (nonatomic, readonly) enum ContentType contentType;
 @property (nonatomic, readonly) enum ContentVisibility visibility;
-@property (strong, nonatomic, readonly) NSString *replaces;
-@property (strong, nonatomic, readonly) NSString *parentId;
+/// Has this entry been deleted? If this is YES, all other fields other than
+/// entryId are likely to be 0 or `nil`.
 @property (nonatomic, readonly) BOOL deleted;
 
+/// Replies to this entry. Generally only populated for Posts.
 @property (strong, nonatomic, readonly) NSArray *children;
+/// Images or videos embedded in this entry. Generally only populated for
+/// Posts.
 @property (strong, nonatomic, readonly) NSArray *embed;
+/// Likes for this entry.
 @property (strong, nonatomic, readonly) NSArray *likes;
+
+@property (strong, nonatomic, readonly) NSString *replaces;
+@property (strong, nonatomic, readonly) NSString *parentId;
 
 + (Entry *)entryWithDictionary:(NSDictionary *)eventData
                    authorsFrom:(id <AuthorLookup>)authorData
@@ -78,36 +103,61 @@ enum PermissionScope {
 - (void)copyFrom:(Entry *)entry;
 @end
 
+/// An opinion of approval expressed by the author about its parent. Likes add
+/// no additional data above what Entry already has.
 @interface Like : Entry
 - (Like *)initWithDictionary:(NSDictionary *)eventData
                  authorsFrom:(id <AuthorLookup>)authorData;
 @end
 
+/// A comment in reply to an article or another comment.
 @interface Post : Entry
+/// The body of the comment, in HTML.
 @property (strong, nonatomic, readonly) NSString *body;
+/// The comment's author's local permissions level, which can be used to mark
+/// posts by moderators and such.
 @property (nonatomic, readonly) enum Permissions authorPermissions;
+/// The scope of the author's local permissions.
 @property (nonatomic, readonly) enum PermissionScope permissionScope;
 
 - (Post *)initWithDictionary:(NSDictionary *)eventData
                  authorsFrom:(id <AuthorLookup>)authorData;
 @end
 
+/// An image or video embedded in a Post.
 @interface Embed : Entry
+/// The URL of the page containing the embedded content, which may not be
+/// distinct from url.
 @property (strong, nonatomic, readonly) NSString *link;
-@property (strong, nonatomic, readonly) NSString *providerUrl;
-@property (strong, nonatomic, readonly) NSString *title;
+/// URL of the actual embed data.
 @property (strong, nonatomic, readonly) NSString *url;
+/// Title of the embedded content.
+@property (strong, nonatomic, readonly) NSString *title;
+/// Unknown.
 @property (strong, nonatomic, readonly) NSString *type;
+/// Name of the author of the embedded content.
 @property (strong, nonatomic, readonly) NSString *authorName;
+/// URL of the author's site.
+@property (strong, nonatomic, readonly) NSString *authorUrl;
+/// HTML which includes the embedded content, which may be used instead of
+/// using url directly.
 @property (strong, nonatomic, readonly) NSString *html;
 @property (strong, nonatomic, readonly) NSString *version;
-@property (strong, nonatomic, readonly) NSString *authorUrl;
+/// Name of the source of the embedded content.
 @property (strong, nonatomic, readonly) NSString *providerName;
-@property (strong, nonatomic, readonly) NSString *thumbnailUrl;
+/// Site of the source of the embedded content.
+@property (strong, nonatomic, readonly) NSString *providerUrl;
+/// Height in pixels of the content.
 @property (nonatomic, readonly) int height;
+/// Width in pixels of the content.
 @property (nonatomic, readonly) int width;
+/// URL for a thumbnail of the embedded content.
+@property (strong, nonatomic, readonly) NSString *thumbnailUrl;
+/// Height of the thumbnail in pixels.
 @property (nonatomic, readonly) int thumbnailHeight;
+/// Width of the thumbnail in pixels.
 @property (nonatomic, readonly) int thumbnailWidth;
+/// Unknown.
 @property (nonatomic, readonly) int position;
 
 - (Embed *)initWithDictionary:(NSDictionary *)eventData;

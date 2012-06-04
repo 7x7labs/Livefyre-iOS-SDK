@@ -10,13 +10,25 @@
 
 @class Entry;
 
+/// A logged-in User. Instances of this class are created with -[LivefyreClient
+/// authenticateUser:forCollection:gotUser:] or -[LivefyreClient
+/// authenticateUser:forSite:forArticle:gotUser:].
 @interface User : NSObject
+/// The Livefyre user ID. May not be the same as the user ID used to log in.
 @property (strong, nonatomic, readonly) NSString *userId;
+/// The user's publicly display name.
 @property (strong, nonatomic, readonly) NSString *displayName;
+/// The URL for the user's control panel to customize their profile, or `nil`
+/// if not applicable.
 @property (strong, nonatomic, readonly) NSString *settingsUrl;
+/// The URL for the user's public profile, or `nil` if not applicable.
 @property (strong, nonatomic, readonly) NSString *profileUrl;
+/// The URL for the user's avatar image, or `nil` if not applicable.
 @property (strong, nonatomic, readonly) NSString *avatarUrl;
+/// The user's Livefyre authentication token. Usually should not need to be
+/// used directly.
 @property (strong, nonatomic, readonly) NSString *token;
+/// Is this user a moderator for the collection they were authenticated for?
 @property (nonatomic, readonly) BOOL isModerator;
 
 + (User *)userWithDictionary:(NSDictionary *)userData;
