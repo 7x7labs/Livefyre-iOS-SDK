@@ -15,6 +15,7 @@
 
 - (void)setUp {
     self.client = [LivefyreClient clientWithDomain:[Config objectForKey:@"domain"]
+                                     bootstrapRoot:[Config objectForKey:@"bootstrap root"]
                                          domainKey:[Config objectForKey:@"domain key"]];
 }
 

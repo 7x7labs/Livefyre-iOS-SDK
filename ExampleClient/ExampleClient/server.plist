@@ -10,5 +10,7 @@
 	<string>303617</string>
 	<key>site key</key>
 	<string>bNyBbN0BWAZ46w3fGBGg9ziB0U4=</string>
+	<key>bootstrap root</key>
+	<string>bootstrap-json-dev.s3.amazonaws.com/t402.livefyre.com</string>
 </dict>
 </plist>

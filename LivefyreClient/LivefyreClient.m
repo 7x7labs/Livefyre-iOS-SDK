@@ -62,18 +62,21 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
     };
 }
 
-static NSString *bootstrapRoot = @"https://bootstrap-json-dev.s3.amazonaws.com/t402.livefyre.com";
-
 @implementation LivefyreClient {
     NSString *domain;
+    NSString *bootstrapRoot;
     NSString *key;
     NSMutableDictionary *pollingCollections;
     NSString *uuid;
 }
 
-+ (LivefyreClient *)clientWithDomain:(NSString *)domain domainKey:(NSString *)key {
++ (LivefyreClient *)clientWithDomain:(NSString *)domain
+                       bootstrapRoot:(NSString *)bootstrapRootUrl
+                           domainKey:(NSString *)key
+{
     LivefyreClient *client = [[LivefyreClient alloc] init];
     client->domain = domain;
+    client->bootstrapRoot = bootstrapRootUrl;
     client->key = key;
     client->pollingCollections = [[NSMutableDictionary alloc] init];
 
@@ -232,7 +235,7 @@ static NSString *bootstrapRoot = @"https://bootstrap-json-dev.s3.amazonaws.com/t
                         forUser:(User *)user
                   gotCollection:(RequestComplete)callback
 {
-    NSString *url = [NSString stringWithFormat:@"%@/%@/%@/%@/init.json",
+    NSString *url = [NSString stringWithFormat:@"https://%@/%@/%@/%@/init.json",
                      bootstrapRoot,
                      domain,
                      siteId,
@@ -308,7 +311,7 @@ static NSString *bootstrapRoot = @"https://bootstrap-json-dev.s3.amazonaws.com/t
 }
 
 - (void (^)(Collection *collection, RequestComplete callback))pageRequest:(NSString *)url {
-    url = [NSString stringWithFormat:@"%@%@", bootstrapRoot, url];
+    url = [NSString stringWithFormat:@"https://%@%@", bootstrapRoot, url];
     __weak LivefyreClient *weakSelf = self;
     return ^(Collection *collection, RequestComplete callback) {
         [HttpRequest getRequest:url

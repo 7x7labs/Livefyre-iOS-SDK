@@ -41,6 +41,7 @@
         self.siteKey = [settings objectForKey:@"site key"];
 
         self.client = [LivefyreClient clientWithDomain:[settings objectForKey:@"domain"]
+                                         bootstrapRoot:[settings objectForKey:@"bootstrap root"]
                                              domainKey:[settings objectForKey:@"domain key"]];
     }
     return self;

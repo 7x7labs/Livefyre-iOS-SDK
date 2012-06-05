@@ -18,6 +18,8 @@
 /// Create a new Livefyre client.
 /// @param domain The Livefyre domain, including TLD, but not protocol (e.g.
 /// @"7x7-1.fyre.co").
+/// @param bootstrapRootUrl The root URL of the bootstrap data source, not
+/// including protocol or trailing slash.
 /// @param key The Livefyre API key for authenticating users on the domain.
 ///
 /// The domain key is optional; if not supplied then authenticateUserWithToken
@@ -25,6 +27,7 @@
 /// potentially more secure, as it makes it possible to avoid ever having the
 /// domain key on the user's device.
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
+                       bootstrapRoot:(NSString *)bootstrapRootUrl
                            domainKey:(NSString *)key;
 
 /// Are there currently any running asynchronous requests triggered by this
