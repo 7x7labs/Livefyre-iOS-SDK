@@ -192,6 +192,30 @@
     for (Entry *child in entry.likes)
         [self addChild:child];
 }
+
+static inline BOOL areEqual(id a1, id a2) {
+    return a1 == a2 || [a1 isEqual:a2];
+}
+
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[self class]]) return NO;
+    if (!areEqual(self.entryId, [object entryId])) return NO;
+    if (self.parent != [object parent]) return NO;
+    if (self.collection != [object collection]) return NO;
+    if (self.author  != [object author]) return NO;
+    if (self.createdAt != [object createdAt]) return NO;
+    if (self.editedAt != [object editedAt]) return NO;
+    if (self.source != [object source]) return NO;
+    if (self.contentType != [object contentType]) return NO;
+    if (self.visibility != [object visibility]) return NO;
+    if (self.deleted != [object deleted]) return NO;
+    if (!areEqual(self.children, [object children])) return NO;
+    if (!areEqual(self.embed, [object embed])) return NO;
+    if (!areEqual(self.likes, [object likes])) return NO;
+    if (!areEqual(self.parentId, [object parentId])) return NO;
+    if (self.event != [object event]) return NO;
+    return YES;
+}
 @end
 
 @implementation Post
@@ -233,6 +257,12 @@
         self.body = [(Post *)entry body];
     [super copyFrom:entry];
 }
+
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[self class]]) return NO;
+    if (![self.body isEqual:[object body]]) return NO;
+    return [super isEqual:object];
+}
 @end
 
 @implementation Like
@@ -261,6 +291,11 @@
             parent.likes = [parent.likes arrayByAddingObject:self];
     }
     return parent;
+}
+
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[self class]]) return NO;
+    return [super isEqual:object];
 }
 @end
 
@@ -341,4 +376,25 @@
     [super copyFrom:entry];
 }
 
+- (BOOL)isEqual:(id)object {
+    Embed *embed = object;
+    if (![object isKindOfClass:[self class]]) return NO;
+    if (!areEqual(self.link, [embed link])) return NO;
+    if (!areEqual(self.url, [embed url])) return NO;
+    if (!areEqual(self.title, [embed title])) return NO;
+    if (!areEqual(self.type, [embed type])) return NO;
+    if (!areEqual(self.authorName, [embed authorName])) return NO;
+    if (!areEqual(self.authorUrl, [embed authorUrl])) return NO;
+    if (!areEqual(self.html, [embed html])) return NO;
+    if (!areEqual(self.version, [embed version])) return NO;
+    if (!areEqual(self.providerName, [embed providerName])) return NO;
+    if (!areEqual(self.providerUrl, [embed providerUrl])) return NO;
+    if (self.height != [embed height]) return NO;
+    if (self.width != [embed width]) return NO;
+    if (!areEqual(self.thumbnailUrl, [embed thumbnailUrl])) return NO;
+    if (self.thumbnailHeight != [embed thumbnailHeight]) return NO;
+    if (self.thumbnailWidth != [embed thumbnailWidth]) return NO;
+    if (self.position != [embed position]) return NO;
+    return [super isEqual:object];
+}
 @end

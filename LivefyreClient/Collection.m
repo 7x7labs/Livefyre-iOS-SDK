@@ -174,11 +174,17 @@
     if (entry.deleted)
         return [self handleDeletion:entry parent:parent updatePostCount:updatePostCount];
 
-    // We might already have this entry, as there's some overlap between the
-    // init data and the first page or if we have multiple stream requests at
-    // once
-    if ([self entryForKey:entry.entryId])
-        return nil;
+    // We might already have this entry, either due to overlap between the
+    // bootstrap data and the first page, or due to be being an entry created
+    // by this collection. In the first case the new one should be identical to
+    // the old one, but in the second the new one might have more data.
+    Entry *existingEntry = [self entryForKey:entry.entryId];
+    if (existingEntry) {
+        if ([existingEntry isEqual:entry])
+            return nil;
+        [existingEntry copyFrom:entry];
+        return existingEntry;
+    }
 
     // Add any children of this node which arrived before it
     NSMutableArray *children = [self.orphans objectForKey:entry.entryId];
