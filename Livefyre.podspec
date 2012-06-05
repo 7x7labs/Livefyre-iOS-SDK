@@ -24,5 +24,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.dependency 'ASIHTTPRequest', '~> 1.8'
-  s.dependency 'JSONKit', '~> 1.4'
+  s.dependency 'JSONKit', '1.5pre'
+  s.dependency 'BlocksKit', '~> 1.0.6'
 end
