@@ -62,7 +62,7 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
     };
 }
 
-static NSString *bootstrapRoot = @"https://bootstrap-v2-json.s3.amazonaws.com";
+static NSString *bootstrapRoot = @"https://bootstrap-json-dev.s3.amazonaws.com/t402.livefyre.com";
 
 @implementation LivefyreClient {
     NSString *domain;
