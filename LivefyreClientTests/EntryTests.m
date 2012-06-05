@@ -21,12 +21,13 @@
 }
 - (Author *)authorForId:(NSString *)authorId {
     if (!author) {
-        author = [Author authorWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
-                                               @"author id", @"id",
-                                               @"profile url", @"profileUrl",
-                                               @"display name", @"displayName",
-                                               @"avatar", @"avatar",
-                                               nil]];
+        author = [Author authorPlaceholder:@"author id"];
+        [author setTo:[NSDictionary dictionaryWithObjectsAndKeys:
+                       @"author id", @"id",
+                       @"profile url", @"profileUrl",
+                       @"display name", @"displayName",
+                       @"avatar", @"avatar",
+                       nil]];
     }
     if ([author.authorId isEqualToString:authorId])
         return author;

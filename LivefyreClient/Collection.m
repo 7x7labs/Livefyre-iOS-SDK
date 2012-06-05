@@ -124,6 +124,10 @@
 }
 
 - (Author *)authorForId:(NSString *)authorId {
+    if (![self.authors objectForKey:authorId])
+        [authors_ setObject:[Author authorPlaceholder:authorId]
+                     forKey:authorId];
+
     return [self.authors objectForKey:authorId];
 }
 
@@ -321,9 +325,7 @@
         [followers_ addObjectsFromArray:followerData];
 
     for (NSString *authorId in authorData) {
-        if (![authors_ objectForKey:authorId])
-            [authors_ setObject:[Author authorWithDictionary:[authorData objectForKey:authorId]]
-                         forKey:authorId];
+        [[self authorForId:authorId] setTo:[authorData objectForKey:authorId]];
     }
 
     NSMutableArray *newEntries = [[NSMutableArray alloc] initWithCapacity:[postData count]];

@@ -12,12 +12,13 @@
 
 @implementation AuthorTests
 -(void)testAuthor {
-    Author *author = [Author authorWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                   @"author id", @"id",
-                                                   @"profile url", @"profileUrl",
-                                                   @"display name", @"displayName",
-                                                   @"avatar", @"avatar",
-                                                   nil]];
+    Author *author = [Author authorPlaceholder:@"id"];
+    [author setTo:[NSDictionary dictionaryWithObjectsAndKeys:
+                   @"author id", @"id",
+                   @"profile url", @"profileUrl",
+                   @"display name", @"displayName",
+                   @"avatar", @"avatar",
+                   nil]];
 
     STAssertEqualObjects(author.authorId, @"author id", nil);
     STAssertEqualObjects(author.profileUrl, @"profile url", nil);

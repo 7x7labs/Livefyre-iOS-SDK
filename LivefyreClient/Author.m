@@ -8,18 +8,29 @@
 
 #import "Author.h"
 
-@implementation Author
+@implementation Author {
+    BOOL placeholder;
+}
+
 @synthesize authorId = authorId_;
 @synthesize displayName = displayName_;
 @synthesize profileUrl = profileUrl_;
 @synthesize avatarUrl = avatarUrl_;
 
-+ (Author *)authorWithDictionary:(NSDictionary *)authorData {
++ (Author *)authorPlaceholder:(NSString *)authorId {
     Author *ret = [[Author alloc] init];
-    ret.authorId = [authorData objectForKey:@"id"];
-    ret.displayName = [authorData objectForKey:@"displayName"];
-    ret.profileUrl = [authorData objectForKey:@"profileUrl"];
-    ret.avatarUrl = [authorData objectForKey:@"avatar"];
+    ret->placeholder = YES;
+    ret.authorId = authorId;
     return ret;
+}
+
+- (void)setTo:(NSDictionary *)authorData {
+    if (placeholder) {
+        self.authorId = [authorData objectForKey:@"id"];
+        self.displayName = [authorData objectForKey:@"displayName"];
+        self.profileUrl = [authorData objectForKey:@"profileUrl"];
+        self.avatarUrl = [authorData objectForKey:@"avatar"];
+        placeholder = NO;
+    }
 }
 @end

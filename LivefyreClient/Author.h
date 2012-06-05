@@ -20,5 +20,7 @@
 /// The URL of the user's avatar, or nil if the user has none.
 @property (strong, nonatomic) NSString *avatarUrl;
 
-+ (Author *)authorWithDictionary:(NSDictionary *)authorData;
++ (Author *)authorPlaceholder:(NSString *)authorId;
+
+- (void)setTo:(NSDictionary *)authorData;
 @end
