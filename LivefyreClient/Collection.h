@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class Author;
+@class Entry;
 @class User;
 
 /// A pair of a start and end date
@@ -83,6 +84,8 @@ typedef void (^RequestComplete)(BOOL error, id resultOrError);
 
 - (NSArray *)addCollectionContent:(NSDictionary *)content
                       erefFetcher:(void (^)(NSString *))erefFetcher;
+
+- (void)addLikeForPost:(Entry *)post visibility:(int)vis;
 
 /// Fetch all posts within the given date range
 /// @param range Range to retrieve posts for

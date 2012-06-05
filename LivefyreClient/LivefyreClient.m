@@ -480,13 +480,17 @@ static NSString *bootstrapRoot = @"https://bootstrap-v2-json.s3.amazonaws.com";
     [HttpRequest postRequest:url
                 withFormData:formParameters
                      onError:errorHandler(callback)
-                   onSuccess:^(NSString *responseString, int statusCode) {
-                       NSLog(@"%d\n%@\n", statusCode, responseString);
+                   onSuccess:^(NSString *responseString, int statusCode)
+     {
+         NSLog(@"%d\n%@\n", statusCode, responseString);
 
-                       NSDictionary *data = tryToParseJSON(responseString, callback);
-                       if (data)
-                           callback(NO, [data objectForKey:@"messageId"]);
-                   }];
+         NSDictionary *data = tryToParseJSON(responseString, callback);
+         if (!data)
+             return;
+
+         [collection addLikeForPost:entry visibility:[endpoint isEqualToString:@"like"]];
+         callback(NO, entry);
+     }];
 }
 
 - (void)likeContent:(Entry *)entry

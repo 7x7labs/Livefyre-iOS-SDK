@@ -1006,4 +1006,27 @@ do { \
     [collection addCollectionContent:[secondUnlikeJson objectFromJSONString] erefFetcher:nil];
     STAssertEquals([post.likes count], 0u, nil);
 }
+
+- (void)testLikeThenUnlikeDirect {
+    NSString *postJson = @"{\"content\":[{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"\",\"authorId\":\"post author\",\"parentId\":\"\",\"id\":\"post id\",\"createdAt\":1},\"childContent\":[],\"source\":5,\"type\":0,\"event\":1}],\"authors\":{\"post author\":{\"profileUrl\":\"\",\"displayName\":\"\",\"id\":\"post author\",\"avatar\":\"\"},\"non mod user\":{\"profileUrl\":\"\",\"displayName\":\"\",\"id\":\"non mod user\",\"avatar\":\"\"}}}";
+
+    Collection *collection = [self basicCollection];
+    [collection addCollectionContent:[postJson objectFromJSONString] erefFetcher:nil];
+
+    STAssertEquals([collection.posts count], 1u, nil);
+    if (![collection.posts count])
+        return;
+    Post *post = [collection.posts objectAtIndex:0];
+
+    [collection addLikeForPost:post visibility:1];
+    STAssertEquals([post.likes count], 1u, nil);
+    STAssertEqualObjects([[post.likes objectAtIndex:0] author].authorId, @"non mod user", nil);
+
+    [collection addLikeForPost:post visibility:1];
+    STAssertEquals([post.likes count], 1u, nil);
+
+    [collection addLikeForPost:post visibility:0];
+    STAssertEquals([post.likes count], 0u, nil);
+}
+
 @end

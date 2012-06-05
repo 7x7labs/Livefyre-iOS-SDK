@@ -39,7 +39,7 @@
             STFail(resultOrError);
         }
         else {
-            STAssertTrue([entry.entryId isEqual:resultOrError], nil);
+            STAssertEquals(entry, resultOrError, nil);
         }
     }];
 
@@ -58,7 +58,7 @@
             STFail(resultOrError);
         }
         else {
-            STAssertTrue([entry.entryId isEqual:resultOrError], nil);
+            STAssertEquals(entry, resultOrError, nil);
         }
     }];
 

@@ -12,6 +12,8 @@
 #import "Entry.h"
 #import "User.h"
 
+#include <sys/time.h>
+
 @implementation DateRange
 @synthesize start = start_;
 @synthesize end = end_;
@@ -335,6 +337,26 @@
         lastEvent_ = lastEvent;
 
     return newEntries;
+}
+
+- (void)addLikeForPost:(Entry *)post visibility:(int)vis {
+    struct timeval tp;
+    gettimeofday(&tp, 0);
+    NSString *likeId = [NSString stringWithFormat:@"%@+%@.%lld%lld", post.entryId, self.user.userId, (int64_t)tp.tv_sec, (int64_t)tp.tv_usec, nil];
+    NSDictionary *likeContent = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 self.user.userId, @"authorId",
+                                 post.entryId, @"targetId",
+                                 likeId, @"id",
+                                 nil];
+    NSDictionary *likeResponse = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [NSNumber numberWithInt:vis], @"vis",
+                                  [NSNumber numberWithInt:ContentTypeOpine], @"type",
+                                  [NSNumber numberWithInt:0], @"event",
+                                  [NSNumber numberWithInt:5], @"source",
+                                  likeContent, @"content",
+                                  nil];
+
+    [self addEntry:likeResponse withParent:post];
 }
 
 - (DateRange *)fetchRange:(DateRange *)range
