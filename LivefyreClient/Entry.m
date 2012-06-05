@@ -244,13 +244,16 @@
 }
 
 - (Entry *)addToParent:(Entry *)parent {
+    BOOL (^matchesAuthor)(id) = ^BOOL(id obj) {
+        return [[obj author] authorId] == self.author.authorId;
+    };
+
     if (self.visibility == ContentVisibilityNone) {
-        parent.likes = [parent.likes reject:^BOOL(id obj) {
-            return [[obj author] authorId] == self.author.authorId;
-        }];
+        parent.likes = [parent.likes reject:matchesAuthor];
     }
     else {
-        parent.likes = [parent.likes arrayByAddingObject:self];
+        if (![parent.likes match:matchesAuthor])
+            parent.likes = [parent.likes arrayByAddingObject:self];
     }
     return parent;
 }
