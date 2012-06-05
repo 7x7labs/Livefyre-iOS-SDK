@@ -12,13 +12,13 @@
 @interface Author : NSObject
 /// The Livefyre author ID, which may not be the same as the user ID used to
 /// log in.
-@property (strong, nonatomic) NSString *authorId;
+@property (strong, nonatomic, readonly) NSString *authorId;
 /// The user's displayed name.
-@property (strong, nonatomic) NSString *displayName;
+@property (strong, nonatomic, readonly) NSString *displayName;
 /// The URL of the user's public profile, or nil if not applicable.
-@property (strong, nonatomic) NSString *profileUrl;
+@property (strong, nonatomic, readonly) NSString *profileUrl;
 /// The URL of the user's avatar, or nil if the user has none.
-@property (strong, nonatomic) NSString *avatarUrl;
+@property (strong, nonatomic, readonly) NSString *avatarUrl;
 
 + (Author *)authorPlaceholder:(NSString *)authorId;
 
