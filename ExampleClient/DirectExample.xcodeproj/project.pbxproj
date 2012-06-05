@@ -20,6 +20,7 @@
 		3FD72960156EB0D0006DD6A1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD7295F156EB0D0006DD6A1 /* CoreGraphics.framework */; };
 		3FD72966156EB0D0006DD6A1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3FD72964156EB0D0006DD6A1 /* InfoPlist.strings */; };
 		3FD72968156EB0D0006DD6A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD72967156EB0D0006DD6A1 /* main.m */; };
+		3FEBC1B2157E62810077B490 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FEBC1B1157E62810077B490 /* MessageUI.framework */; };
 		3FF31B561570456800B5B7D5 /* libLivefyreClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F371451157040360069FCFB /* libLivefyreClient.a */; };
 		3FF31B59157045B900B5B7D5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F0E52E8156EDB7F0043ED27 /* libz.dylib */; };
 		3FFDF61815705C73007CB366 /* server.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FFDF61715705C73007CB366 /* server.plist */; };
@@ -71,6 +72,7 @@
 		3FD72965156EB0D0006DD6A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3FD72967156EB0D0006DD6A1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3FD72969156EB0D0006DD6A1 /* ExampleClient-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ExampleClient-Prefix.pch"; sourceTree = "<group>"; };
+		3FEBC1B1157E62810077B490 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		3FFDF61715705C73007CB366 /* server.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = server.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FEBC1B2157E62810077B490 /* MessageUI.framework in Frameworks */,
 				3FF31B59157045B900B5B7D5 /* libz.dylib in Frameworks */,
 				3FF31B561570456800B5B7D5 /* libLivefyreClient.a in Frameworks */,
 				3F0E52ED156EDBD10043ED27 /* MobileCoreServices.framework in Frameworks */,
@@ -122,14 +125,15 @@
 		3FD7295A156EB0D0006DD6A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3F0E52E6156EDB6F0043ED27 /* CFNetwork.framework */,
+				3FD7295F156EB0D0006DD6A1 /* CoreGraphics.framework */,
+				3FD7295D156EB0D0006DD6A1 /* Foundation.framework */,
+				3F0E52E8156EDB7F0043ED27 /* libz.dylib */,
 				3F371447157040350069FCFB /* LivefyreClient.xcodeproj */,
+				3FEBC1B1157E62810077B490 /* MessageUI.framework */,
 				3F0E52EC156EDBD10043ED27 /* MobileCoreServices.framework */,
 				3F0E52EA156EDBBC0043ED27 /* SystemConfiguration.framework */,
-				3F0E52E8156EDB7F0043ED27 /* libz.dylib */,
-				3F0E52E6156EDB6F0043ED27 /* CFNetwork.framework */,
 				3FD7295B156EB0D0006DD6A1 /* UIKit.framework */,
-				3FD7295D156EB0D0006DD6A1 /* Foundation.framework */,
-				3FD7295F156EB0D0006DD6A1 /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
