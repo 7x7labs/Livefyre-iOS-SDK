@@ -165,7 +165,7 @@
 }
 
 - (Entry *)insertEntry:(Entry *)entry withParent:(Entry *)parent {
-    BOOL updatePostCount = entry.event > self.lastEvent;
+    BOOL updatePostCount = entry.event < 0 || entry.event > self.lastEvent;
 
     if (entry.deleted)
         return [self handleDeletion:entry parent:parent updatePostCount:updatePostCount];

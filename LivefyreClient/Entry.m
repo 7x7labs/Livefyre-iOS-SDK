@@ -123,11 +123,16 @@
         self.editedAt = self.createdAt;
         self.embed = [[NSArray alloc] init];
         self.entryId = [content objectForKey:@"id"];
-        self.event = [[eventData objectForKey:@"event"] longLongValue];
         self.likes = [[NSArray alloc] init];
         self.replaces = [self fixNull:[content objectForKey:@"replaces"]];
         self.source = [[eventData objectForKey:@"source"] intValue];
         self.visibility = [[eventData objectForKey:@"vis"] intValue];
+
+        id event = [eventData objectForKey:@"event"];
+        if ([event respondsToSelector:@selector(longLongValue)])
+            self.event = [event longLongValue];
+        else
+            self.event = -1;
 
         if (self.source > 8) {
             NSLog(@"Unrecognized source: %d", self.source);
