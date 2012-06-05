@@ -973,7 +973,37 @@ do { \
         STAssertNil(post.parent, nil);
         STAssertTrue(post.deleted, nil);
     }
+}
+
+- (void)testLikeThenUnlike {
+    NSString *postJson = @"{\"content\":[{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"\",\"authorId\":\"post author\",\"parentId\":\"\",\"id\":\"post id\",\"createdAt\":1},\"childContent\":[],\"source\":5,\"type\":0,\"event\":1}],\"authors\":{\"post author\":{\"profileUrl\":\"\",\"displayName\":\"\",\"id\":\"post author\",\"avatar\":\"\"},\"first liking author\":{\"profileUrl\":\"\",\"displayName\":\"\",\"id\":\"first liking author\",\"avatar\":\"\"},\"second liking author\":{\"profileUrl\":\"\",\"displayName\":\"\",\"id\":\"second liking author\",\"avatar\":\"\"}}}";
+    NSString *firstLikeJson = @"{\"content\":[{\"content\":{\"authorId\":\"first liking author\",\"targetId\":\"post id\",\"id\":\"like request id 1\"},\"vis\":1,\"type\":1,\"event\":2,\"source\":5}]}";
+    NSString *secondLikeJson = @"{\"content\":[{\"content\":{\"authorId\":\"second liking author\",\"targetId\":\"post id\",\"id\":\"like request id 2\"},\"vis\":1,\"type\":1,\"event\":3,\"source\":5}]}";
+    NSString *firstUnlikeJson = @"{\"content\":[{\"content\":{\"authorId\":\"first liking author\",\"targetId\":\"post id\",\"id\":\"unlike request id 1\"},\"vis\":0,\"type\":1,\"event\":4,\"source\":5}]}";
+    NSString *secondUnlikeJson = @"{\"content\":[{\"content\":{\"authorId\":\"second liking author\",\"targetId\":\"post id\",\"id\":\"unlike request id 2\"},\"vis\":0,\"type\":1,\"event\":5,\"source\":5}]}";
 
 
+    Collection *collection = [self basicCollection];
+    [collection addCollectionContent:[postJson objectFromJSONString] erefFetcher:nil];
+
+    STAssertEquals([collection.posts count], 1u, nil);
+    if (![collection.posts count])
+        return;
+    Post *post = [collection.posts objectAtIndex:0];
+
+    [collection addCollectionContent:[firstLikeJson objectFromJSONString] erefFetcher:nil];
+    STAssertEquals([post.likes count], 1u, nil);
+    STAssertEqualObjects([[post.likes objectAtIndex:0] author].authorId, @"first liking author", nil);
+
+    [collection addCollectionContent:[secondLikeJson objectFromJSONString] erefFetcher:nil];
+    STAssertEquals([post.likes count], 2u, nil);
+    STAssertEqualObjects([[post.likes objectAtIndex:1] author].authorId, @"second liking author", nil);
+
+    [collection addCollectionContent:[firstUnlikeJson objectFromJSONString] erefFetcher:nil];
+    STAssertEquals([post.likes count], 1u, nil);
+    STAssertEqualObjects([[post.likes objectAtIndex:0] author].authorId, @"second liking author", nil);
+
+    [collection addCollectionContent:[secondUnlikeJson objectFromJSONString] erefFetcher:nil];
+    STAssertEquals([post.likes count], 0u, nil);
 }
 @end
