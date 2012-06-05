@@ -263,6 +263,9 @@
         return nil;
 
     entry = [self insertEntry:entry withParent:parent];
+    if (!entry && [[entryData objectForKey:@"childContent"] count])
+        entry = [self entryForKey:entry.entryId];
+
     if (!entry)
         return nil;
 
