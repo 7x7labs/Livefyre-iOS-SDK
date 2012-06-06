@@ -1029,4 +1029,30 @@ do { \
     STAssertEquals([post.likes count], 0u, nil);
 }
 
+- (void)testPostWithNeverSeenAuthor {
+    User *user = [User userWithDictionary:
+                  [@"{\"profile\":{\"id\":\"non mod user\", \"displayName\":\"a user\",\"profileUrl\":\"http://admin.t405.livefyre.com/profile/5011/\",\"settingsUrl\":\"http://admin.t405.livefyre.com/profile/edit/info\",\"avatar\":\"http://livefyre-avatar.s3.amazonaws.com/a/1/d627b1ba3fce6ab0af872ed3d65278fd/50.jpg\"},\"permissions\":{}}"
+                   objectFromJSONString]];
+
+    Collection *collection = [Collection collectionWithId:@"collection id"
+                                                     user:user
+                                                nestLevel:4
+                                            numberVisible:0
+                                        numberOfFollowers:11
+                                                lastEvent:1234
+                                                bootstrap:nil
+                                          additionalPages:nil];
+
+    NSString *postJson = @"{\"content\":[{\"vis\":1,\"content\":{\"replaces\":\"\",\"bodyHtml\":\"\",\"authorId\":\"non mod user\",\"parentId\":\"\",\"id\":\"post id\",\"createdAt\":1},\"childContent\":[],\"source\":5,\"type\":0,\"event\":1}]}";
+
+    [collection addCollectionContent:[postJson objectFromJSONString] erefFetcher:nil];
+
+    STAssertEquals([collection.posts count], 1u, nil);
+    Entry *post = [collection.posts objectAtIndex:0];
+    STAssertEqualObjects(post.author.authorId, @"non mod user", nil);
+    STAssertEqualObjects(post.author.displayName, @"a user", nil);
+    STAssertEqualObjects(post.author.profileUrl, @"http://admin.t405.livefyre.com/profile/5011/", nil);
+    STAssertEqualObjects(post.author.avatarUrl, @"http://livefyre-avatar.s3.amazonaws.com/a/1/d627b1ba3fce6ab0af872ed3d65278fd/50.jpg", nil);
+}
+
 @end

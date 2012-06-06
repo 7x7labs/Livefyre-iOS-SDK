@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class User;
+
 /// The author of an entry in a collection.
 @interface Author : NSObject
 /// The Livefyre author ID, which may not be the same as the user ID used to
@@ -23,4 +25,5 @@
 + (Author *)authorPlaceholder:(NSString *)authorId;
 
 - (void)setTo:(NSDictionary *)authorData;
+- (void)setToUser:(User *)user;
 @end

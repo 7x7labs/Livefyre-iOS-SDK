@@ -8,6 +8,8 @@
 
 #import "Author.h"
 
+#import "User.h"
+
 @interface Author()
 @property (strong, nonatomic) NSString *authorId;
 @property (strong, nonatomic) NSString *displayName;
@@ -39,4 +41,15 @@
         self.placeholder = NO;
     }
 }
+
+- (void)setToUser:(User *)user {
+    if (self.placeholder) {
+        self.authorId = user.userId;
+        self.displayName = user.displayName;
+        self.profileUrl = user.profileUrl;
+        self.avatarUrl = user.avatarUrl;
+        self.placeholder = NO;
+    }
+}
+
 @end

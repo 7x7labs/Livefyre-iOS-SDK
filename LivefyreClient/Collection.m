@@ -124,9 +124,13 @@
 }
 
 - (Author *)authorForId:(NSString *)authorId {
-    if (![self.authors objectForKey:authorId])
+    if (![self.authors objectForKey:authorId]) {
         [authors_ setObject:[Author authorPlaceholder:authorId]
                      forKey:authorId];
+
+        if ([authorId isEqualToString:self.user.userId])
+            [[self.authors objectForKey:authorId] setToUser:self.user];
+    }
 
     return [self.authors objectForKey:authorId];
 }
