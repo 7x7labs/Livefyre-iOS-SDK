@@ -97,6 +97,14 @@
 
 <li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_User Authentication">User Authentication</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Collection Management">Collection Management</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Collection Retrieval">Collection Retrieval</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Content Creation">Content Creation</a></span></li>
+	
 </ul></li>
 
 
@@ -185,6 +193,15 @@
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
 						<p>LivefyreClient is the top-level interface to the Livefyre SDK.</p>
+
+<p>As most of the client operations require accessing the Livefyre servers,
+they follow a consistent asynchronous design. Rather than returning the
+result of the operation, they take a RequestComplete block, which is
+invoked when the operation completes or fails. This block is called with
+two parameters: a <code>BOOL</code> which indicates whether or not the operation
+failed, and an <code>id</code> which is either the error message (if the <code>BOOL</code> is
+<code>YES</code>), or the return value. The type of the return value varies between
+operations, and is documented with each method.</p>
 					</div>
 					
 					
@@ -197,7 +214,7 @@
 						
 						
 						
-						
+						<h3 class="subsubtitle task-title">Other Methods</h3>
 
 						<ul class="task-list">
 							<li>
@@ -215,7 +232,15 @@ client?</p></span>
 	</span>
 	
 	
-</li><li>
+</li>
+						</ul>
+						
+						
+						<a title="User Authentication" name="task_User Authentication"></a>
+						<h3 class="subsubtitle task-title">User Authentication</h3>
+
+						<ul class="task-list">
+							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/authenticateUser:forCollection:gotUser:">&ndash;&nbsp;authenticateUser:forCollection:gotUser:</a></code>
 		<span class="tooltip"><p>Authenticate a user for accessing and posting to a collection.</p></span>
@@ -243,7 +268,15 @@ client?</p></span>
 	</span>
 	
 	
-</li><li>
+</li>
+						</ul>
+						
+						
+						<a title="Collection Management" name="task_Collection Management"></a>
+						<h3 class="subsubtitle task-title">Collection Management</h3>
+
+						<ul class="task-list">
+							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/createCollection:forArticle:atUrl:forSite:withKey:withTags:collectionCreated:">&ndash;&nbsp;createCollection:forArticle:atUrl:forSite:withKey:withTags:collectionCreated:</a></code>
 		<span class="tooltip"><p>Create a new collection for comments on an article.</p></span>
@@ -257,10 +290,18 @@ client?</p></span>
 	</span>
 	
 	
-</li><li>
+</li>
+						</ul>
+						
+						
+						<a title="Collection Retrieval" name="task_Collection Retrieval"></a>
+						<h3 class="subsubtitle task-title">Collection Retrieval</h3>
+
+						<ul class="task-list">
+							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/getCollectionForArticle:inSite:forUser:gotCollection:">&ndash;&nbsp;getCollectionForArticle:inSite:forUser:gotCollection:</a></code>
-		<span class="tooltip"><p>Get the collection for an article.</p></span>
+		<span class="tooltip"><p>Get the collection of comments for an article.</p></span>
 	</span>
 	
 	
@@ -292,7 +333,15 @@ client?</p></span>
 	</span>
 	
 	
-</li><li>
+</li>
+						</ul>
+						
+						
+						<a title="Content Creation" name="task_Content Creation"></a>
+						<h3 class="subsubtitle task-title">Content Creation</h3>
+
+						<ul class="task-list">
+							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/likeContent:onComplete:">&ndash;&nbsp;likeContent:onComplete:</a></code>
 		<span class="tooltip"><p><a href="../Classes/Like.html">Like</a> a post in a collection.</p></span>
@@ -777,7 +826,10 @@ domain key on the user&rsquo;s device.</p></dd>
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>callback</em></dt>
-			<dd><p>Callback called with the new <a href="../Classes/Post.html"><code>Post</code></a>.</p></dd>
+			<dd><p>Callback called with the new <a href="../Classes/Post.html"><code>Post</code></a>.</p>
+
+<p>Creating new posts requires that the <a href="../Classes/Collection.html">Collection</a> was created with a
+logged-in user who has permission to post in the collection.</p></dd>
 		</dl>
 		
 	</div>
@@ -838,7 +890,10 @@ domain key on the user&rsquo;s device.</p></dd>
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>callback</em></dt>
-			<dd><p>Callback called with the new <a href="../Classes/Post.html"><code>Post</code></a>.</p></dd>
+			<dd><p>Callback called with the new <a href="../Classes/Post.html"><code>Post</code></a>.</p>
+
+<p>Creating new posts requires that the <a href="../Classes/Collection.html">Collection</a> was created with a
+logged-in user who has permission to post in the collection.</p></dd>
 		</dl>
 		
 	</div>
@@ -875,7 +930,7 @@ domain key on the user&rsquo;s device.</p></dd>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Get the collection for an article.</p>
+		<p>Get the collection of comments for an article.</p>
 	</div>		
 	
     
@@ -905,8 +960,17 @@ collection anonymously.</p></dd>
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>callback</em></dt>
-			<dd><p>Callback called with the <a href="../Classes/Collection.html">Collection</a> once the metadata has
-been retrieved.</p></dd>
+			<dd><p>Callback called with the Collection once the metadata has
+been retrieved.</p>
+
+<p>If no user is supplied, it will not be possible to create new posts or
+(un)like existing posts, and only publicly-visible comments will be
+displayed.</p>
+
+<p>This method does not get any of the contents of the Collection; only the
+metadata and information need to retrieve the contents. To fetch the posts,
+see <a href="../Classes/Collection.html#//api/name/fetchBootstrap:">[Collection fetchBootstrap:]</a>, <a href="../Classes/Collection.html#//api/name/fetchPage:gotPage:">[Collection fetchPage:gotPage:]</a>, and
+<a href="../Classes/Collection.html#//api/name/fetchRange:gotRange:">[Collection fetchRange:gotRange:]</a>.</p></dd>
 		</dl>
 		
 	</div>
@@ -919,7 +983,7 @@ been retrieved.</p></dd>
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>Get the collection for an article.</p>
+		<p>Get the collection of comments for an article.</p>
 	</div>
 	
 	
@@ -972,8 +1036,17 @@ been retrieved.</p></dd>
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>callback</em></dt>
-			<dd><p>Callback called with the <a href="../Classes/Collection.html">Collection</a> once the metadata has
-been retrieved.</p></dd>
+			<dd><p>Callback called with the Collection once the metadata has
+been retrieved.</p>
+
+<p>This method cannot be used for anonymous access; use
+<a href="#//api/name/getCollectionForArticle:inSite:forUser:gotCollection:">[LivefyreClient getCollectionForArticle:inSite:forUser:gotCollection:]</a> for
+that.</p>
+
+<p>This method does not get any of the contents of the Collection; only the
+metadata and information need to retrieve the contents. To fetch the posts,
+see <a href="../Classes/Collection.html#//api/name/fetchBootstrap:">[Collection fetchBootstrap:]</a>, <a href="../Classes/Collection.html#//api/name/fetchPage:gotPage:">[Collection fetchPage:gotPage:]</a>, and
+<a href="../Classes/Collection.html#//api/name/fetchRange:gotRange:">[Collection fetchRange:gotRange:]</a>.</p></dd>
 		</dl>
 		
 	</div>
@@ -1040,8 +1113,17 @@ for. Must not be nil.</p></dd>
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>callback</em></dt>
-			<dd><p>Callback called with the <a href="../Classes/Collection.html">Collection</a> once the metadata has
-been retrieved.</p></dd>
+			<dd><p>Callback called with the Collection once the metadata has
+been retrieved.</p>
+
+<p>This method cannot be used for anonymous access; use
+<a href="#//api/name/getCollectionForArticle:inSite:forUser:gotCollection:">[LivefyreClient getCollectionForArticle:inSite:forUser:gotCollection:]</a> for
+that.</p>
+
+<p>This method does not get any of the contents of the Collection; only the
+metadata and information need to retrieve the contents. To fetch the posts,
+see <a href="../Classes/Collection.html#//api/name/fetchBootstrap:">[Collection fetchBootstrap:]</a>, <a href="../Classes/Collection.html#//api/name/fetchPage:gotPage:">[Collection fetchPage:gotPage:]</a>, and
+<a href="../Classes/Collection.html#//api/name/fetchRange:gotRange:">[Collection fetchRange:gotRange:]</a>.</p></dd>
 		</dl>
 		
 	</div>
@@ -1097,10 +1179,12 @@ been retrieved.</p></dd>
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>callback</em></dt>
-			<dd><p>Callback called with the ID of the post which was liked.</p>
+			<dd><p>Callback called with the <a href="../Classes/Post.html">Post</a> which was liked.</p>
 
 <p>The post must be from a logged-in user&rsquo;s <a href="../Classes/Collection.html">Collection</a> and posted by a
-different user.</p></dd>
+different user.</p>
+
+<p>Trying to <a href="../Classes/Like.html">Like</a> things other than Posts may have odd results.</p></dd>
 		</dl>
 		
 	</div>
@@ -1209,7 +1293,17 @@ client?</p>
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>callback</em></dt>
-			<dd><p>Callback to call when new data arrives.</p></dd>
+			<dd><p>Callback to call when new data arrives.</p>
+
+<p>The gotNewPosts callback is invoked with an array of new or modified
+entries when new content arrives from the server.</p>
+
+<p>Content can only be streamed to a single callback for each collection.
+Calling startPollingForUpdates while data is already being streamed for the
+given collection will result in stopPollingForUpdates being called first.</p>
+
+<p>Streamed content may or may not include new posts made via the same
+collection as is being polled.</p></dd>
 		</dl>
 		
 	</div>
@@ -1316,7 +1410,7 @@ client?</p>
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>callback</em></dt>
-			<dd><p>Callback called with the ID of the post which was unliked.</p>
+			<dd><p>Callback called with <a href="../Classes/Post.html">Post</a> which was unliked.</p>
 
 <p>The post must be from a logged-in user&rsquo;s <a href="../Classes/Collection.html">Collection</a> and posted by a
 different user.</p>
@@ -1445,7 +1539,7 @@ different user.</p>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2012 Livefyre, Inc.. All rights reserved. (Last updated: 2012-06-05)</span><br />
+						<p><span class="copyright">&copy; 2012 Livefyre, Inc.. All rights reserved. (Last updated: 2012-06-06)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.5 (build 789)</a>.</span></p>
 						

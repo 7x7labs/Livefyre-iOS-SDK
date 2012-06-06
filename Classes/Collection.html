@@ -168,12 +168,18 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p><code>Collection</code> represents a single user&rsquo;s view of a Livefyre collection for
-an article. When initially created, collections have the metadata fields
+						<p><code>Collection</code> represents a single (possibly anonymous) user&rsquo;s view of a
+Livefyre collection of comments for an article.</p>
+
+<p>When initially created, collections have the metadata fields
 populated, but none of the contents such as <a href="#//api/name/authors">authors</a> and <a href="#//api/name/posts">posts</a>. To retrieve
-the contents, <code>fetchBootstrap</code> can be called to retrieve the newest <a href="#//api/name/posts">posts</a>
-in the collection, or <code>fetchPage</code> or <code>fetchRange</code> can be called to retrieve
-a specific range of <a href="#//api/name/posts">posts</a>.</p>
+the contents, <a href="#//api/name/fetchBootstrap:"><code>fetchBootstrap:</code></a> can be called to retrieve the newest <a href="#//api/name/posts">posts</a>
+in the collection, or <a href="#//api/name/fetchPage:gotPage:"><code>fetchPage:gotPage:</code></a> or <a href="#//api/name/fetchRange:gotRange:"><code>fetchRange:gotRange:</code></a> can
+be called to retrieve a specific range of <a href="#//api/name/posts">posts</a>.</p>
+
+<p>After retrieving the content, the top-level comments to the article will be
+found in the <a href="#//api/name/posts"><code>posts</code></a> property, with replies to those comments in those
+Posts' <code>children</code> property.</p>
 					</div>
 					
 					
@@ -199,21 +205,21 @@ a specific range of <a href="#//api/name/posts">posts</a>.</p>
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/followers">&nbsp;&nbsp;followers</a></code>
-		<span class="tooltip"><p><a href="../Classes/User.html">User</a> IDs of users currently following this collection</p></span>
+		<span class="tooltip"><p><a href="../Classes/User.html">User</a> IDs of users currently following this collection.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/posts">&nbsp;&nbsp;posts</a></code>
-		<span class="tooltip"><p>Top-level posts in this collection</p></span>
+		<span class="tooltip"><p>Top-level posts in this collection which are visible to the current <a href="#//api/name/user">user</a>.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/collectionId">&nbsp;&nbsp;collectionId</a></code>
-		<span class="tooltip"><p>Livefyre ID of the collection</p></span>
+		<span class="tooltip"><p>Livefyre unique ID of the collection.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -228,7 +234,7 @@ fetched anonymously.</p></span>
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/nestLevel">&nbsp;&nbsp;nestLevel</a></code>
-		<span class="tooltip"><p>Recommended maximum nesting level for replies to comments. Not enforced.</p></span>
+		<span class="tooltip"><p>Recommended maximum nesting level for replies to comments.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -250,8 +256,8 @@ which have not been retrieved from the server yet.</p></span>
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/availableDataRanges">&nbsp;&nbsp;availableDataRanges</a></code>
-		<span class="tooltip"><p>An array of DateRanges which are available but have not been fetched from
-the server yet.</p></span>
+		<span class="tooltip"><p>An array of <a href="../Classes/DateRange.html">DateRange</a>s which have <a href="#//api/name/posts">posts</a> that have not been fetched from the
+server yet.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -322,7 +328,9 @@ the server yet.</p></span>
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>The authors of <a href="#//api/name/posts">posts</a> in this collection.</p>
 
-<p>The key the author ID; the value is an <a href="../Classes/Author.html"><code>Author</code></a> object for the author.</p>
+<p>The key the author ID; the value is an <a href="../Classes/Author.html"><code>Author</code></a> object for the author. It
+is normally not necessary to access this directly as each post has a
+reference to its <a href="../Classes/Author.html">Author</a>.</p>
 	</div>
 	
 	
@@ -346,8 +354,8 @@ the server yet.</p></span>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>An array of DateRanges which are available but have not been fetched from
-the server yet.</p>
+		<p>An array of <a href="../Classes/DateRange.html">DateRange</a>s which have <a href="#//api/name/posts">posts</a> that have not been fetched from the
+server yet.</p>
 	</div>		
 	
     
@@ -364,8 +372,8 @@ the server yet.</p>
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>An array of DateRanges which are available but have not been fetched from
-the server yet.</p>
+		<p>An array of <a href="../Classes/DateRange.html">DateRange</a>s which have <a href="#//api/name/posts">posts</a> that have not been fetched from the
+server yet.</p>
 	</div>
 	
 	
@@ -389,7 +397,7 @@ the server yet.</p>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Livefyre ID of the collection</p>
+		<p>Livefyre unique ID of the collection.</p>
 	</div>		
 	
     
@@ -406,7 +414,7 @@ the server yet.</p>
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>Livefyre ID of the collection</p>
+		<p>Livefyre unique ID of the collection.</p>
 	</div>
 	
 	
@@ -430,7 +438,7 @@ the server yet.</p>
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="../Classes/User.html">User</a> IDs of users currently following this collection</p>
+		<p><a href="../Classes/User.html">User</a> IDs of users currently following this collection.</p>
 	</div>		
 	
     
@@ -447,7 +455,7 @@ the server yet.</p>
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p><a href="../Classes/User.html">User</a> IDs of users currently following this collection</p>
+		<p><a href="../Classes/User.html">User</a> IDs of users currently following this collection.</p>
 	</div>
 	
 	
@@ -471,7 +479,7 @@ the server yet.</p>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Recommended maximum nesting level for replies to comments. Not enforced.</p>
+		<p>Recommended maximum nesting level for replies to comments.</p>
 	</div>		
 	
     
@@ -488,7 +496,10 @@ the server yet.</p>
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>Recommended maximum nesting level for replies to comments. Not enforced.</p>
+		<p>Recommended maximum nesting level for replies to comments.</p>
+
+<p>The reply interface should be hidden for <a href="#//api/name/posts">posts</a> which are already nested to
+this depth, but this maximum is not enforced.</p>
 	</div>
 	
 	
@@ -637,7 +648,7 @@ which have not been retrieved from the server yet.</p>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Top-level posts in this collection</p>
+		<p>Top-level posts in this collection which are visible to the current <a href="#//api/name/user">user</a>.</p>
 	</div>		
 	
     
@@ -654,7 +665,7 @@ which have not been retrieved from the server yet.</p>
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>Top-level posts in this collection</p>
+		<p>Top-level posts in this collection which are visible to the current <a href="#//api/name/user">user</a>.</p>
 	</div>
 	
 	
@@ -805,7 +816,8 @@ fetched anonymously.</p>
 			<dt><em>callback</em></dt>
 			<dd><p>Callback to call with an array of the new <a href="#//api/name/posts">posts</a>.</p>
 
-<p>Requesting the same page multiple times is an error.</p></dd>
+<p>Requesting the same page multiple times or a page past the last page (as
+indicated by <a href="#//api/name/numberOfPages">numberOfPages</a>) is an error.</p></dd>
 		</dl>
 		
 	</div>
@@ -863,7 +875,8 @@ fetched anonymously.</p>
 			<dt><em>callback</em></dt>
 			<dd><p>Callback called with the array of new <a href="#//api/name/posts">posts</a> found in that
 date range. May be called multiple times if the requested time range
-requires multiple requests to retrieve.</p></dd>
+requires multiple requests to retrieve, or zero times if there are no <a href="#//api/name/posts">posts</a>
+within the given range which have not been retrieved already.</p></dd>
 		</dl>
 		
 	</div>
@@ -873,6 +886,9 @@ requires multiple requests to retrieve.</p></dd>
 	<div class="method-subsection return">
 		<h4 class="method-subtitle parameter-title">Return Value</h4>
 		<p>The date range which was actually requested from the server.</p>
+
+<p>Unlike <a href="#//api/name/fetchPage:gotPage:">fetchPage:gotPage:</a>, calling this with parameters which will not
+result in any data being fetched is not an error.</p>
 	</div>
 	
 	
@@ -911,7 +927,7 @@ requires multiple requests to retrieve.</p></dd>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2012 Livefyre, Inc.. All rights reserved. (Last updated: 2012-06-05)</span><br />
+						<p><span class="copyright">&copy; 2012 Livefyre, Inc.. All rights reserved. (Last updated: 2012-06-06)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.5 (build 789)</a>.</span></p>
 						

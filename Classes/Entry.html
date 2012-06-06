@@ -46,6 +46,8 @@
 	
 	<option value="//api/name/collection">&nbsp;&nbsp;&nbsp;&nbsp;collection</option>
 	
+	<option value="//api/name/contentType">&nbsp;&nbsp;&nbsp;&nbsp;contentType</option>
+	
 	<option value="//api/name/createdAt">&nbsp;&nbsp;&nbsp;&nbsp;createdAt</option>
 	
 	<option value="//api/name/deleted">&nbsp;&nbsp;&nbsp;&nbsp;deleted</option>
@@ -59,6 +61,10 @@
 	<option value="//api/name/likes">&nbsp;&nbsp;&nbsp;&nbsp;likes</option>
 	
 	<option value="//api/name/parent">&nbsp;&nbsp;&nbsp;&nbsp;parent</option>
+	
+	<option value="//api/name/source">&nbsp;&nbsp;&nbsp;&nbsp;source</option>
+	
+	<option value="//api/name/visibility">&nbsp;&nbsp;&nbsp;&nbsp;visibility</option>
 	
 	
 	
@@ -94,6 +100,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/collection">collection</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/contentType">contentType</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createdAt">createdAt</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleted">deleted</a></span></li>
@@ -107,6 +115,10 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/likes">likes</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/parent">parent</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/source">source</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/visibility">visibility</a></span></li>
 	
 </ul></li>
 
@@ -176,15 +188,14 @@ comment.</p>
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/parent">&nbsp;&nbsp;parent</a></code>
-		<span class="tooltip"><p>The entry&rsquo;s parent entry for replies, <a href="#//api/name/likes">likes</a> and embeds. <code>nil</code> for top-level
-comments.</p></span>
+		<span class="tooltip"><p>The parent of this entry.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/collection">&nbsp;&nbsp;collection</a></code>
-		<span class="tooltip"><p>The collection this entry is in.</p></span>
+		<span class="tooltip"><p>The <a href="../Classes/Collection.html">Collection</a> containing this Entry.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -198,22 +209,43 @@ comments.</p></span>
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/createdAt">&nbsp;&nbsp;createdAt</a></code>
-		<span class="tooltip"><p>Creation date of this entry in epoch time.</p></span>
+		<span class="tooltip"><p>When this Entry was first created, in epoch time.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/editedAt">&nbsp;&nbsp;editedAt</a></code>
-		<span class="tooltip"><p>Time that this entry was last edited, in epoch time.</p></span>
+		<span class="tooltip"><p>When this Entry was last edited, in epoch time.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/source">&nbsp;&nbsp;source</a></code>
+		<span class="tooltip"><p>Livefyre collections can contain data from external social networks. This
+field indicates where this specific Entry came from.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/contentType">&nbsp;&nbsp;contentType</a></code>
+		<span class="tooltip"><p>The type of this Entry.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/visibility">&nbsp;&nbsp;visibility</a></code>
+		<span class="tooltip"><p>The visibility of this Entry.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/deleted">&nbsp;&nbsp;deleted</a></code>
-		<span class="tooltip"><p>Has this entry been deleted? If this is YES, all other fields other than
-<a href="#//api/name/entryId">entryId</a> are likely to be 0 or <code>nil</code>.</p></span>
+		<span class="tooltip"><p>Has this entry been deleted?</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -341,7 +373,7 @@ Posts.</p></span>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The collection this entry is in.</p>
+		<p>The <a href="../Classes/Collection.html">Collection</a> containing this Entry.</p>
 	</div>		
 	
     
@@ -358,7 +390,51 @@ Posts.</p></span>
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>The collection this entry is in.</p>
+		<p>The <a href="../Classes/Collection.html">Collection</a> containing this Entry.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">Entry.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/contentType" title="contentType"></a>
+	<h3 class="subsubtitle method-title">contentType</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The type of this Entry.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) enum ContentType contentType</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The type of this Entry.</p>
+
+<p>This property should always match the result of checking the content type
+based on the subclass.</p>
 	</div>
 	
 	
@@ -382,7 +458,7 @@ Posts.</p></span>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Creation date of this entry in epoch time.</p>
+		<p>When this Entry was first created, in epoch time.</p>
 	</div>		
 	
     
@@ -399,7 +475,7 @@ Posts.</p></span>
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>Creation date of this entry in epoch time.</p>
+		<p>When this Entry was first created, in epoch time.</p>
 	</div>
 	
 	
@@ -423,8 +499,7 @@ Posts.</p></span>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Has this entry been deleted? If this is YES, all other fields other than
-<a href="#//api/name/entryId">entryId</a> are likely to be 0 or <code>nil</code>.</p>
+		<p>Has this entry been deleted?</p>
 	</div>		
 	
     
@@ -441,8 +516,10 @@ Posts.</p></span>
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>Has this entry been deleted? If this is YES, all other fields other than
-<a href="#//api/name/entryId">entryId</a> are likely to be 0 or <code>nil</code>.</p>
+		<p>Has this entry been deleted?</p>
+
+<p>If this is YES, all other fields other than <a href="#//api/name/entryId">entryId</a> will either be 0/nil or
+have stale data which should not be used.</p>
 	</div>
 	
 	
@@ -466,7 +543,7 @@ Posts.</p></span>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Time that this entry was last edited, in epoch time.</p>
+		<p>When this Entry was last edited, in epoch time.</p>
 	</div>		
 	
     
@@ -483,7 +560,7 @@ Posts.</p></span>
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>Time that this entry was last edited, in epoch time.</p>
+		<p>When this Entry was last edited, in epoch time.</p>
 	</div>
 	
 	
@@ -568,6 +645,8 @@ Posts.</p>
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>The unique Livefyre ID of this entry.</p>
+
+<p>This is not guaranteed to remain unchanged over the life of an Entry.</p>
 	</div>
 	
 	
@@ -632,8 +711,7 @@ Posts.</p>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The entry&rsquo;s parent entry for replies, <a href="#//api/name/likes">likes</a> and embeds. <code>nil</code> for top-level
-comments.</p>
+		<p>The parent of this entry.</p>
 	</div>		
 	
     
@@ -650,8 +728,109 @@ comments.</p>
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>The entry&rsquo;s parent entry for replies, <a href="#//api/name/likes">likes</a> and embeds. <code>nil</code> for top-level
-comments.</p>
+		<p>The parent of this entry.</p>
+
+<p>Posts with this set are replies to the given <a href="../Classes/Post.html">Post</a>, and are a top-level
+comment on the article if this is <code>nil</code>. Likes and Embeds should always
+have this set to a <a href="../Classes/Post.html">Post</a> as they make little sense on their own.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">Entry.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/source" title="source"></a>
+	<h3 class="subsubtitle method-title">source</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Livefyre collections can contain data from external social networks. This
+field indicates where this specific Entry came from.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) int source</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Livefyre collections can contain data from external social networks. This
+field indicates where this specific Entry came from.</p>
+
+<p>0, 4, 5, 8: Livefyre
+1, 2, 7: Twitter
+3, 6: Facebook</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">Entry.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/visibility" title="visibility"></a>
+	<h3 class="subsubtitle method-title">visibility</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The visibility of this Entry.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) enum ContentVisibility visibility</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The visibility of this Entry.</p>
+
+<p>ContentVisibilityOwner indicates that the Entry can only be seen by the
+posting user. This normally should not be revealed in the UI.</p>
+
+<p>ContentTypeGroup indicates that the Entry is currently waiting for
+moderation and so it only visible to the posting user and any moderators
+for the Livefyre <a href="#//api/name/collection">collection</a>.</p>
+
+<p>Posts which cannot be seen by the current user are automatically filtered
+out, so ContentVisibilityNone will normally not be seen.</p>
 	</div>
 	
 	
@@ -685,7 +864,7 @@ comments.</p>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2012 Livefyre, Inc.. All rights reserved. (Last updated: 2012-06-05)</span><br />
+						<p><span class="copyright">&copy; 2012 Livefyre, Inc.. All rights reserved. (Last updated: 2012-06-06)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.5 (build 789)</a>.</span></p>
 						
