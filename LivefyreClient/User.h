@@ -10,13 +10,19 @@
 
 @class Entry;
 
-/// A logged-in User. Instances of this class are created with -[LivefyreClient
-/// authenticateUser:forCollection:gotUser:] or -[LivefyreClient
-/// authenticateUser:forSite:forArticle:gotUser:].
+/// A logged-in User.
+///
+/// Instances of this class are created through LivefyreClient. See the
+/// following methods:
+///
+/// * -[LivefyreClient authenticateUser:forCollection:gotUser:]
+/// * -[LivefyreClient authenticateUser:forSite:forArticle:gotUser:]
+/// * -[LivefyreClient authenticateUserWithToken:forCollection:gotUser:]
+/// * -[LivefyreClient authenticateUserWithToken:forSite:forArticle:gotUser:]
 @interface User : NSObject
 /// The Livefyre user ID. May not be the same as the user ID used to log in.
 @property (strong, nonatomic, readonly) NSString *userId;
-/// The user's publicly display name.
+/// The user's publicly displayed name.
 @property (strong, nonatomic, readonly) NSString *displayName;
 /// The URL for the user's control panel to customize their profile, or `nil`
 /// if not applicable.

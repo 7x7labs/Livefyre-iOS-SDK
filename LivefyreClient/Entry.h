@@ -58,34 +58,72 @@ enum PermissionScope {
 /// comment.
 @interface Entry : NSObject
 /// The unique Livefyre ID of this entry.
+///
+/// This is not guaranteed to remain unchanged over the life of an Entry.
 @property (strong, nonatomic, readonly) NSString *entryId;
-/// The entry's parent entry for replies, likes and embeds. `nil` for top-level
-/// comments.
+
+/// The parent of this entry.
+///
+/// Posts with this set are replies to the given Post, and are a top-level
+/// comment on the article if this is `nil`. Likes and Embeds should always
+/// have this set to a Post as they make little sense on their own.
 @property (weak, nonatomic, readonly) Entry *parent;
-/// The collection this entry is in.
+
+/// The Collection containing this Entry.
 @property (weak, nonatomic, readonly) Collection *collection;
+
 /// The author of this entry.
 @property (weak, nonatomic, readonly) Author *author;
 
-/// Creation date of this entry in epoch time.
+/// When this Entry was first created, in epoch time.
 @property (nonatomic, readonly) int createdAt;
-/// Time that this entry was last edited, in epoch time.
+/// When this Entry was last edited, in epoch time.
 @property (nonatomic, readonly) int editedAt;
+
+/// Livefyre collections can contain data from external social networks. This
+/// field indicates where this specific Entry came from.
+///
+/// 0, 4, 5, 8: Livefyre
+/// 1, 2, 7: Twitter
+/// 3, 6: Facebook
 @property (nonatomic, readonly) int source;
+
+/// The type of this Entry.
+///
+/// This property should always match the result of checking the content type
+/// based on the subclass.
 @property (nonatomic, readonly) enum ContentType contentType;
+
+/// The visibility of this Entry.
+///
+/// ContentVisibilityOwner indicates that the Entry can only be seen by the
+/// posting user. This normally should not be revealed in the UI.
+///
+/// ContentTypeGroup indicates that the Entry is currently waiting for
+/// moderation and so it only visible to the posting user and any moderators
+/// for the Livefyre collection.
+///
+/// Posts which cannot be seen by the current user are automatically filtered
+/// out, so ContentVisibilityNone will normally not be seen.
 @property (nonatomic, readonly) enum ContentVisibility visibility;
-/// Has this entry been deleted? If this is YES, all other fields other than
-/// entryId are likely to be 0 or `nil`.
+
+/// Has this entry been deleted?
+///
+/// If this is YES, all other fields other than entryId will either be 0/nil or
+/// have stale data which should not be used.
 @property (nonatomic, readonly) BOOL deleted;
 
 /// Replies to this entry. Generally only populated for Posts.
 @property (strong, nonatomic, readonly) NSArray *children;
+
 /// Images or videos embedded in this entry. Generally only populated for
 /// Posts.
 @property (strong, nonatomic, readonly) NSArray *embed;
+
 /// Likes for this entry.
 @property (strong, nonatomic, readonly) NSArray *likes;
 
+// Implementation details follow
 @property (strong, nonatomic, readonly) NSString *replaces;
 @property (strong, nonatomic, readonly) NSString *parentId;
 @property (nonatomic, readonly) int64_t event;
@@ -104,8 +142,10 @@ enum PermissionScope {
 - (void)copyFrom:(Entry *)entry;
 @end
 
-/// An opinion of approval expressed by the author about its parent. Likes add
-/// no additional data above what Entry already has.
+/// An opinion of approval expressed by the author about its parent.
+///
+/// Likes add no additional data above what Entry already has, and the `author`
+/// is typically the only interesting property.
 @interface Like : Entry
 - (Like *)initWithDictionary:(NSDictionary *)eventData
                  authorsFrom:(id <AuthorLookup>)authorData;
@@ -115,9 +155,12 @@ enum PermissionScope {
 @interface Post : Entry
 /// The body of the comment, in HTML.
 @property (strong, nonatomic, readonly) NSString *body;
-/// The comment's author's local permissions level, which can be used to mark
-/// posts by moderators and such.
+
+/// The comment's author's local permissions level.
+///
+/// This can be used to mark posts by moderators and such.
 @property (nonatomic, readonly) enum Permissions authorPermissions;
+
 /// The scope of the author's local permissions.
 @property (nonatomic, readonly) enum PermissionScope permissionScope;
 
@@ -137,12 +180,16 @@ enum PermissionScope {
 /// Unknown.
 @property (strong, nonatomic, readonly) NSString *type;
 /// Name of the author of the embedded content.
+///
+/// Note that this is the name of the creator of the content being embedded,
+/// not the author of the post.
 @property (strong, nonatomic, readonly) NSString *authorName;
 /// URL of the author's site.
 @property (strong, nonatomic, readonly) NSString *authorUrl;
 /// HTML which includes the embedded content, which may be used instead of
 /// using url directly.
 @property (strong, nonatomic, readonly) NSString *html;
+/// Unknown.
 @property (strong, nonatomic, readonly) NSString *version;
 /// Name of the source of the embedded content.
 @property (strong, nonatomic, readonly) NSString *providerName;

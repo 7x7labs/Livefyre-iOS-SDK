@@ -20,5 +20,12 @@
 	<string>http://livefyre.github.com/Livefyre-iOS-SDK/%DOCSETATOMFILENAME</string>
 	<key>--docset-package-url</key>
 	<string>http://livefyre.github.com/Livefyre-iOS-SDK/%DOCSETPACKAGEFILENAME</string>
+	<key>--index-desc</key>
+	<string>../doc/documentation-index.md</string>
+	<key>--include</key>
+	<array>
+		<string>../doc/Build-template.md</string>
+		<string>../doc/Getting Started-template.md</string>
+	</array>
 </dict>
 </plist>

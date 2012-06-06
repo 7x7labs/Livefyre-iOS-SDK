@@ -124,7 +124,7 @@ the most recent posts in the collection:
 
 The SDK's API documentation can be accessed in three ways:
 
-1. Online in your web browser at https://livefyre.github.com/Livefyre-iOS-SDK/.
+1. Online in your web browser at http://livefyre.github.com/Livefyre-iOS-SDK/.
 2. Directly within Xcode. Open Xcode Preferences and switch to the
    Documentation tab. Click the + button and add the Livefyre iOS SDK feed:
    feed://TODO.atom
