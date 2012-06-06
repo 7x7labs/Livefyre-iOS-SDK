@@ -1,0 +1,1548 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>LivefyreClient Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.0.5 (build 789)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">Livefyre iOS SDK </a></h1>
+				<a id="developerHome" href="../index.html">Livefyre, Inc.</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">LivefyreClient Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	
+	
+	<option value="class_methods">Class Methods</option>
+	
+	<option value="//api/name/clientWithDomain:bootstrapRoot:domainKey:">&nbsp;&nbsp;&nbsp;&nbsp;+ clientWithDomain:bootstrapRoot:domainKey:</option>
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/authenticateUser:forCollection:gotUser:">&nbsp;&nbsp;&nbsp;&nbsp;- authenticateUser:forCollection:gotUser:</option>
+	
+	<option value="//api/name/authenticateUser:forSite:forArticle:gotUser:">&nbsp;&nbsp;&nbsp;&nbsp;- authenticateUser:forSite:forArticle:gotUser:</option>
+	
+	<option value="//api/name/authenticateUserWithToken:forCollection:gotUser:">&nbsp;&nbsp;&nbsp;&nbsp;- authenticateUserWithToken:forCollection:gotUser:</option>
+	
+	<option value="//api/name/authenticateUserWithToken:forSite:forArticle:gotUser:">&nbsp;&nbsp;&nbsp;&nbsp;- authenticateUserWithToken:forSite:forArticle:gotUser:</option>
+	
+	<option value="//api/name/createCollection:forArticle:atUrl:forSite:withKey:withTags:collectionCreated:">&nbsp;&nbsp;&nbsp;&nbsp;- createCollection:forArticle:atUrl:forSite:withKey:withTags:collectionCreated:</option>
+	
+	<option value="//api/name/createPost:inCollection:onComplete:">&nbsp;&nbsp;&nbsp;&nbsp;- createPost:inCollection:onComplete:</option>
+	
+	<option value="//api/name/createPost:inReplyTo:onComplete:">&nbsp;&nbsp;&nbsp;&nbsp;- createPost:inReplyTo:onComplete:</option>
+	
+	<option value="//api/name/getCollectionForArticle:inSite:forUser:gotCollection:">&nbsp;&nbsp;&nbsp;&nbsp;- getCollectionForArticle:inSite:forUser:gotCollection:</option>
+	
+	<option value="//api/name/getCollectionForArticle:inSite:forUserName:gotCollection:">&nbsp;&nbsp;&nbsp;&nbsp;- getCollectionForArticle:inSite:forUserName:gotCollection:</option>
+	
+	<option value="//api/name/getCollectionForArticle:inSite:forUserToken:gotCollection:">&nbsp;&nbsp;&nbsp;&nbsp;- getCollectionForArticle:inSite:forUserToken:gotCollection:</option>
+	
+	<option value="//api/name/likeContent:onComplete:">&nbsp;&nbsp;&nbsp;&nbsp;- likeContent:onComplete:</option>
+	
+	<option value="//api/name/pendingAsyncRequests">&nbsp;&nbsp;&nbsp;&nbsp;- pendingAsyncRequests</option>
+	
+	<option value="//api/name/startPollingForUpdates:pollFrequency:requestTimeout:gotNewPosts:">&nbsp;&nbsp;&nbsp;&nbsp;- startPollingForUpdates:pollFrequency:requestTimeout:gotNewPosts:</option>
+	
+	<option value="//api/name/stopPollingForUpdates:">&nbsp;&nbsp;&nbsp;&nbsp;- stopPollingForUpdates:</option>
+	
+	<option value="//api/name/unlikeContent:onComplete:">&nbsp;&nbsp;&nbsp;&nbsp;- unlikeContent:onComplete:</option>
+	
+	<option value="//api/name/updateCollection:forArticle:atUrl:forSite:withKey:withTags:collectionUpdated:">&nbsp;&nbsp;&nbsp;&nbsp;- updateCollection:forArticle:atUrl:forSite:withKey:withTags:collectionUpdated:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+</ul></li>
+
+
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/clientWithDomain:bootstrapRoot:domainKey:">clientWithDomain:bootstrapRoot:domainKey:</a></span></li>
+	
+</ul></li>
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUser:forCollection:gotUser:">authenticateUser:forCollection:gotUser:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUser:forSite:forArticle:gotUser:">authenticateUser:forSite:forArticle:gotUser:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithToken:forCollection:gotUser:">authenticateUserWithToken:forCollection:gotUser:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithToken:forSite:forArticle:gotUser:">authenticateUserWithToken:forSite:forArticle:gotUser:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createCollection:forArticle:atUrl:forSite:withKey:withTags:collectionCreated:">createCollection:forArticle:atUrl:forSite:withKey:withTags:collectionCreated:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createPost:inCollection:onComplete:">createPost:inCollection:onComplete:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createPost:inReplyTo:onComplete:">createPost:inReplyTo:onComplete:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getCollectionForArticle:inSite:forUser:gotCollection:">getCollectionForArticle:inSite:forUser:gotCollection:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getCollectionForArticle:inSite:forUserName:gotCollection:">getCollectionForArticle:inSite:forUserName:gotCollection:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getCollectionForArticle:inSite:forUserToken:gotCollection:">getCollectionForArticle:inSite:forUserToken:gotCollection:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/likeContent:onComplete:">likeContent:onComplete:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/pendingAsyncRequests">pendingAsyncRequests</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/startPollingForUpdates:pollFrequency:requestTimeout:gotNewPosts:">startPollingForUpdates:pollFrequency:requestTimeout:gotNewPosts:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/stopPollingForUpdates:">stopPollingForUpdates:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/unlikeContent:onComplete:">unlikeContent:onComplete:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/updateCollection:forArticle:atUrl:forSite:withKey:withTags:collectionUpdated:">updateCollection:forArticle:atUrl:forSite:withKey:withTags:collectionUpdated:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="LivefyreClient Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">LivefyreClient Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">LivefyreClient.h<br />LivefyreClient.m</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>LivefyreClient is the top-level interface to the Livefyre SDK.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/clientWithDomain:bootstrapRoot:domainKey:">+&nbsp;clientWithDomain:bootstrapRoot:domainKey:</a></code>
+		<span class="tooltip"><p>Create a new Livefyre client.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/pendingAsyncRequests">&ndash;&nbsp;pendingAsyncRequests</a></code>
+		<span class="tooltip"><p>Are there currently any running asynchronous requests triggered by this
+client?</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/authenticateUser:forCollection:gotUser:">&ndash;&nbsp;authenticateUser:forCollection:gotUser:</a></code>
+		<span class="tooltip"><p>Authenticate a user for accessing and posting to a collection.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/authenticateUser:forSite:forArticle:gotUser:">&ndash;&nbsp;authenticateUser:forSite:forArticle:gotUser:</a></code>
+		<span class="tooltip"><p>Authenticate a user for accessing and posting to a collection.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/authenticateUserWithToken:forCollection:gotUser:">&ndash;&nbsp;authenticateUserWithToken:forCollection:gotUser:</a></code>
+		<span class="tooltip"><p>Authenticate a user for accessing and posting to a collection.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/authenticateUserWithToken:forSite:forArticle:gotUser:">&ndash;&nbsp;authenticateUserWithToken:forSite:forArticle:gotUser:</a></code>
+		<span class="tooltip"><p>Authenticate a user for accessing and posting to a collection.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createCollection:forArticle:atUrl:forSite:withKey:withTags:collectionCreated:">&ndash;&nbsp;createCollection:forArticle:atUrl:forSite:withKey:withTags:collectionCreated:</a></code>
+		<span class="tooltip"><p>Create a new collection for comments on an article.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/updateCollection:forArticle:atUrl:forSite:withKey:withTags:collectionUpdated:">&ndash;&nbsp;updateCollection:forArticle:atUrl:forSite:withKey:withTags:collectionUpdated:</a></code>
+		<span class="tooltip"><p>Update the metadata for an existing collection.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getCollectionForArticle:inSite:forUser:gotCollection:">&ndash;&nbsp;getCollectionForArticle:inSite:forUser:gotCollection:</a></code>
+		<span class="tooltip"><p>Get the collection for an article.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getCollectionForArticle:inSite:forUserName:gotCollection:">&ndash;&nbsp;getCollectionForArticle:inSite:forUserName:gotCollection:</a></code>
+		<span class="tooltip"><p>Get the collection for an article.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getCollectionForArticle:inSite:forUserToken:gotCollection:">&ndash;&nbsp;getCollectionForArticle:inSite:forUserToken:gotCollection:</a></code>
+		<span class="tooltip"><p>Get the collection for an article.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/startPollingForUpdates:pollFrequency:requestTimeout:gotNewPosts:">&ndash;&nbsp;startPollingForUpdates:pollFrequency:requestTimeout:gotNewPosts:</a></code>
+		<span class="tooltip"><p>Start polling for updates made to the contents of a <a href="../Classes/Collection.html">Collection</a>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/stopPollingForUpdates:">&ndash;&nbsp;stopPollingForUpdates:</a></code>
+		<span class="tooltip"><p>Stop polling for new posts made to a collection.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/likeContent:onComplete:">&ndash;&nbsp;likeContent:onComplete:</a></code>
+		<span class="tooltip"><p><a href="../Classes/Like.html">Like</a> a post in a collection.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/unlikeContent:onComplete:">&ndash;&nbsp;unlikeContent:onComplete:</a></code>
+		<span class="tooltip"><p>Unlike a post in a collection.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createPost:inCollection:onComplete:">&ndash;&nbsp;createPost:inCollection:onComplete:</a></code>
+		<span class="tooltip"><p>Create a new top-level post in a collection.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createPost:inReplyTo:onComplete:">&ndash;&nbsp;createPost:inReplyTo:onComplete:</a></code>
+		<span class="tooltip"><p>Create a reply to an existing post in a collection.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Class Methods" name="class_methods"></a>
+						<h2 class="subtitle subtitle-methods">Class Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/clientWithDomain:bootstrapRoot:domainKey:" title="clientWithDomain:bootstrapRoot:domainKey:"></a>
+	<h3 class="subsubtitle method-title">clientWithDomain:bootstrapRoot:domainKey:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Create a new Livefyre client.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (LivefyreClient *)clientWithDomain:(NSString *)<em>domain</em> bootstrapRoot:(NSString *)<em>bootstrapRootUrl</em> domainKey:(NSString *)<em>key</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>domain</em></dt>
+			<dd><p>The Livefyre domain, including TLD, but not protocol (e.g.
+@&ldquo;7x7-1.fyre.co&rdquo;).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>bootstrapRootUrl</em></dt>
+			<dd><p>The root URL of the bootstrap data source, not
+including protocol or trailing slash.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>key</em></dt>
+			<dd><p>The Livefyre API key for authenticating users on the domain.</p>
+
+<p>The domain key is optional; if not supplied then authenticateUserWithToken
+must be used rather than authenticate<a href="../Classes/User.html">User</a>. Not supplying the key is
+potentially more secure, as it makes it possible to avoid ever having the
+domain key on the user&rsquo;s device.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Create a new Livefyre client.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/authenticateUser:forCollection:gotUser:" title="authenticateUser:forCollection:gotUser:"></a>
+	<h3 class="subsubtitle method-title">authenticateUser:forCollection:gotUser:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Authenticate a user for accessing and posting to a collection.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)authenticateUser:(NSString *)<em>userName</em> forCollection:(NSString *)<em>collectionId</em> gotUser:(RequestComplete)<em>callback</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userName</em></dt>
+			<dd><p>The user&rsquo;s ID.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>collectionId</em></dt>
+			<dd><p>The ID of the collection to get access to.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>callback</em></dt>
+			<dd><p>Block to call with the <a href="../Classes/User.html"><code>User</code></a> object.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Authenticate a user for accessing and posting to a collection.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/authenticateUser:forSite:forArticle:gotUser:" title="authenticateUser:forSite:forArticle:gotUser:"></a>
+	<h3 class="subsubtitle method-title">authenticateUser:forSite:forArticle:gotUser:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Authenticate a user for accessing and posting to a collection.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)authenticateUser:(NSString *)<em>userName</em> forSite:(NSString *)<em>siteId</em> forArticle:(NSString *)<em>articleId</em> gotUser:(RequestComplete)<em>callback</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userName</em></dt>
+			<dd><p>The user&rsquo;s ID.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>siteId</em></dt>
+			<dd><p>The site containing the desired collection.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>articleId</em></dt>
+			<dd><p>The article which the collection is for.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>callback</em></dt>
+			<dd><p>Block to call with the <a href="../Classes/User.html"><code>User</code></a> object.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Authenticate a user for accessing and posting to a collection.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/authenticateUserWithToken:forCollection:gotUser:" title="authenticateUserWithToken:forCollection:gotUser:"></a>
+	<h3 class="subsubtitle method-title">authenticateUserWithToken:forCollection:gotUser:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Authenticate a user for accessing and posting to a collection.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)authenticateUserWithToken:(NSString *)<em>userToken</em> forCollection:(NSString *)<em>collectionId</em> gotUser:(RequestComplete)<em>callback</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userToken</em></dt>
+			<dd><p>The user&rsquo;s Livefyre token.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>collectionId</em></dt>
+			<dd><p>The ID of the collection to get access to.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>callback</em></dt>
+			<dd><p>Block to call with the <a href="../Classes/User.html"><code>User</code></a> object.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Authenticate a user for accessing and posting to a collection.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/authenticateUserWithToken:forSite:forArticle:gotUser:" title="authenticateUserWithToken:forSite:forArticle:gotUser:"></a>
+	<h3 class="subsubtitle method-title">authenticateUserWithToken:forSite:forArticle:gotUser:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Authenticate a user for accessing and posting to a collection.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)authenticateUserWithToken:(NSString *)<em>userToken</em> forSite:(NSString *)<em>siteId</em> forArticle:(NSString *)<em>articleId</em> gotUser:(RequestComplete)<em>callback</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userToken</em></dt>
+			<dd><p>The user&rsquo;s Livefyre token.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>siteId</em></dt>
+			<dd><p>The site containing the desired collection.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>articleId</em></dt>
+			<dd><p>The article which the collection is for.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>callback</em></dt>
+			<dd><p>Block to call with the <a href="../Classes/User.html"><code>User</code></a> object.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Authenticate a user for accessing and posting to a collection.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createCollection:forArticle:atUrl:forSite:withKey:withTags:collectionCreated:" title="createCollection:forArticle:atUrl:forSite:withKey:withTags:collectionCreated:"></a>
+	<h3 class="subsubtitle method-title">createCollection:forArticle:atUrl:forSite:withKey:withTags:collectionCreated:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Create a new collection for comments on an article.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)createCollection:(NSString *)<em>title</em> forArticle:(NSString *)<em>articleId</em> atUrl:(NSString *)<em>url</em> forSite:(NSString *)<em>siteId</em> withKey:(NSString *)<em>siteKey</em> withTags:(NSString *)<em>tags</em> collectionCreated:(RequestComplete)<em>callback</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>title</em></dt>
+			<dd><p>Title of the article.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>articleId</em></dt>
+			<dd><p>Unique ID of the article.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>url</em></dt>
+			<dd><p>URL of the article.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>siteId</em></dt>
+			<dd><p>ID of the site the article is in.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>siteKey</em></dt>
+			<dd><p>Livefyre API key for the site.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>tags</em></dt>
+			<dd><p>Comma separated list of tags for the collection.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>callback</em></dt>
+			<dd><p>Block to call with the ID of the new collection.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Create a new collection for comments on an article.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createPost:inCollection:onComplete:" title="createPost:inCollection:onComplete:"></a>
+	<h3 class="subsubtitle method-title">createPost:inCollection:onComplete:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Create a new top-level post in a collection.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)createPost:(NSString *)<em>body</em> inCollection:(Collection *)<em>collection</em> onComplete:(RequestComplete)<em>callback</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>body</em></dt>
+			<dd><p>HTML body of the new post.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>collection</em></dt>
+			<dd><p><a href="../Classes/Collection.html">Collection</a> to add the post to.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>callback</em></dt>
+			<dd><p>Callback called with the new <a href="../Classes/Post.html"><code>Post</code></a>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Create a new top-level post in a collection.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createPost:inReplyTo:onComplete:" title="createPost:inReplyTo:onComplete:"></a>
+	<h3 class="subsubtitle method-title">createPost:inReplyTo:onComplete:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Create a reply to an existing post in a collection.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)createPost:(NSString *)<em>body</em> inReplyTo:(Post *)<em>parent</em> onComplete:(RequestComplete)<em>callback</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>body</em></dt>
+			<dd><p>HTML body of the new post.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>parent</em></dt>
+			<dd><p>Parent post to reply to.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>callback</em></dt>
+			<dd><p>Callback called with the new <a href="../Classes/Post.html"><code>Post</code></a>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Create a reply to an existing post in a collection.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getCollectionForArticle:inSite:forUser:gotCollection:" title="getCollectionForArticle:inSite:forUser:gotCollection:"></a>
+	<h3 class="subsubtitle method-title">getCollectionForArticle:inSite:forUser:gotCollection:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Get the collection for an article.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)getCollectionForArticle:(NSString *)<em>articleId</em> inSite:(NSString *)<em>siteId</em> forUser:(User *)<em>user</em> gotCollection:(RequestComplete)<em>callback</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>articleId</em></dt>
+			<dd><p>The ID of the article to get the collection for.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>siteId</em></dt>
+			<dd><p>The ID of the site the article is in.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>user</em></dt>
+			<dd><p>The user to get the collection for, or nil to access the
+collection anonymously.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>callback</em></dt>
+			<dd><p>Callback called with the <a href="../Classes/Collection.html">Collection</a> once the metadata has
+been retrieved.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Get the collection for an article.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getCollectionForArticle:inSite:forUserName:gotCollection:" title="getCollectionForArticle:inSite:forUserName:gotCollection:"></a>
+	<h3 class="subsubtitle method-title">getCollectionForArticle:inSite:forUserName:gotCollection:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Get the collection for an article.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)getCollectionForArticle:(NSString *)<em>articleId</em> inSite:(NSString *)<em>siteId</em> forUserName:(NSString *)<em>userName</em> gotCollection:(RequestComplete)<em>callback</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>articleId</em></dt>
+			<dd><p>The ID of the article to get the collection for.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>siteId</em></dt>
+			<dd><p>The ID of the site the article is in.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userName</em></dt>
+			<dd><p>The ID of the user to get the collection for. Must not be nil.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>callback</em></dt>
+			<dd><p>Callback called with the <a href="../Classes/Collection.html">Collection</a> once the metadata has
+been retrieved.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Get the collection for an article.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getCollectionForArticle:inSite:forUserToken:gotCollection:" title="getCollectionForArticle:inSite:forUserToken:gotCollection:"></a>
+	<h3 class="subsubtitle method-title">getCollectionForArticle:inSite:forUserToken:gotCollection:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Get the collection for an article.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)getCollectionForArticle:(NSString *)<em>articleId</em> inSite:(NSString *)<em>siteId</em> forUserToken:(NSString *)<em>userToken</em> gotCollection:(RequestComplete)<em>callback</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>articleId</em></dt>
+			<dd><p>The ID of the article to get the collection for.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>siteId</em></dt>
+			<dd><p>The ID of the site the article is in.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userToken</em></dt>
+			<dd><p>A signed Livefyre token for the user to get the collection
+for. Must not be nil.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>callback</em></dt>
+			<dd><p>Callback called with the <a href="../Classes/Collection.html">Collection</a> once the metadata has
+been retrieved.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Get the collection for an article.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/likeContent:onComplete:" title="likeContent:onComplete:"></a>
+	<h3 class="subsubtitle method-title">likeContent:onComplete:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="../Classes/Like.html">Like</a> a post in a collection.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)likeContent:(Entry *)<em>entry</em> onComplete:(RequestComplete)<em>callback</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>entry</em></dt>
+			<dd><p>The post to <a href="../Classes/Like.html">Like</a>.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>callback</em></dt>
+			<dd><p>Callback called with the ID of the post which was liked.</p>
+
+<p>The post must be from a logged-in user&rsquo;s <a href="../Classes/Collection.html">Collection</a> and posted by a
+different user.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p><a href="../Classes/Like.html">Like</a> a post in a collection.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/pendingAsyncRequests" title="pendingAsyncRequests"></a>
+	<h3 class="subsubtitle method-title">pendingAsyncRequests</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Are there currently any running asynchronous requests triggered by this
+client?</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)pendingAsyncRequests</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Are there currently any running asynchronous requests triggered by this
+client?</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/startPollingForUpdates:pollFrequency:requestTimeout:gotNewPosts:" title="startPollingForUpdates:pollFrequency:requestTimeout:gotNewPosts:"></a>
+	<h3 class="subsubtitle method-title">startPollingForUpdates:pollFrequency:requestTimeout:gotNewPosts:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Start polling for updates made to the contents of a <a href="../Classes/Collection.html">Collection</a>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)startPollingForUpdates:(Collection *)<em>collection</em> pollFrequency:(NSTimeInterval)<em>frequency</em> requestTimeout:(NSTimeInterval)<em>timeout</em> gotNewPosts:(RequestComplete)<em>callback</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>collection</em></dt>
+			<dd><p><a href="../Classes/Collection.html">Collection</a> to start polling for updates.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>frequency</em></dt>
+			<dd><p>How often in seconds to check for new content.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>timeout</em></dt>
+			<dd><p>Timeout in seconds for the long-poll requests.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>callback</em></dt>
+			<dd><p>Callback to call when new data arrives.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Start polling for updates made to the contents of a <a href="../Classes/Collection.html">Collection</a>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/stopPollingForUpdates:" title="stopPollingForUpdates:"></a>
+	<h3 class="subsubtitle method-title">stopPollingForUpdates:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Stop polling for new posts made to a collection.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)stopPollingForUpdates:(Collection *)<em>collection</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>collection</em></dt>
+			<dd><p><a href="../Classes/Collection.html">Collection</a> to start polling.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Stop polling for new posts made to a collection.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/unlikeContent:onComplete:" title="unlikeContent:onComplete:"></a>
+	<h3 class="subsubtitle method-title">unlikeContent:onComplete:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Unlike a post in a collection.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)unlikeContent:(Entry *)<em>entry</em> onComplete:(RequestComplete)<em>callback</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>entry</em></dt>
+			<dd><p>The post to Unlike.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>callback</em></dt>
+			<dd><p>Callback called with the ID of the post which was unliked.</p>
+
+<p>The post must be from a logged-in user&rsquo;s <a href="../Classes/Collection.html">Collection</a> and posted by a
+different user.</p>
+
+<p>This has no effect if the post was not previously liked.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Unlike a post in a collection.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/updateCollection:forArticle:atUrl:forSite:withKey:withTags:collectionUpdated:" title="updateCollection:forArticle:atUrl:forSite:withKey:withTags:collectionUpdated:"></a>
+	<h3 class="subsubtitle method-title">updateCollection:forArticle:atUrl:forSite:withKey:withTags:collectionUpdated:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Update the metadata for an existing collection.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)updateCollection:(NSString *)<em>title</em> forArticle:(NSString *)<em>articleId</em> atUrl:(NSString *)<em>url</em> forSite:(NSString *)<em>siteId</em> withKey:(NSString *)<em>siteKey</em> withTags:(NSString *)<em>tags</em> collectionUpdated:(RequestComplete)<em>callback</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>title</em></dt>
+			<dd><p>New title of the article.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>articleId</em></dt>
+			<dd><p>Unique ID of the article.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>url</em></dt>
+			<dd><p>New URL of the article.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>siteId</em></dt>
+			<dd><p>ID of the site the article is in.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>siteKey</em></dt>
+			<dd><p>Livefyre API key for the site.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>tags</em></dt>
+			<dd><p>New comma separated list of tags for the collection.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>callback</em></dt>
+			<dd><p>Block to call with the ID of the updated collection.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Update the metadata for an existing collection.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2012 Livefyre, Inc.. All rights reserved. (Last updated: 2012-06-05)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.5 (build 789)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>
