@@ -4,7 +4,7 @@
 <dict>
 	<key>--input</key>
 	<array>
-		<string>LivefyreClient</string>
+		<string>.</string>
 	</array>
 	<key>--project-name</key>
 	<string>Livefyre iOS SDK</string>
@@ -15,6 +15,10 @@
 	<key>--docsetutil-path</key>
 	<string>/Applications/Xcode.app/Contents/Developer/usr/bin/docsetutil</string>
 	<key>--output</key>
-	<string>doc</string>
+	<string>../doc</string>
+	<key>--docset-feed-url</key>
+	<string>http://livefyre.github.com/Livefyre-iOS-SDK/%DOCSETATOMFILENAME</string>
+	<key>--docset-package-url</key>
+	<string>http://livefyre.github.com/Livefyre-iOS-SDK/%DOCSETPACKAGEFILENAME</string>
 </dict>
 </plist>
