@@ -124,15 +124,14 @@ the most recent posts in the collection:
 
 The SDK's API documentation can be accessed in three ways:
 
-1. Online in your web browser at
-   [https://github.com/Livefyre/Livefyre-iOS-SDK].
+1. Online in your web browser at https://livefyre.github.com/Livefyre-iOS-SDK/.
 2. Directly within Xcode. Open Xcode Preferences and switch to the
    Documentation tab. Click the + button and add the Livefyre iOS SDK feed:
    feed://TODO.atom
 3. By generating the documentation directly from the source code. This requires
-   appledoc, which is available with homebrew. Simply run `appledoc .` from
-   within the source checkout, and the documentation will be generated into the
-   `docs` directory and registered with Xcode.
+   appledoc, which is available with homebrew. Navigate to the LivefyreClient
+   directory, then run `appledoc .`. The documentation will be generated into
+   the `doc` directory and registered with Xcode.
 
 The SDK has a very minimal sample client in the ExampleClient directory. To
 build it, place a copy of the SDK framework in the ExampleClient directory,
@@ -187,8 +186,8 @@ add the SDK to a project.
 
 Install CocoaPods if needed:
 
-  $ sudo gem install cocoapods
-  $ pod setup
+    $ sudo gem install cocoapods
+    $ pod setup
 
 Create a Podfile. The minimum file required is:
 
