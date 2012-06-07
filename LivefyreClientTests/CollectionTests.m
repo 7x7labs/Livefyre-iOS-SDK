@@ -1055,4 +1055,27 @@ do { \
     STAssertEqualObjects(post.author.avatarUrl, @"http://livefyre-avatar.s3.amazonaws.com/a/1/d627b1ba3fce6ab0af872ed3d65278fd/50.jpg", nil);
 }
 
+- (void)testEref {
+    // "not a valid eref" and "eref://valid eref"
+    NSString *contentWithEref = @"{\"content\":[{\"erefs\":[\"not a valid eref\",\"0286D0DC181D610805053A9D83979958\",\"099BC19A4312381F080037D9C6808E5BC5\"],\"vis\":1,\"childContent\":[],\"source\":5,\"type\":0,\"event\":1336606326575866}]}";
+    Collection *collection = [self basicCollection];
+    User *user = [User userWithDictionary:[@"{\"profile\":{\"id\":\"mod user\"},\"permissions\":{\"moderator_key\":\"736563726574206B6579\"}}" objectFromJSONString]];
+
+    __block int fetcherCalls = 0;
+
+    [collection addCollectionContent:[contentWithEref objectFromJSONString]
+                         erefFetcher:^(NSString *eref) {
+                             NSString *decrypted = [user tryToDecodeEref:eref];
+                             if (fetcherCalls < 2) {
+                                 STAssertNil(decrypted, nil);
+                             }
+                             else {
+                                 STAssertEqualObjects(decrypted, @"eref://valid eref", nil);
+                             }
+                             ++fetcherCalls;
+                         }];
+
+    STAssertEquals(fetcherCalls, 3, nil);
+}
+
 @end
