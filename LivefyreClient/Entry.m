@@ -167,7 +167,7 @@
     return [child addToParent:self];
 }
 
-- (void)copyFrom:(Entry *)entry {
+- (Entry *)copyFrom:(Entry *)entry {
     if (entry.deleted)
         self.deleted = YES;
 
@@ -191,6 +191,8 @@
         [self addChild:child];
     for (Entry *child in entry.likes)
         [self addChild:child];
+
+    return self;
 }
 
 static inline BOOL areEqual(id a1, id a2) {
@@ -252,10 +254,10 @@ static inline BOOL areEqual(id a1, id a2) {
     return self;
 }
 
-- (void)copyFrom:(Entry *)entry {
+- (Entry *)copyFrom:(Entry *)entry {
     if ([entry isKindOfClass:[self class]] && entry.editedAt > self.editedAt)
         self.body = [(Post *)entry body];
-    [super copyFrom:entry];
+    return [super copyFrom:entry];
 }
 
 - (BOOL)isEqual:(id)object {
@@ -296,6 +298,15 @@ static inline BOOL areEqual(id a1, id a2) {
 - (BOOL)isEqual:(id)object {
     if (![object isKindOfClass:[self class]]) return NO;
     return [super isEqual:object];
+}
+
+- (Entry *)copyFrom:(Entry *)entry {
+    [super copyFrom:entry];
+    if (!entry.visibility) {
+        self.visibility = ContentVisibilityNone;
+        self.parent.likes = [self.parent.likes reject:^BOOL(id obj) { return [[obj entryId] isEqual:self.entryId]; }];
+    }
+    return self.parent;
 }
 @end
 
@@ -352,7 +363,7 @@ static inline BOOL areEqual(id a1, id a2) {
     return self;
 }
 
-- (void)copyFrom:(Entry *)entry {
+- (Entry *)copyFrom:(Entry *)entry {
     if ([entry isKindOfClass:[self class]] && entry.editedAt > self.editedAt) {
         Embed *embed = (Embed *)entry;
         self.link = embed.link;
@@ -373,7 +384,7 @@ static inline BOOL areEqual(id a1, id a2) {
         self.position = embed.position;
     }
 
-    [super copyFrom:entry];
+    return [super copyFrom:entry];
 }
 
 - (BOOL)isEqual:(id)object {

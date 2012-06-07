@@ -124,6 +124,9 @@
 }
 
 - (Author *)authorForId:(NSString *)authorId {
+    if (!authorId)
+        return nil;
+
     if (![self.authors objectForKey:authorId]) {
         [authors_ setObject:[Author authorPlaceholder:authorId]
                      forKey:authorId];
@@ -153,8 +156,7 @@
     if (original) {
         if (!original.deleted)
             --numberVisible_;
-        [original copyFrom:entry];
-        return original;
+        return [original copyFrom:entry];;
     }
 
     if (parent && [entry.entryId hasPrefix:parent.entryId] && parent.deleted) {
@@ -186,8 +188,7 @@
     if (existingEntry) {
         if ([existingEntry isEqual:entry])
             return nil;
-        [existingEntry copyFrom:entry];
-        return existingEntry;
+        return [existingEntry copyFrom:entry];
     }
 
     // Add any children of this node which arrived before it
@@ -209,9 +210,8 @@
 
     if (original) {
         // what if the visibility changed?
-        [original copyFrom:entry];
         [entries_ setObject:original forKey:entry.entryId];
-        return original;
+        return [original copyFrom:entry];
     }
 
     if (![self userCanViewEntry:entry])
