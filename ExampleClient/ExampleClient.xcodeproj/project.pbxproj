@@ -294,10 +294,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleClient/ExampleClient-Prefix.pch";
 				INFOPLIST_FILE = "ExampleClient/ExampleClient-Info.plist";
-				OTHER_LDFLAGS = (
-					"-framework",
-					LivefyreClient,
-				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -313,10 +310,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleClient/ExampleClient-Prefix.pch";
 				INFOPLIST_FILE = "ExampleClient/ExampleClient-Info.plist";
-				OTHER_LDFLAGS = (
-					"-framework",
-					LivefyreClient,
-				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

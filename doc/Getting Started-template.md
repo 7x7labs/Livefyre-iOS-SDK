@@ -8,18 +8,20 @@
 3. Drag the downloaded copy of LivefyreClient.framework into the Frameworks
    group in the project.
 4. Click on the project in the Project Navigator.
-5. Click on the Build Phases tab
-6. Add the following libraries to Link Binary With Libraries: (some may already
+5. Click on the Build Settings tab
+6. Add -ObjC to Other Linker Flags
+7. Click on the Build Phases tab
+8. Add the following libraries to Link Binary With Libraries: (some may already
    be present)
     1. CFNetwork.framework
     2. MobileCoreServices.framework
     3. libz.dylib
     4. SystemConfiguration.framework
     5. MessageUI.framework
-7. Move the added libraries to the Frameworks group
-8. Import the SDK headers with #import <LivefyreClient/LivefyreClient.h> in
+9. Move the added libraries to the Frameworks group
+10. Import the SDK headers with #import <LivefyreClient/LivefyreClient.h> in
    either the prefix header or just the files which need it.
-9. Build the project to verify that installation was successful.
+11. Build the project to verify that installation was successful.
 
 ## Using the SDK
 
