@@ -42,7 +42,9 @@
 	
 	<option value="class_methods">Class Methods</option>
 	
-	<option value="//api/name/clientWithDomain:bootstrapRoot:domainKey:">&nbsp;&nbsp;&nbsp;&nbsp;+ clientWithDomain:bootstrapRoot:domainKey:</option>
+	<option value="//api/name/clientWithDomain:domainKey:">&nbsp;&nbsp;&nbsp;&nbsp;+ clientWithDomain:domainKey:</option>
+	
+	<option value="//api/name/clientWithDomain:environment:domainKey:">&nbsp;&nbsp;&nbsp;&nbsp;+ clientWithDomain:environment:domainKey:</option>
 	
 	
 	
@@ -115,7 +117,9 @@
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/clientWithDomain:bootstrapRoot:domainKey:">clientWithDomain:bootstrapRoot:domainKey:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/clientWithDomain:domainKey:">clientWithDomain:domainKey:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/clientWithDomain:environment:domainKey:">clientWithDomain:environment:domainKey:</a></span></li>
 	
 </ul></li>
 
@@ -219,7 +223,14 @@ operations, and is documented with each method.</p>
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/clientWithDomain:bootstrapRoot:domainKey:">+&nbsp;clientWithDomain:bootstrapRoot:domainKey:</a></code>
+		<code><a href="#//api/name/clientWithDomain:domainKey:">+&nbsp;clientWithDomain:domainKey:</a></code>
+		<span class="tooltip"><p>Create a new Livefyre client.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/clientWithDomain:environment:domainKey:">+&nbsp;clientWithDomain:environment:domainKey:</a></code>
 		<span class="tooltip"><p>Create a new Livefyre client.</p></span>
 	</span>
 	
@@ -385,8 +396,8 @@ client?</p></span>
 						<h2 class="subtitle subtitle-methods">Class Methods</h2>
 						
 						<div class="section-method">
-	<a name="//api/name/clientWithDomain:bootstrapRoot:domainKey:" title="clientWithDomain:bootstrapRoot:domainKey:"></a>
-	<h3 class="subsubtitle method-title">clientWithDomain:bootstrapRoot:domainKey:</h3>
+	<a name="//api/name/clientWithDomain:domainKey:" title="clientWithDomain:domainKey:"></a>
+	<h3 class="subsubtitle method-title">clientWithDomain:domainKey:</h3>
 	
 	
 	
@@ -396,7 +407,7 @@ client?</p></span>
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (LivefyreClient *)clientWithDomain:(NSString *)<em>domain</em> bootstrapRoot:(NSString *)<em>bootstrapRootUrl</em> domainKey:(NSString *)<em>key</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (LivefyreClient *)clientWithDomain:(NSString *)<em>domain</em> domainKey:(NSString *)<em>key</em></code></div>
 
     
 	
@@ -410,9 +421,71 @@ client?</p></span>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>bootstrapRootUrl</em></dt>
-			<dd><p>The root URL of the bootstrap data source, not
-including protocol or trailing slash.</p></dd>
+			<dt><em>key</em></dt>
+			<dd><p>The Livefyre API key for authenticating users on the domain.</p>
+
+<p>The domain key is optional; if not supplied then authenticateUserWithToken
+must be used rather than authenticate<a href="../Classes/User.html">User</a>. Not supplying the key is
+potentially more secure, as it makes it possible to avoid ever having the
+domain key on the user&rsquo;s device.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Create a new Livefyre client.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LivefyreClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/clientWithDomain:environment:domainKey:" title="clientWithDomain:environment:domainKey:"></a>
+	<h3 class="subsubtitle method-title">clientWithDomain:environment:domainKey:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Create a new Livefyre client.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (LivefyreClient *)clientWithDomain:(NSString *)<em>domain</em> environment:(NSString *)<em>environment</em> domainKey:(NSString *)<em>key</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>domain</em></dt>
+			<dd><p>The Livefyre domain, including TLD, but not protocol (e.g.
+@&ldquo;7x7-1.fyre.co&rdquo;).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>environment</em></dt>
+			<dd><p>The server environment to use. If not specified the
+standard production environment is used.</p></dd>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
@@ -1165,7 +1238,7 @@ see <a href="../Classes/Collection.html#//api/name/fetchBootstrap:">[Collection 
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)likeContent:(Entry *)<em>entry</em> onComplete:(RequestComplete)<em>callback</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)likeContent:(Content *)<em>content</em> onComplete:(RequestComplete)<em>callback</em></code></div>
 
     
 	
@@ -1173,7 +1246,7 @@ see <a href="../Classes/Collection.html#//api/name/fetchBootstrap:">[Collection 
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>entry</em></dt>
+			<dt><em>content</em></dt>
 			<dd><p>The post to <a href="../Classes/Like.html">Like</a>.</p></dd>
 		</dl>
 		
@@ -1296,9 +1369,9 @@ client?</p>
 			<dd><p>Callback to call when new data arrives.</p>
 
 <p>The gotNewPosts callback is invoked with an array of new or modified
-entries when new content arrives from the server.</p>
+contents when new content arrives from the server.</p>
 
-<p>Content can only be streamed to a single callback for each collection.
+<p><a href="../Classes/Content.html">Content</a> can only be streamed to a single callback for each collection.
 Calling startPollingForUpdates while data is already being streamed for the
 given collection will result in stopPollingForUpdates being called first.</p>
 
@@ -1396,7 +1469,7 @@ collection as is being polled.</p></dd>
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)unlikeContent:(Entry *)<em>entry</em> onComplete:(RequestComplete)<em>callback</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)unlikeContent:(Content *)<em>content</em> onComplete:(RequestComplete)<em>callback</em></code></div>
 
     
 	
@@ -1404,7 +1477,7 @@ collection as is being polled.</p></dd>
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>entry</em></dt>
+			<dt><em>content</em></dt>
 			<dd><p>The post to Unlike.</p></dd>
 		</dl>
 		
@@ -1539,7 +1612,7 @@ different user.</p>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2012 Livefyre, Inc.. All rights reserved. (Last updated: 2012-06-07)</span><br />
+						<p><span class="copyright">&copy; 2012 Livefyre, Inc.. All rights reserved. (Last updated: 2012-06-13)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.5 (build 789)</a>.</span></p>
 						
