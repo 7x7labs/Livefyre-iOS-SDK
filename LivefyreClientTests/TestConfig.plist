@@ -22,7 +22,7 @@
 	<string>test-article-id</string>
 	<key>nonexistant article</key>
 	<string>please don&apos;t make an article with this id</string>
-	<key>bootstrap root</key>
-	<string>bootstrap-json-dev.s3.amazonaws.com/t402.livefyre.com</string>
+	<key>environment</key>
+	<string>t402.livefyre.com</string>
 </dict>
 </plist>

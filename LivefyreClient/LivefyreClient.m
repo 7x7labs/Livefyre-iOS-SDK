@@ -71,12 +71,11 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
 }
 
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
-                       bootstrapRoot:(NSString *)bootstrapRootUrl
                            domainKey:(NSString *)key
 {
     LivefyreClient *client = [[LivefyreClient alloc] init];
     client->domain = domain;
-    client->bootstrapRoot = bootstrapRootUrl;
+    client->bootstrapRoot = @"bootstrap-json-dev.s3.amazonaws.com";
     client->key = key;
     client->pollingCollections = [[NSMutableDictionary alloc] init];
 
@@ -86,6 +85,15 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
         CFRelease(uuid);
     }
 
+    return client;
+}
+
++ (LivefyreClient *)clientWithDomain:(NSString *)domain
+                         environment:(NSString *)environment
+                           domainKey:(NSString *)key
+{
+    LivefyreClient *client = [self clientWithDomain:domain domainKey:key];
+    client->bootstrapRoot = [NSString stringWithFormat:@"%@/%@", client->bootstrapRoot, environment, nil];
     return client;
 }
 

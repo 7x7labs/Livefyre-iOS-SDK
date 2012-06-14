@@ -14,9 +14,16 @@
 @synthesize client;
 
 - (void)setUp {
-    self.client = [LivefyreClient clientWithDomain:[Config objectForKey:@"domain"]
-                                     bootstrapRoot:[Config objectForKey:@"bootstrap root"]
-                                         domainKey:[Config objectForKey:@"domain key"]];
+    NSString *environment = [Config objectForKey:@"environment"];
+    if ([environment length]) {
+        self.client = [LivefyreClient clientWithDomain:[Config objectForKey:@"domain"]
+                                           environment:environment
+                                             domainKey:[Config objectForKey:@"domain key"]];
+    }
+    else {
+        self.client = [LivefyreClient clientWithDomain:[Config objectForKey:@"domain"]
+                                             domainKey:[Config objectForKey:@"domain key"]];
+    }
 }
 
 - (void)waitForTests {
