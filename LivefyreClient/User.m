@@ -10,7 +10,7 @@
 
 #import "ARC4.h"
 #import "Author.h"
-#import "Entry.h"
+#import "Content.h"
 
 @interface User ()
 @property (strong, nonatomic) NSMutableArray *decryptionKeys;
@@ -68,16 +68,16 @@
     return nil;
 }
 
-- (BOOL)canViewEntry:(Entry *)entry {
-    switch (entry.visibility) {
+- (BOOL)canViewContent:(Content *)content {
+    switch (content.visibility) {
         case ContentVisibilityNone:
             return NO;
         case ContentVisibilityEveryone:
             return YES;
         case ContentVisibilityOwner:
-            return [entry.author.authorId isEqualToString:self.userId];
+            return [content.author.authorId isEqualToString:self.userId];
         case ContentVisibilityGroup:
-            return self.isModerator || [entry.author.authorId isEqualToString:self.userId];
+            return self.isModerator || [content.author.authorId isEqualToString:self.userId];
         default:
             // error?
             return NO;

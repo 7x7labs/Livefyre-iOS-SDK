@@ -468,11 +468,11 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
     ((void (^)())[timer userInfo])();
 }
 
-- (void)likeOrUnlikeContent:(Entry *)entry
+- (void)likeOrUnlikeContent:(Content *)content
                  onComplete:(RequestComplete)callback
                    endpoint:(NSString *)endpoint
 {
-    Collection *collection = entry.collection;
+    Collection *collection = content.collection;
 
     if (!collection.user) {
         callback(YES, [NSString stringWithFormat:@"Must be logged in to %@ postsß", endpoint, nil]);
@@ -481,7 +481,7 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
 
     NSString *url = [NSString stringWithFormat:@"http://quill.%@/api/v3.0/message/%@/%@/",
                      domain,
-                     [HttpRequest urlEscape:entry.entryId],
+                     [HttpRequest urlEscape:content.contentId],
                      endpoint];
 
     NSDictionary *formParameters = [NSDictionary dictionaryWithObjectsAndKeys:collection.collectionId, @"collection_id",
@@ -499,23 +499,23 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
          if (!data)
              return;
 
-         [collection addLikeForPost:entry visibility:[endpoint isEqualToString:@"like"]];
-         callback(NO, entry);
+         [collection addLikeForPost:content visibility:[endpoint isEqualToString:@"like"]];
+         callback(NO, content);
      }];
 }
 
-- (void)likeContent:(Entry *)entry
+- (void)likeContent:(Content *)content
          onComplete:(RequestComplete)callback
 {
-    [self likeOrUnlikeContent:entry
+    [self likeOrUnlikeContent:content
                    onComplete:callback
                      endpoint:@"like"];
 }
 
-- (void)unlikeContent:(Entry *)entry
+- (void)unlikeContent:(Content *)content
            onComplete:(RequestComplete)callback
 {
-    [self likeOrUnlikeContent:entry
+    [self likeOrUnlikeContent:content
                    onComplete:callback
                      endpoint:@"unlike"];
 }
@@ -551,7 +551,7 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
     if (parent) {
         postBody = [NSDictionary dictionaryWithObjectsAndKeys:body, @"body",
                     collection.user.token, @"lftoken",
-                    parent.entryId, @"parent_id",
+                    parent.contentId, @"parent_id",
                     uuid, @"_bi",
                     nil];
     }
@@ -573,8 +573,8 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
 
          NSArray *newPosts = [collection addCollectionContent:data erefFetcher:nil];
 
-         for (Post *entry in newPosts) {
-             callback(NO, (Post *)entry);
+         for (Post *content in newPosts) {
+             callback(NO, (Post *)content);
          }
      }];
 }

@@ -9,7 +9,7 @@
 #import "UserTests.h"
 
 #import "Author.h"
-#import "Entry.h"
+#import "Content.h"
 #import "JSONKit.h"
 #import "User.h"
 
@@ -21,21 +21,21 @@
 @synthesize authorId;
 @end
 
-@interface MockEntry : NSObject
+@interface MockContent : NSObject
 @property (strong, nonatomic) MockAuthor *author;
 @property (nonatomic) enum ContentVisibility visibility;
 @end
 
-@implementation MockEntry
+@implementation MockContent
 @synthesize author;
 @synthesize visibility;
 
-+ (id)entryWithAuthorId:(NSString *)authorId visbility:(enum ContentVisibility)visibility {
-    MockEntry *entry = [[MockEntry alloc] init];
-    entry.author = [[MockAuthor alloc] init];
-    entry.author.authorId = authorId;
-    entry.visibility = visibility;
-    return entry;
++ (id)contentWithAuthorId:(NSString *)authorId visbility:(enum ContentVisibility)visibility {
+    MockContent *content = [[MockContent alloc] init];
+    content.author = [[MockAuthor alloc] init];
+    content.author.authorId = authorId;
+    content.visibility = visibility;
+    return content;
 }
 @end
 
@@ -53,36 +53,36 @@
     STAssertEquals(user.isModerator, YES, nil);
 }
 
-- (void)testCanViewEntry {
+- (void)testCanViewContent {
     NSString *modUserJson = @"{\"profile\":{\"id\":\"mod user\"},\"permissions\":{\"moderator_key\":\"c6da4b1d248e07dc534da83691f74676490f591b\"}}";
     NSString *nonModUserJson = @"{\"profile\":{\"id\":\"non mod user\"},\"permissions\":{}}";
 
     User *modUser = [User userWithDictionary:[modUserJson objectFromJSONString]];
     User *nonModUser = [User userWithDictionary:[nonModUserJson objectFromJSONString]];
 
-    id visibleToNone = [MockEntry entryWithAuthorId:@"" visbility:ContentVisibilityNone];
-    id visibleToAll = [MockEntry entryWithAuthorId:@"" visbility:ContentVisibilityEveryone];
-    id visibleToModUser = [MockEntry entryWithAuthorId:@"mod user" visbility:ContentVisibilityOwner];
-    id visibleToNonModUser = [MockEntry entryWithAuthorId:@"non mod user" visbility:ContentVisibilityOwner];
-    id visibleToOtherUser = [MockEntry entryWithAuthorId:@"other user" visbility:ContentVisibilityOwner];
-    id visibleToModsAndNonModUser = [MockEntry entryWithAuthorId:@"non mod user" visbility:ContentVisibilityGroup];
-    id visibleToModsAndOtherUser = [MockEntry entryWithAuthorId:@"other user" visbility:ContentVisibilityGroup];
+    id visibleToNone = [MockContent contentWithAuthorId:@"" visbility:ContentVisibilityNone];
+    id visibleToAll = [MockContent contentWithAuthorId:@"" visbility:ContentVisibilityEveryone];
+    id visibleToModUser = [MockContent contentWithAuthorId:@"mod user" visbility:ContentVisibilityOwner];
+    id visibleToNonModUser = [MockContent contentWithAuthorId:@"non mod user" visbility:ContentVisibilityOwner];
+    id visibleToOtherUser = [MockContent contentWithAuthorId:@"other user" visbility:ContentVisibilityOwner];
+    id visibleToModsAndNonModUser = [MockContent contentWithAuthorId:@"non mod user" visbility:ContentVisibilityGroup];
+    id visibleToModsAndOtherUser = [MockContent contentWithAuthorId:@"other user" visbility:ContentVisibilityGroup];
 
-    STAssertEquals([modUser canViewEntry:visibleToNone], NO, nil);
-    STAssertEquals([modUser canViewEntry:visibleToAll], YES, nil);
-    STAssertEquals([modUser canViewEntry:visibleToModUser], YES, nil);
-    STAssertEquals([modUser canViewEntry:visibleToNonModUser], NO, nil);
-    STAssertEquals([modUser canViewEntry:visibleToOtherUser], NO, nil);
-    STAssertEquals([modUser canViewEntry:visibleToModsAndNonModUser], YES, nil);
-    STAssertEquals([modUser canViewEntry:visibleToModsAndOtherUser], YES, nil);
+    STAssertEquals([modUser canViewContent:visibleToNone], NO, nil);
+    STAssertEquals([modUser canViewContent:visibleToAll], YES, nil);
+    STAssertEquals([modUser canViewContent:visibleToModUser], YES, nil);
+    STAssertEquals([modUser canViewContent:visibleToNonModUser], NO, nil);
+    STAssertEquals([modUser canViewContent:visibleToOtherUser], NO, nil);
+    STAssertEquals([modUser canViewContent:visibleToModsAndNonModUser], YES, nil);
+    STAssertEquals([modUser canViewContent:visibleToModsAndOtherUser], YES, nil);
 
-    STAssertEquals([nonModUser canViewEntry:visibleToNone], NO, nil);
-    STAssertEquals([nonModUser canViewEntry:visibleToAll], YES, nil);
-    STAssertEquals([nonModUser canViewEntry:visibleToModUser], NO, nil);
-    STAssertEquals([nonModUser canViewEntry:visibleToNonModUser], YES, nil);
-    STAssertEquals([nonModUser canViewEntry:visibleToOtherUser], NO, nil);
-    STAssertEquals([nonModUser canViewEntry:visibleToModsAndNonModUser], YES, nil);
-    STAssertEquals([nonModUser canViewEntry:visibleToModsAndOtherUser], NO, nil);
+    STAssertEquals([nonModUser canViewContent:visibleToNone], NO, nil);
+    STAssertEquals([nonModUser canViewContent:visibleToAll], YES, nil);
+    STAssertEquals([nonModUser canViewContent:visibleToModUser], NO, nil);
+    STAssertEquals([nonModUser canViewContent:visibleToNonModUser], YES, nil);
+    STAssertEquals([nonModUser canViewContent:visibleToOtherUser], NO, nil);
+    STAssertEquals([nonModUser canViewContent:visibleToModsAndNonModUser], YES, nil);
+    STAssertEquals([nonModUser canViewContent:visibleToModsAndOtherUser], NO, nil);
 }
 
 - (void)testEref {

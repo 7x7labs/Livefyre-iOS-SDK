@@ -10,7 +10,7 @@
 
 #import <LivefyreClient/Author.h>
 #import <LivefyreClient/Collection.h>
-#import <LivefyreClient/Entry.h>
+#import <LivefyreClient/Content.h>
 #import <LivefyreClient/User.h>
 
 /// LivefyreClient is the top-level interface to the Livefyre SDK.
@@ -199,7 +199,7 @@
 /// @param callback Callback to call when new data arrives.
 ///
 /// The gotNewPosts callback is invoked with an array of new or modified
-/// entries when new content arrives from the server.
+/// contents when new content arrives from the server.
 ///
 /// Content can only be streamed to a single callback for each collection.
 /// Calling startPollingForUpdates while data is already being streamed for the
@@ -219,25 +219,25 @@
 /// @name Content Creation
 
 /// Like a post in a collection.
-/// @param entry The post to Like.
+/// @param content The post to Like.
 /// @param callback Callback called with the Post which was liked.
 ///
 /// The post must be from a logged-in user's Collection and posted by a
 /// different user.
 ///
 /// Trying to Like things other than Posts may have odd results.
-- (void)likeContent:(Entry *)entry
+- (void)likeContent:(Content *)content
          onComplete:(RequestComplete)callback;
 
 /// Unlike a post in a collection.
-/// @param entry The post to Unlike.
+/// @param content The post to Unlike.
 /// @param callback Callback called with Post which was unliked.
 ///
 /// The post must be from a logged-in user's Collection and posted by a
 /// different user.
 ///
 /// This has no effect if the post was not previously liked.
-- (void)unlikeContent:(Entry *)entry
+- (void)unlikeContent:(Content *)content
            onComplete:(RequestComplete)callback;
 
 /// Create a new top-level post in a collection.

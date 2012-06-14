@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class Entry;
+@class Content;
 
 /// A logged-in User.
 ///
@@ -40,5 +40,5 @@
 + (User *)userWithDictionary:(NSDictionary *)userData;
 
 - (NSString *)tryToDecodeEref:(NSString *)eref;
-- (BOOL)canViewEntry:(Entry *)entry;
+- (BOOL)canViewContent:(Content *)content;
 @end

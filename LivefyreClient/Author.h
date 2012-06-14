@@ -10,7 +10,7 @@
 
 @class User;
 
-/// The author of an entry in a collection.
+/// The author of content in a collection.
 @interface Author : NSObject
 /// The Livefyre author ID, which may not be the same as the user ID used to
 /// log in.

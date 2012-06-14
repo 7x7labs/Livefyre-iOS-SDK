@@ -1,18 +1,18 @@
 //
-//  Event.m
+//  Content.m
 //  jwt-test
 //
 //  Created by Thomas Goyne on 5/17/12.
 //  Copyright (c) 2012 7x7 Labs. All rights reserved.
 //
 
-#import "Entry.h"
+#import "Content.h"
 
 #import "Author.h"
 #import "NSArray+BlocksKit.h"
 
-@interface Entry ()
-@property (strong, nonatomic) NSString *entryId;
+@interface Content ()
+@property (strong, nonatomic) NSString *contentId;
 @property (weak, nonatomic) Author *author;
 @property (nonatomic) int createdAt;
 @property (nonatomic) int editedAt;
@@ -21,7 +21,7 @@
 @property (nonatomic) enum ContentVisibility visibility;
 @property (strong, nonatomic) NSString *replaces;
 @property (strong, nonatomic) NSString *parentId;
-@property (weak, nonatomic) Entry *parent;
+@property (weak, nonatomic) Content *parent;
 @property (strong, nonatomic) NSArray *children;
 @property (strong, nonatomic) NSArray *embed;
 @property (strong, nonatomic) NSArray *likes;
@@ -29,7 +29,7 @@
 @property (weak, nonatomic) Collection *collection;
 @property (nonatomic) int64_t event;
 
-- (Entry *)addToParent:(Entry *)parent;
+- (Content *)addToParent:(Content *)parent;
 @end
 
 @interface Post ()
@@ -57,7 +57,7 @@
 @property (nonatomic) int position;
 @end
 
-@implementation Entry
+@implementation Content
 @synthesize author = author_;
 @synthesize children = children_;
 @synthesize collection = collection_;
@@ -66,7 +66,7 @@
 @synthesize deleted = deleted_;
 @synthesize editedAt = editedAt_;
 @synthesize embed = embed_;
-@synthesize entryId = entryId_;
+@synthesize contentId = contentId_;
 @synthesize event = event_;
 @synthesize likes = likes_;
 @synthesize parent = parent_;
@@ -75,60 +75,60 @@
 @synthesize source = source_;
 @synthesize visibility = visibility_;
 
-+ (Entry *)entryWithDictionary:(NSDictionary *)eventData
++ (Content *)contentWithDictionary:(NSDictionary *)contentData
                    authorsFrom:(id <AuthorLookup>)authorData
                   inCollection:(Collection *)collection
 {
-    Entry *newEntry = [self entryWithDictionary:eventData
+    Content *newContent = [self contentWithDictionary:contentData
                                     authorsFrom:authorData
                                      withParent:nil];
-    newEntry.collection = collection;
-    return newEntry;
+    newContent.collection = collection;
+    return newContent;
 }
 
-+ (Entry *)entryWithDictionary:(NSDictionary *)eventData
++ (Content *)contentWithDictionary:(NSDictionary *)contentData
                    authorsFrom:(id <AuthorLookup>)authorData
-                    withParent:(Entry *)parent
+                    withParent:(Content *)parent
 {
-    Entry *newEntry = nil;
-    switch ([[eventData objectForKey:@"type"] intValue]) {
+    Content *newContent = nil;
+    switch ([[contentData objectForKey:@"type"] intValue]) {
         case ContentTypeOpine:
-            newEntry = [[Like alloc] initWithDictionary:eventData
+            newContent = [[Like alloc] initWithDictionary:contentData
                                             authorsFrom:authorData];
             break;
         case ContentTypeEmbed:
-            newEntry = [[Embed alloc] initWithDictionary:eventData];
+            newContent = [[Embed alloc] initWithDictionary:contentData];
             break;
         case ContentTypeMessage: {
-            newEntry = [[Post alloc] initWithDictionary:eventData authorsFrom:authorData];
-            if (newEntry.deleted)
-                newEntry.parentId = parent.entryId;
+            newContent = [[Post alloc] initWithDictionary:contentData authorsFrom:authorData];
+            if (newContent.deleted)
+                newContent.parentId = parent.contentId;
             break;
         }
         default:
-            NSLog(@"Unrecognized content type: %d", [[eventData objectForKey:@"type"] intValue]);
+            NSLog(@"Unrecognized content type: %d", [[contentData objectForKey:@"type"] intValue]);
             return nil;
     }
-    newEntry.collection = parent.collection;
-    return newEntry;
+    newContent.collection = parent.collection;
+    return newContent;
 }
 
-- (Entry *)initWithDictionary:(NSDictionary *)eventData {
+- (Content *)initWithDictionary:(NSDictionary *)contentData {
     self = [super init];
     if (self) {
-        NSDictionary *content = [eventData objectForKey:@"content"];
+        NSDictionary *content = [contentData objectForKey:@"content"];
         self.children = [[NSArray alloc] init];
-        self.contentType = [[eventData objectForKey:@"type"] intValue];
+        self.contentType = [[contentData objectForKey:@"type"] intValue];
         self.createdAt = [[content objectForKey:@"createdAt"] intValue];
         self.editedAt = self.createdAt;
         self.embed = [[NSArray alloc] init];
-        self.entryId = [content objectForKey:@"id"];
+        self.contentId = [content objectForKey:@"id"];
         self.likes = [[NSArray alloc] init];
         self.replaces = [self fixNull:[content objectForKey:@"replaces"]];
-        self.source = [[eventData objectForKey:@"source"] intValue];
-        self.visibility = [[eventData objectForKey:@"vis"] intValue];
+        self.source = [[contentData objectForKey:@"source"] intValue];
+        self.visibility = [[contentData objectForKey:@"vis"] intValue];
 
-        id event = [eventData objectForKey:@"event"];
+        id event = [contentData objectForKey:@"event"];
         if ([event respondsToSelector:@selector(longLongValue)])
             self.event = [event longLongValue];
         else
@@ -157,39 +157,39 @@
     return value;
 }
 
-- (Entry *)addToParent:(Entry *)parent {
+- (Content *)addToParent:(Content *)parent {
     parent.children = [parent.children arrayByAddingObject:self];
     return self;
 }
 
-- (Entry *)addChild:(Entry *)child {
+- (Content *)addChild:(Content *)child {
     child.parent = self;
     return [child addToParent:self];
 }
 
-- (Entry *)copyFrom:(Entry *)entry {
-    if (entry.deleted)
+- (Content *)copyFrom:(Content *)content {
+    if (content.deleted)
         self.deleted = YES;
 
-    if ([self.entryId hasPrefix:entry.entryId])
-        self.entryId = entry.entryId;
+    if ([self.contentId hasPrefix:content.contentId])
+        self.contentId = content.contentId;
 
-    if (entry.editedAt > self.editedAt) {
-        self.source = entry.source;
-        self.visibility = entry.visibility;
+    if (content.editedAt > self.editedAt) {
+        self.source = content.source;
+        self.visibility = content.visibility;
     }
-    if (!self.createdAt || !entry.createdAt)
-        self.createdAt = MAX(self.createdAt, entry.createdAt);
+    if (!self.createdAt || !content.createdAt)
+        self.createdAt = MAX(self.createdAt, content.createdAt);
     else
-        self.createdAt = MIN(self.createdAt, entry.createdAt);
+        self.createdAt = MIN(self.createdAt, content.createdAt);
 
-    self.editedAt = MAX(self.editedAt, entry.editedAt);
+    self.editedAt = MAX(self.editedAt, content.editedAt);
 
-    for (Entry *child in entry.children)
+    for (Content *child in content.children)
         [self addChild:child];
-    for (Entry *child in entry.embed)
+    for (Content *child in content.embed)
         [self addChild:child];
-    for (Entry *child in entry.likes)
+    for (Content *child in content.likes)
         [self addChild:child];
 
     return self;
@@ -201,7 +201,7 @@ static inline BOOL areEqual(id a1, id a2) {
 
 - (BOOL)isEqual:(id)object {
     if (![object isKindOfClass:[self class]]) return NO;
-    if (!areEqual(self.entryId, [object entryId])) return NO;
+    if (!areEqual(self.contentId, [object contentId])) return NO;
     if (self.parent != [object parent]) return NO;
     if (self.collection != [object collection]) return NO;
     if (self.author  != [object author]) return NO;
@@ -225,12 +225,12 @@ static inline BOOL areEqual(id a1, id a2) {
 @synthesize authorPermissions = authorPermissions_;
 @synthesize permissionScope = permissionScope_;
 
-- (Post *)initWithDictionary:(NSDictionary *)eventData
+- (Post *)initWithDictionary:(NSDictionary *)contentData
                  authorsFrom:(id <AuthorLookup>)authorData
 {
-    self = [super initWithDictionary:eventData];
+    self = [super initWithDictionary:contentData];
     if (self) {
-        NSDictionary *content = [eventData objectForKey:@"content"];
+        NSDictionary *content = [contentData objectForKey:@"content"];
         if ([content count] == 1u && [content objectForKey:@"id"]) {
             self.deleted = YES;
         }
@@ -254,10 +254,10 @@ static inline BOOL areEqual(id a1, id a2) {
     return self;
 }
 
-- (Entry *)copyFrom:(Entry *)entry {
-    if ([entry isKindOfClass:[self class]] && entry.editedAt > self.editedAt)
-        self.body = [(Post *)entry body];
-    return [super copyFrom:entry];
+- (Content *)copyFrom:(Content *)content {
+    if ([content isKindOfClass:[self class]] && content.editedAt > self.editedAt)
+        self.body = [(Post *)content body];
+    return [super copyFrom:content];
 }
 
 - (BOOL)isEqual:(id)object {
@@ -268,19 +268,19 @@ static inline BOOL areEqual(id a1, id a2) {
 @end
 
 @implementation Like
-- (Like *)initWithDictionary:(NSDictionary *)eventData
+- (Like *)initWithDictionary:(NSDictionary *)contentData
                  authorsFrom:(id <AuthorLookup>)authorData
 {
-    self = [super initWithDictionary:eventData];
+    self = [super initWithDictionary:contentData];
     if (self) {
-        NSDictionary *content = [eventData objectForKey:@"content"];
+        NSDictionary *content = [contentData objectForKey:@"content"];
         self.author = [authorData authorForId:[content objectForKey:@"authorId"]];
         self.parentId = [self fixNull:[content objectForKey:@"targetId"]];
     }
     return self;
 }
 
-- (Entry *)addToParent:(Entry *)parent {
+- (Content *)addToParent:(Content *)parent {
     BOOL (^matchesAuthor)(id) = ^BOOL(id obj) {
         return [[obj author] authorId] == self.author.authorId;
     };
@@ -300,11 +300,11 @@ static inline BOOL areEqual(id a1, id a2) {
     return [super isEqual:object];
 }
 
-- (Entry *)copyFrom:(Entry *)entry {
-    [super copyFrom:entry];
-    if (!entry.visibility) {
+- (Content *)copyFrom:(Content *)content {
+    [super copyFrom:content];
+    if (!content.visibility) {
         self.visibility = ContentVisibilityNone;
-        self.parent.likes = [self.parent.likes reject:^BOOL(id obj) { return [[obj entryId] isEqual:self.entryId]; }];
+        self.parent.likes = [self.parent.likes reject:^BOOL(id obj) { return [[obj contentId] isEqual:self.contentId]; }];
     }
     return self.parent;
 }
@@ -328,10 +328,10 @@ static inline BOOL areEqual(id a1, id a2) {
 @synthesize thumbnailWidth = thumbnailWidth_;
 @synthesize position = position_;
 
-- (Embed *)initWithDictionary:(NSDictionary *)eventData {
-    self = [super initWithDictionary:eventData];
+- (Embed *)initWithDictionary:(NSDictionary *)contentData {
+    self = [super initWithDictionary:contentData];
     if (self) {
-        NSDictionary *content = [eventData objectForKey:@"content"];
+        NSDictionary *content = [contentData objectForKey:@"content"];
         NSDictionary *oembed = [content objectForKey:@"oembed"];
 
         self.link = [content objectForKey:@"link"];
@@ -351,21 +351,21 @@ static inline BOOL areEqual(id a1, id a2) {
         self.thumbnailWidth = [[oembed objectForKey:@"thumbnail_width"] intValue];
         self.position = [[content objectForKey:@"position"] intValue];
         self.parentId = [self fixNull:[content objectForKey:@"targetId"]];
-        self.createdAt = (int)([[eventData objectForKey:@"event"] longLongValue] / 1000000);
+        self.createdAt = (int)([[contentData objectForKey:@"event"] longLongValue] / 1000000);
         self.editedAt = self.createdAt;
     }
     return self;
 }
 
-- (Entry *)addToParent:(Entry *)parent {
+- (Content *)addToParent:(Content *)parent {
     self.author = parent.author;
     parent.embed = [parent.embed arrayByAddingObject:self];
     return self;
 }
 
-- (Entry *)copyFrom:(Entry *)entry {
-    if ([entry isKindOfClass:[self class]] && entry.editedAt > self.editedAt) {
-        Embed *embed = (Embed *)entry;
+- (Content *)copyFrom:(Content *)content {
+    if ([content isKindOfClass:[self class]] && content.editedAt > self.editedAt) {
+        Embed *embed = (Embed *)content;
         self.link = embed.link;
         self.providerUrl = embed.providerUrl;
         self.title = embed.title;
@@ -384,7 +384,7 @@ static inline BOOL areEqual(id a1, id a2) {
         self.position = embed.position;
     }
 
-    return [super copyFrom:entry];
+    return [super copyFrom:content];
 }
 
 - (BOOL)isEqual:(id)object {

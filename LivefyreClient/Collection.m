@@ -9,7 +9,7 @@
 #import "Collection.h"
 
 #import "Author.h"
-#import "Entry.h"
+#import "Content.h"
 #import "User.h"
 
 #include <sys/time.h>
@@ -58,7 +58,7 @@
 
 @implementation Collection {
     NSMutableDictionary *authors_;
-    NSMutableDictionary *entries_;
+    NSMutableDictionary *contents_;
     NSMutableArray *followers_;
 }
 
@@ -106,7 +106,7 @@
     if (!collection) return collection;
 
     collection->authors_ = [[NSMutableDictionary alloc] init];
-    collection->entries_ = [[NSMutableDictionary alloc] init];
+    collection->contents_ = [[NSMutableDictionary alloc] init];
     collection->followers_ = [[NSMutableArray alloc] init];
     collection.topLevelPosts = [[NSMutableArray alloc] init];
     collection.orphans = [[NSMutableDictionary alloc] init];
@@ -138,169 +138,169 @@
     return [self.authors objectForKey:authorId];
 }
 
-- (NSString *)removeEntryIdSuffix:(NSString *)string {
+- (NSString *)removeContentIdSuffix:(NSString *)string {
     NSUInteger pos = [string rangeOfString:@"."].location;
     if (pos == NSNotFound)
         return nil;
     return [string substringToIndex:pos];
 }
 
-- (Entry *)handleDeletion:(Entry *)entry
-                   parent:(Entry *)parent
+- (Content *)handleDeletion:(Content *)content
+                   parent:(Content *)parent
           updatePostCount:(BOOL)updatePostCount
 {
     // In stream responses, deleted posts have the same ID as the original
     // post. In bootstrap responses, deleted posts have the original ID,
     // plus a child with the suffixed version of the original ID
-    Entry *original = [self entryForKey:entry.entryId];
+    Content *original = [self contentForKey:content.contentId];
     if (original) {
         if (!original.deleted)
             --numberVisible_;
-        return [original copyFrom:entry];;
+        return [original copyFrom:content];;
     }
 
-    if (parent && [entry.entryId hasPrefix:parent.entryId] && parent.deleted) {
-        [entries_ setObject:parent forKey:entry.entryId];
+    if (parent && [content.contentId hasPrefix:parent.contentId] && parent.deleted) {
+        [contents_ setObject:parent forKey:content.contentId];
         return parent;
     }
 
     // Otherwise either the undeleted one was never seen, or we've gotten
     // an unrecognized delete format
-    [entries_ setObject:entry forKey:entry.entryId];
+    [contents_ setObject:content forKey:content.contentId];
     if (parent)
-        [parent addChild:entry];
+        [parent addChild:content];
     else
-        [self.topLevelPosts addObject:entry];
-    return entry;
+        [self.topLevelPosts addObject:content];
+    return content;
 }
 
-- (Entry *)insertEntry:(Entry *)entry withParent:(Entry *)parent {
-    BOOL updatePostCount = entry.event < 0 || entry.event > self.lastEvent;
+- (Content *)insertContent:(Content *)content withParent:(Content *)parent {
+    BOOL updatePostCount = content.event < 0 || content.event > self.lastEvent;
 
-    if (entry.deleted)
-        return [self handleDeletion:entry parent:parent updatePostCount:updatePostCount];
+    if (content.deleted)
+        return [self handleDeletion:content parent:parent updatePostCount:updatePostCount];
 
-    // We might already have this entry, either due to overlap between the
-    // bootstrap data and the first page, or due to be being an entry created
+    // We might already have this content, either due to overlap between the
+    // bootstrap data and the first page, or due to be being content created
     // by this collection. In the first case the new one should be identical to
     // the old one, but in the second the new one might have more data.
-    Entry *existingEntry = [self entryForKey:entry.entryId];
-    if (existingEntry) {
-        if ([existingEntry isEqual:entry])
+    Content *existingContent = [self contentForKey:content.contentId];
+    if (existingContent) {
+        if ([existingContent isEqual:content])
             return nil;
-        return [existingEntry copyFrom:entry];
+        return [existingContent copyFrom:content];
     }
 
     // Add any children of this node which arrived before it
-    NSMutableArray *children = [self.orphans objectForKey:entry.entryId];
+    NSMutableArray *children = [self.orphans objectForKey:content.contentId];
     if (children) {
-        for (Entry *child in children)
-            [entry addChild:child];
-        [self.orphans removeObjectForKey:entry.entryId];
+        for (Content *child in children)
+            [content addChild:child];
+        [self.orphans removeObjectForKey:content.contentId];
     }
 
     // The replaces ID for edits has a suffix of unknown meaning, so try to
-    // find an entry whose ID is the prefix of the target ID
-    NSString *replaces = entry.replaces;
-    Entry *original = nil;
+    // find content whose ID is the prefix of the target ID
+    NSString *replaces = content.replaces;
+    Content *original = nil;
     while (replaces && !original) {
-        original = [self entryForKey:replaces];
-        replaces = [self removeEntryIdSuffix:replaces];
+        original = [self contentForKey:replaces];
+        replaces = [self removeContentIdSuffix:replaces];
     }
 
     if (original) {
         // what if the visibility changed?
-        [entries_ setObject:original forKey:entry.entryId];
-        return [original copyFrom:entry];
+        [contents_ setObject:original forKey:content.contentId];
+        return [original copyFrom:content];
     }
 
-    if (![self userCanViewEntry:entry])
+    if (![self userCanViewContent:content])
         return nil;
 
-    [entries_ setObject:entry forKey:entry.entryId];
-    if (updatePostCount && [entry isKindOfClass:[Post class]])
+    [contents_ setObject:content forKey:content.contentId];
+    if (updatePostCount && [content isKindOfClass:[Post class]])
         ++numberVisible_;
 
     // Register each prefix
-    replaces = entry.replaces;
+    replaces = content.replaces;
     while (replaces && !original) {
-        [entries_ setObject:entry forKey:replaces];
-        original = [self entryForKey:replaces];
-        replaces = [self removeEntryIdSuffix:replaces];
+        [contents_ setObject:content forKey:replaces];
+        original = [self contentForKey:replaces];
+        replaces = [self removeContentIdSuffix:replaces];
     }
 
     if (!parent)
-        parent = [self entryForKey:entry.parentId];
+        parent = [self contentForKey:content.parentId];
     if (parent)
-        return [parent addChild:entry];
+        return [parent addChild:content];
 
-    if (entry.parentId) {
+    if (content.parentId) {
         // Has a parent but we haven't read the parent yet, so remember it until
         // the parent arrives
-        NSMutableArray *siblings = [self.orphans objectForKey:entry.parentId];
+        NSMutableArray *siblings = [self.orphans objectForKey:content.parentId];
         if (!siblings) {
             siblings = [[NSMutableArray alloc] init];
-            [self.orphans setObject:siblings forKey:entry.parentId];
+            [self.orphans setObject:siblings forKey:content.parentId];
         }
-        [siblings addObject:entry];
+        [siblings addObject:content];
         return nil;
     }
 
-    [self.topLevelPosts addObject:entry];
-    return entry;
+    [self.topLevelPosts addObject:content];
+    return content;
 }
 
-- (Entry *)createEntry:(NSDictionary *)entryData parent:(Entry *)parent {
+- (Content *)createContent:(NSDictionary *)contentData parent:(Content *)parent {
     if (parent)
-        return [Entry entryWithDictionary:entryData
+        return [Content contentWithDictionary:contentData
                               authorsFrom:self
                                withParent:parent];
 
-    return [Entry entryWithDictionary:entryData
+    return [Content contentWithDictionary:contentData
                           authorsFrom:self
                          inCollection:self];
 }
 
-- (Entry *)addEntry:(NSDictionary *)entryData withParent:(Entry *)parent {
-    Entry *entry = [self createEntry:entryData parent:parent];
-    if (!entry)
+- (Content *)addContent:(NSDictionary *)contentData withParent:(Content *)parent {
+    Content *content = [self createContent:contentData parent:parent];
+    if (!content)
         return nil;
 
-    entry = [self insertEntry:entry withParent:parent];
-    if (!entry && [[entryData objectForKey:@"childContent"] count])
-        entry = [self entryForKey:entry.entryId];
+    content = [self insertContent:content withParent:parent];
+    if (!content && [[contentData objectForKey:@"childContent"] count])
+        content = [self contentForKey:content.contentId];
 
-    if (!entry)
+    if (!content)
         return nil;
 
-    for (NSDictionary *child in [entryData objectForKey:@"childContent"])
-        [self addEntry:child withParent:entry];
+    for (NSDictionary *child in [contentData objectForKey:@"childContent"])
+        [self addContent:child withParent:content];
 
-    return entry;
+    return content;
 }
 
-- (BOOL)userCanViewEntry:(Entry *)entry {
+- (BOOL)userCanViewContent:(Content *)content {
     // Unlikes show up as likes with visibility none, so we don't want to filter
     // them out
-    if ([entry isKindOfClass:[Like class]])
+    if ([content isKindOfClass:[Like class]])
         return YES;
     if (self.user)
-        return [self.user canViewEntry:entry];
-    return entry.visibility == ContentVisibilityEveryone;
+        return [self.user canViewContent:content];
+    return content.visibility == ContentVisibilityEveryone;
 }
 
-- (Entry *)entryForKey:(NSString *)entryId {
-    return entryId ? [entries_ objectForKey:entryId] : nil;
+- (Content *)contentForKey:(NSString *)contentId {
+    return contentId ? [contents_ objectForKey:contentId] : nil;
 }
 
 - (NSArray *)addCollectionContent:(NSDictionary *)content
                       erefFetcher:(void (^)(NSString *))erefFetcher
 {
-    NSArray *entries = [content objectForKey:@"content"];
-    if (!entries)
-        entries = [content objectForKey:@"messages"];
-    if (!entries)
-        entries = [[content objectForKey:@"states"] allValues];
+    NSArray *contents = [content objectForKey:@"content"];
+    if (!contents)
+        contents = [content objectForKey:@"messages"];
+    if (!contents)
+        contents = [[content objectForKey:@"states"] allValues];
 
     NSDictionary *authors = [content objectForKey:@"authors"];
     NSArray *followers = [content objectForKey:@"followers"];
@@ -308,7 +308,7 @@
 
     NSArray *filteredPosts = [[NSArray alloc] init];
 
-    for (NSDictionary *entry in entries) {
+    for (NSDictionary *entry in contents) {
         NSArray *erefs = [entry objectForKey:@"erefs"];
         if (erefs) {
             if (erefFetcher) {
@@ -341,26 +341,26 @@
         [[self authorForId:authorId] setTo:[authorData objectForKey:authorId]];
     }
 
-    NSMutableArray *newEntries = [[NSMutableArray alloc] initWithCapacity:[postData count]];
+    NSMutableArray *newContents = [[NSMutableArray alloc] initWithCapacity:[postData count]];
     for (NSDictionary *post in postData) {
-        Entry *newEntry = [self addEntry:post withParent:nil];
-        if (newEntry)
-            [newEntries addObject:newEntry];
+        Content *newContent = [self addContent:post withParent:nil];
+        if (newContent)
+            [newContents addObject:newContent];
     }
 
     if (lastEvent)
         lastEvent_ = lastEvent;
 
-    return newEntries;
+    return newContents;
 }
 
-- (void)addLikeForPost:(Entry *)post visibility:(int)vis {
+- (void)addLikeForPost:(Content *)post visibility:(int)vis {
     struct timeval tp;
     gettimeofday(&tp, 0);
-    NSString *likeId = [NSString stringWithFormat:@"%@+%@.%lld%lld", post.entryId, self.user.userId, (int64_t)tp.tv_sec, (int64_t)tp.tv_usec, nil];
+    NSString *likeId = [NSString stringWithFormat:@"%@+%@.%lld%lld", post.contentId, self.user.userId, (int64_t)tp.tv_sec, (int64_t)tp.tv_usec, nil];
     NSDictionary *likeContent = [NSDictionary dictionaryWithObjectsAndKeys:
                                  self.user.userId, @"authorId",
-                                 post.entryId, @"targetId",
+                                 post.contentId, @"targetId",
                                  likeId, @"id",
                                  nil];
     NSDictionary *likeResponse = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -371,7 +371,7 @@
                                   likeContent, @"content",
                                   nil];
 
-    [self addEntry:likeResponse withParent:post];
+    [self addContent:likeResponse withParent:post];
 }
 
 - (DateRange *)fetchRange:(DateRange *)range

@@ -247,7 +247,7 @@
     Post *post = [collection.posts objectAtIndex:0];
     STAssertEquals([post.children count], 0u, nil);
     STAssertEqualObjects(post.body, @"original body", nil);
-    STAssertEqualObjects(post.entryId, @"tweet-200315761892392960@twitter.com", nil);
+    STAssertEqualObjects(post.contentId, @"tweet-200315761892392960@twitter.com", nil);
 
     [collection addAuthors:nil
                   andPosts:[replacementPost objectFromJSONString]
@@ -260,7 +260,7 @@
 
     post = [collection.posts objectAtIndex:0];
     STAssertEqualObjects(post.body, @"replacement body", nil);
-    STAssertEqualObjects(post.entryId, @"tweet-200315761892392960@twitter.com", nil);
+    STAssertEqualObjects(post.contentId, @"tweet-200315761892392960@twitter.com", nil);
 
     // note: using original post id
     [collection addAuthors:nil
@@ -298,7 +298,7 @@
 
     Post *post = [collection.posts objectAtIndex:0];
     STAssertEqualObjects(post.body, @"replacement body", nil);
-    STAssertEqualObjects(post.entryId, @"tweet-200315761892392961@twitter.com", nil);
+    STAssertEqualObjects(post.contentId, @"tweet-200315761892392961@twitter.com", nil);
 
     [collection addAuthors:nil
                   andPosts:[originalPost objectFromJSONString]
@@ -311,7 +311,7 @@
 
     post = [collection.posts objectAtIndex:0];
     STAssertEqualObjects(post.body, @"replacement body", nil);
-    STAssertEqualObjects(post.entryId, @"tweet-200315761892392961@twitter.com", nil);
+    STAssertEqualObjects(post.contentId, @"tweet-200315761892392961@twitter.com", nil);
 
     // note: using original post id
     [collection addAuthors:nil
@@ -599,7 +599,7 @@
     STAssertEquals(collection.lastEvent, 1338400428925945LL, nil);
     STAssertEquals([collection.posts count], 1u, nil);
     Post *firstPost = [collection.posts objectAtIndex:0];
-    STAssertEqualObjects(firstPost.entryId, @"25802158", nil);
+    STAssertEqualObjects(firstPost.contentId, @"25802158", nil);
     STAssertEqualObjects(firstPost.body, @"<p>\u00a0new post</p>", nil);
     STAssertEqualObjects(firstPost.author.displayName, @"regUser", nil);
     STAssertEquals([firstPost.children count], 0u, nil);
@@ -619,7 +619,7 @@
     STAssertEquals(firstPost, [collection.posts objectAtIndex:0], nil);
     STAssertEquals([firstPost.children count], 1u, nil);
     Post *child = [firstPost.children objectAtIndex:0];
-    STAssertEqualObjects(child.entryId, @"25802159", nil);
+    STAssertEqualObjects(child.contentId, @"25802159", nil);
     STAssertEqualObjects(child.body,  @"<p>\u00a0 <a vocab=\"http://schema.org\" typeof=\"Person\" rel=\"nofollow\" resource=\"acct:2@7x7-1.fyre.co\" data-lf-provider=\"livefyre\" property=\"url\"  target=\"_blank\" class=\"fyre-mention fyre-mention-livefyre\">@<span property=\"name\">regUser</span></a>\u00a0reply to new post</p>", nil);
 
     STAssertEquals([newData count], 1u, nil);
@@ -630,7 +630,7 @@
     STAssertEquals(collection.lastEvent, 1338400967479010LL, nil);
     STAssertEquals([collection.posts count], 1u, nil);
     STAssertTrue(firstPost == [collection.posts objectAtIndex:0], nil);
-    STAssertEqualObjects(firstPost.entryId, @"25802158", nil);
+    STAssertEqualObjects(firstPost.contentId, @"25802158", nil);
     STAssertEqualObjects(firstPost.body, @"<p>edit post with reply</p>", nil);
     STAssertEqualObjects(firstPost.author.displayName, @"regUser", nil);
     STAssertEquals([firstPost.children count], 1u, nil);
@@ -644,7 +644,7 @@
     STAssertEquals(collection.lastEvent, 1338413150921195LL, nil);
     STAssertEquals([collection.posts count], 1u, nil);
     STAssertTrue(firstPost == [collection.posts objectAtIndex:0], nil);
-    STAssertEqualObjects(firstPost.entryId, @"25802158", nil);
+    STAssertEqualObjects(firstPost.contentId, @"25802158", nil);
     STAssertTrue(firstPost.deleted, nil);
     STAssertNotNil(firstPost.author, nil);
     STAssertEquals([firstPost.children count], 1u, nil);
@@ -716,7 +716,7 @@ do { \
     STAssertTrue([collection.posts count] > 0, nil);
     if ([collection.posts count] > 0) {
         post = [collection.posts objectAtIndex:0];
-        STAssertEqualObjects(post.entryId, @"25802160", nil);
+        STAssertEqualObjects(post.contentId, @"25802160", nil);
         STAssertNil(post.parent, nil);
         STAssertFalse(post.deleted, nil);
         if (!post.deleted) {
@@ -735,7 +735,7 @@ do { \
     STAssertTrue([collection.posts count] > 1, nil);
     if ([collection.posts count] > 1) {
         post = [collection.posts objectAtIndex:1];
-        STAssertEqualObjects(post.entryId, @"25802158", nil);
+        STAssertEqualObjects(post.contentId, @"25802158", nil);
         STAssertNil(post.parent, nil);
         STAssertTrue(post.deleted, nil);
 
@@ -744,7 +744,7 @@ do { \
         if ([post.children count] > 0) {
             post = [post.children objectAtIndex:0];
             STAssertEquals(parent, post.parent, nil);
-            STAssertEqualObjects(post.entryId, @"25802159", nil);
+            STAssertEqualObjects(post.contentId, @"25802159", nil);
             STAssertTrue(post.deleted, nil);
         }
 
@@ -754,7 +754,7 @@ do { \
     if ([collection.posts count] > 2) {
         post = [collection.posts objectAtIndex:2];
         STAssertNil(post.parent, nil);
-        STAssertEqualObjects(post.entryId, @"25802156", nil);
+        STAssertEqualObjects(post.contentId, @"25802156", nil);
         STAssertFalse(post.deleted, nil);
         if (!post.deleted) {
             STAssertEqualObjects([post body], @"<p>edited post</p>", nil);
@@ -773,7 +773,7 @@ do { \
         if ([post.children count] > 0) {
             post = [post.children objectAtIndex:0];
             STAssertEquals(parent, post.parent, nil);
-            STAssertEqualObjects(post.entryId, @"25802157", nil);
+            STAssertEqualObjects(post.contentId, @"25802157", nil);
             STAssertFalse(post.deleted, nil);
             if (!post.deleted) {
                 STAssertEqualObjects([post body], @"<a vocab=\"http://schema.org\" typeof=\"Person\" rel=\"nofollow\" resource=\"acct:dev00@7x7-1.fyre.co\" data-lf-provider=\"livefyre\" property=\"url\"  target=\"_blank\" class=\"fyre-mention fyre-mention-livefyre\">@<span property=\"name\">dev00</span></a> reply to edited post<p> </p>", nil);
@@ -792,7 +792,7 @@ do { \
     STAssertTrue([collection.posts count] > 3, nil);
     if ([collection.posts count] > 3) {
         post = [collection.posts objectAtIndex:3];
-        STAssertEqualObjects(post.entryId, @"25802152", nil);
+        STAssertEqualObjects(post.contentId, @"25802152", nil);
         STAssertNil(post.parent, nil);
         STAssertFalse(post.deleted, nil);
         if (!post.deleted) {
@@ -811,7 +811,7 @@ do { \
     STAssertTrue([collection.posts count] > 4, nil);
     if ([collection.posts count] > 4) {
         post = [collection.posts objectAtIndex:4];
-        STAssertEqualObjects(post.entryId, @"25802151", nil);
+        STAssertEqualObjects(post.contentId, @"25802151", nil);
         STAssertNil(post.parent, nil);
         STAssertFalse(post.deleted, nil);
         if (!post.deleted) {
@@ -830,7 +830,7 @@ do { \
     STAssertTrue([collection.posts count] > 5, nil);
     if ([collection.posts count] > 5) {
         post = [collection.posts objectAtIndex:5];
-        STAssertEqualObjects(post.entryId, @"25802145", nil);
+        STAssertEqualObjects(post.contentId, @"25802145", nil);
         STAssertNil(post.parent, nil);
         STAssertFalse(post.deleted, nil);
         if (!post.deleted) {
@@ -850,7 +850,7 @@ do { \
         if ([post.likes count] > 0) {
             Like *like = [post.likes objectAtIndex:0];
             STAssertEquals(like.contentType, ContentTypeOpine, nil);
-            STAssertEqualObjects(like.entryId, @"d0bb9bf32ac94a35b8cdf76d8c68e755", nil);
+            STAssertEqualObjects(like.contentId, @"d0bb9bf32ac94a35b8cdf76d8c68e755", nil);
             STAssertEqualObjects(like.author.authorId, @"2@7x7-1.fyre.co", nil);
             STAssertEquals(like.source, 5, nil);
             STAssertEquals(like.visibility, 1, nil);
@@ -861,7 +861,7 @@ do { \
     STAssertTrue([collection.posts count] > 6, nil);
     if ([collection.posts count] > 6) {
         post = [collection.posts objectAtIndex:6];
-        STAssertEqualObjects(post.entryId, @"25802144", nil);
+        STAssertEqualObjects(post.contentId, @"25802144", nil);
         STAssertNil(post.parent, nil);
         STAssertFalse(post.deleted, nil);
         if (!post.deleted) {
@@ -881,7 +881,7 @@ do { \
         if ([post.likes count] > 0) {
             Like *like = [post.likes objectAtIndex:0];
             STAssertEquals(like.contentType, ContentTypeOpine, nil);
-            STAssertEqualObjects(like.entryId, @"e5734c6596194dc4a366ca4b8bcc70c4", nil);
+            STAssertEqualObjects(like.contentId, @"e5734c6596194dc4a366ca4b8bcc70c4", nil);
             STAssertEqualObjects(like.author.authorId, @"2@7x7-1.fyre.co", nil);
             STAssertEquals(like.source, 5, nil);
             STAssertEquals(like.visibility, 1, nil);
@@ -892,7 +892,7 @@ do { \
     STAssertTrue([collection.posts count] > 7, nil);
     if ([collection.posts count] > 7) {
         post = [collection.posts objectAtIndex:7];
-        STAssertEqualObjects(post.entryId, @"25802143", nil);
+        STAssertEqualObjects(post.contentId, @"25802143", nil);
         STAssertNil(post.parent, nil);
         STAssertFalse(post.deleted, nil);
         if (!post.deleted) {
@@ -913,7 +913,7 @@ do { \
     STAssertTrue([collection.posts count] > 8, nil);
     if ([collection.posts count] > 8) {
         post = [collection.posts objectAtIndex:8];
-        STAssertEqualObjects(post.entryId, @"25802142", nil);
+        STAssertEqualObjects(post.contentId, @"25802142", nil);
         STAssertNil(post.parent, nil);
         STAssertTrue(post.deleted, nil);
 
@@ -922,7 +922,7 @@ do { \
         if ([post.children count] > 0) {
             post = [post.children objectAtIndex:0];
             STAssertEquals(parent, post.parent, nil);
-            STAssertEqualObjects(post.entryId, @"25802165", nil);
+            STAssertEqualObjects(post.contentId, @"25802165", nil);
             STAssertFalse(post.deleted, nil);
             if (!post.deleted) {
                 STAssertEqualObjects([post body], @"<a vocab=\"http://schema.org\" typeof=\"Person\" rel=\"nofollow\" resource=\"acct:6@7x7-1.fyre.co\" data-lf-provider=\"livefyre\" property=\"url\"  target=\"_blank\" class=\"fyre-mention fyre-mention-livefyre\">@<span property=\"name\">modUser</span></a> reply to deleted posted<p> </p>", nil);
@@ -942,7 +942,7 @@ do { \
     STAssertTrue([collection.posts count] > 9, nil);
     if ([collection.posts count] > 9) {
         post = [collection.posts objectAtIndex:9];
-        STAssertEqualObjects(post.entryId, @"25802141", nil);
+        STAssertEqualObjects(post.contentId, @"25802141", nil);
         STAssertNil(post.parent, nil);
         STAssertTrue(post.deleted, nil);
     }
@@ -950,7 +950,7 @@ do { \
     STAssertTrue([collection.posts count] > 10, nil);
     if ([collection.posts count] > 10) {
         post = [collection.posts objectAtIndex:10];
-        STAssertEqualObjects(post.entryId, @"25802140", nil);
+        STAssertEqualObjects(post.contentId, @"25802140", nil);
         STAssertNil(post.parent, nil);
         STAssertFalse(post.deleted, nil);
         if (!post.deleted) {
@@ -969,7 +969,7 @@ do { \
     STAssertTrue([collection.posts count] > 11, nil);
     if ([collection.posts count] > 11) {
         post = [collection.posts objectAtIndex:11];
-        STAssertEqualObjects(post.entryId, @"25802065", nil);
+        STAssertEqualObjects(post.contentId, @"25802065", nil);
         STAssertNil(post.parent, nil);
         STAssertTrue(post.deleted, nil);
     }
@@ -1048,7 +1048,7 @@ do { \
     [collection addCollectionContent:[postJson objectFromJSONString] erefFetcher:nil];
 
     STAssertEquals([collection.posts count], 1u, nil);
-    Entry *post = [collection.posts objectAtIndex:0];
+    Content *post = [collection.posts objectAtIndex:0];
     STAssertEqualObjects(post.author.authorId, @"non mod user", nil);
     STAssertEqualObjects(post.author.displayName, @"a user", nil);
     STAssertEqualObjects(post.author.profileUrl, @"http://admin.t405.livefyre.com/profile/5011/", nil);
