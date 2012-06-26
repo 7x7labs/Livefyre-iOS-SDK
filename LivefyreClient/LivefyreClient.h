@@ -89,6 +89,9 @@
 /// client?
 - (BOOL)pendingAsyncRequests;
 
+/// The Livefyre environment this client was created for.
+@property (nonatomic, readonly, strong) NSString *environment;
+
 /// @name User Authentication
 
 /// Authenticate a user for accessing and posting to a collection.

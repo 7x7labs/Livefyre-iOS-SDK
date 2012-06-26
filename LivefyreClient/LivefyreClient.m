@@ -70,6 +70,8 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
     NSString *uuid;
 }
 
+@synthesize environment;
+
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
                            domainKey:(NSString *)key
 {
@@ -103,6 +105,7 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
     LivefyreClient *client = [[LivefyreClient alloc] init];
     client->domain = domain;
     client->bootstrapRoot = bootstrapRoot;
+    client->environment = environment;
     client->key = key;
     client->pollingCollections = [[NSMutableDictionary alloc] init];
 
