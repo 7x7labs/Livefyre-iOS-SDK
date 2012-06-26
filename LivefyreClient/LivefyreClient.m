@@ -13,6 +13,8 @@
 #import "MEJWT.h"
 #import "NSString+Base64StringFromData.h"
 
+static const NSString *defaultBootstrapHost = @"bootstrap-json.s3.amazonaws.com";
+
 static NSString *authToken(NSString *userName, NSString *domain, NSString *key) {
     NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:domain, @"domain",
                           userName, @"user_id",
@@ -98,7 +100,7 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
                            domainKey:(NSString *)key
 {
     if (!bootstrapRoot)
-        bootstrapRoot = @"bootstrap-json-dev.s3.amazonaws.com";
+        bootstrapRoot = [defaultBootstrapHost copy];
     if (environment)
         bootstrapRoot = [NSString stringWithFormat:@"%@/%@", bootstrapRoot, environment, nil];
 
