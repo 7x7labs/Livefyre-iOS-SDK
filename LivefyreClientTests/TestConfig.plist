@@ -24,5 +24,7 @@
 	<string>please don&apos;t make an article with this id</string>
 	<key>environment</key>
 	<string>t402.livefyre.com</string>
+	<key>bootstrap host</key>
+	<string>bootstrap-json-dev.s3.amazonaws.com</string>
 </dict>
 </plist>

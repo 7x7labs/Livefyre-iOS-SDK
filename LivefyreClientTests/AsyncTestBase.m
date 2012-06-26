@@ -18,10 +18,12 @@
     if ([environment length]) {
         self.client = [LivefyreClient clientWithDomain:[Config objectForKey:@"domain"]
                                            environment:environment
+                                         bootstrapHost:[Config objectForKey:@"bootstrap host"]
                                              domainKey:[Config objectForKey:@"domain key"]];
     }
     else {
         self.client = [LivefyreClient clientWithDomain:[Config objectForKey:@"domain"]
+                                         bootstrapHost:[Config objectForKey:@"bootstrap host"]
                                              domainKey:[Config objectForKey:@"domain key"]];
     }
 }
