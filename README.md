@@ -48,11 +48,17 @@ the most recent posts in the collection:
     // can generate Livefyre user tokens for you. In this case, we're assuming
     // that the tokens are generated elsewhere.
     NSString *domainKey = nil;
-    // The name of the environment to use, if not using production
+
+    // The name of the environment to use
     NSString *environment = @"t402.livefyre.com";
+    // The hostname for the bootstarp data
+    // Either or both of these can be set to nil or left out entirely to simply
+    // use the production servers.
+    NSString *bootstrapHost = @"bootstrap-json-dev.s3.amazonaws.com";
 
     // First create an instance of the client
     LivefyreClient *client = [LivefyreClient clientWithDomain:livefyreDomain
+                                                bootstrapHost:boostrapHost
                                                   environment:environment
                                                     domainKey:domainKey];
 

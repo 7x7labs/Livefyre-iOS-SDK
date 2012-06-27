@@ -12,5 +12,7 @@
 	<string>bNyBbN0BWAZ46w3fGBGg9ziB0U4=</string>
 	<key>environment</key>
 	<string>t402.livefyre.com</string>
+	<key>bootstrap host</key>
+	<string>bootstrap-json-dev.s3.amazonaws.com</string>
 </dict>
 </plist>

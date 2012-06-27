@@ -39,6 +39,21 @@
 /// Create a new Livefyre client.
 /// @param domain The Livefyre domain, including TLD, but not protocol (e.g.
 /// @"7x7-1.fyre.co").
+/// @param bootstrapHost The server hostname for the bootstrap data. If `nil` or
+/// not specified, the standard production server is used.
+/// @param key The Livefyre API key for authenticating users on the domain.
+///
+/// The domain key is optional; if not supplied then authenticateUserWithToken
+/// must be used rather than authenticateUser. Not supplying the key is
+/// potentially more secure, as it makes it possible to avoid ever having the
+/// domain key on the user's device.
++ (LivefyreClient *)clientWithDomain:(NSString *)domain
+                       bootstrapHost:(NSString *)bootstrapRoot
+                           domainKey:(NSString *)key;
+
+/// Create a new Livefyre client.
+/// @param domain The Livefyre domain, including TLD, but not protocol (e.g.
+/// @"7x7-1.fyre.co").
 /// @param environment The server environment to use. If not specified the
 /// standard production environment is used.
 /// @param key The Livefyre API key for authenticating users on the domain.
@@ -51,10 +66,31 @@
                          environment:(NSString *)environment
                            domainKey:(NSString *)key;
 
+/// Create a new Livefyre client.
+/// @param domain The Livefyre domain, including TLD, but not protocol (e.g.
+/// @"7x7-1.fyre.co").
+/// @param bootstrapHost The server hostname for the bootstrap data. If `nil` or
+/// not specified, the standard production server is used.
+/// @param environment The server environment to use. If `nil` or not specified
+/// the standard production environment is used.
+/// @param key The Livefyre API key for authenticating users on the domain.
+///
+/// The domain key is optional; if not supplied then authenticateUserWithToken
+/// must be used rather than authenticateUser. Not supplying the key is
+/// potentially more secure, as it makes it possible to avoid ever having the
+/// domain key on the user's device.
++ (LivefyreClient *)clientWithDomain:(NSString *)domain
+                         environment:(NSString *)environment
+                       bootstrapHost:(NSString *)bootstrapHost
+                           domainKey:(NSString *)key;
+
 
 /// Are there currently any running asynchronous requests triggered by this
 /// client?
 - (BOOL)pendingAsyncRequests;
+
+/// The Livefyre environment this client was created for.
+@property (nonatomic, readonly, strong) NSString *environment;
 
 /// @name User Authentication
 

@@ -13,6 +13,8 @@
 #import "MEJWT.h"
 #import "NSString+Base64StringFromData.h"
 
+static const NSString *defaultBootstrapHost = @"bootstrap-json.s3.amazonaws.com";
+
 static NSString *authToken(NSString *userName, NSString *domain, NSString *key) {
     NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:domain, @"domain",
                           userName, @"user_id",
@@ -70,12 +72,42 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
     NSString *uuid;
 }
 
+@synthesize environment;
+
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
                            domainKey:(NSString *)key
 {
+    return [self clientWithDomain:domain environment:nil bootstrapHost:nil domainKey:key];
+}
+
++ (LivefyreClient *)clientWithDomain:(NSString *)domain
+                       bootstrapHost:(NSString *)bootstrapRoot
+                           domainKey:(NSString *)key
+{
+    return [self clientWithDomain:domain environment:nil bootstrapHost:bootstrapRoot domainKey:key];
+}
+
++ (LivefyreClient *)clientWithDomain:(NSString *)domain
+                         environment:(NSString *)environment
+                           domainKey:(NSString *)key
+{
+    return [self clientWithDomain:domain environment:environment bootstrapHost:nil domainKey:key];
+}
+
++ (LivefyreClient *)clientWithDomain:(NSString *)domain
+                         environment:(NSString *)environment
+                       bootstrapHost:(NSString *)bootstrapRoot
+                           domainKey:(NSString *)key
+{
+    if (!bootstrapRoot)
+        bootstrapRoot = [defaultBootstrapHost copy];
+    if (environment)
+        bootstrapRoot = [NSString stringWithFormat:@"%@/%@", bootstrapRoot, environment, nil];
+
     LivefyreClient *client = [[LivefyreClient alloc] init];
     client->domain = domain;
-    client->bootstrapRoot = @"bootstrap-json-dev.s3.amazonaws.com";
+    client->bootstrapRoot = bootstrapRoot;
+    client->environment = environment;
     client->key = key;
     client->pollingCollections = [[NSMutableDictionary alloc] init];
 
@@ -85,15 +117,6 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
         CFRelease(uuid);
     }
 
-    return client;
-}
-
-+ (LivefyreClient *)clientWithDomain:(NSString *)domain
-                         environment:(NSString *)environment
-                           domainKey:(NSString *)key
-{
-    LivefyreClient *client = [self clientWithDomain:domain domainKey:key];
-    client->bootstrapRoot = [NSString stringWithFormat:@"%@/%@", client->bootstrapRoot, environment, nil];
     return client;
 }
 
