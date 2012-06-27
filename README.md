@@ -3,6 +3,10 @@
 NOTE: This SDK is still under heavy development.  Kindly consider this code to
 be alpha quality.
 
+## Changelog
+
+v0.1.0: Initial alpha version. Introduce `environment` and `bootstrapHost` parameters to be used when instantiating a LivefyreClient.
+
 ## Getting Started
 
 ### Adding the SDK to a project
