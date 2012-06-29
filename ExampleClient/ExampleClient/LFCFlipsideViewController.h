@@ -15,9 +15,7 @@
 @end
 
 @interface LFCFlipsideViewController : UIViewController
-
 @property (weak, nonatomic) id <LFCFlipsideViewControllerDelegate> delegate;
-
-- (IBAction)done:(id)sender;
-
+@property (strong, nonatomic) LivefyreClient *client;
+@property (strong, nonatomic) Collection *collection;
 @end
