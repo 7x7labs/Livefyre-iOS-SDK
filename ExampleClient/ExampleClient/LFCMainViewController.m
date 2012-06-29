@@ -8,40 +8,51 @@
 
 #import "LFCMainViewController.h"
 
+#import "CommentList.h"
+
 @interface LFCMainViewController ()
 @property (strong, nonatomic) LivefyreClient *client;
 @property (strong, nonatomic) Collection *collection;
 @property (strong, nonatomic) RequestComplete gotData;
+
+@property (weak, nonatomic) IBOutlet CommentList *commentList;
 @end
 
 @implementation LFCMainViewController
 @synthesize client = _client;
 @synthesize collection = _collection;
 @synthesize gotData = _gotData;
+@synthesize commentList = _commentList;
 
-- (id)init {
-    self = [super init];
-    if (self) {
-        self.gotData = ^(BOOL error, id resultOrError) {
-            if (error) {
-                [[[UIAlertView alloc] initWithTitle:@"Error"
-                                            message:resultOrError
-                                           delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil,
-                  nil] show];
-            }
-        };
-    }
-    return self;
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    self.gotData = ^(BOOL error, id resultOrError) {
+        if (error) {
+            [[[UIAlertView alloc] initWithTitle:@"Error"
+                                        message:resultOrError
+                                       delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil,
+              nil] show];
+            return;
+        }
+
+        for (Content *changedContent in resultOrError) {
+            // Only process top-level comments for now
+            if (!changedContent.parent && changedContent.contentType == ContentTypeMessage)
+                [self.commentList addComment:(Post *)changedContent];
+        }
+
+    };
 }
 
-- (void)flipsideViewControllerDidFinish:(LFCFlipsideViewController *)controller
-{
+- (void)flipsideViewControllerDidFinish:(LFCFlipsideViewController *)controller {
     [self dismissModalViewControllerAnimated:YES];
 
     if (self.client) {
         [self.client stopPollingForUpdates:self.collection];
+        [self.commentList clear];
     }
 
     self.client = controller.client;
@@ -60,4 +71,8 @@
     }
 }
 
+- (void)viewDidUnload {
+    [self setCommentList:nil];
+    [super viewDidUnload];
+}
 @end

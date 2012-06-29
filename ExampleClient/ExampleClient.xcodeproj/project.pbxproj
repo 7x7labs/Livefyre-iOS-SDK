@@ -22,6 +22,8 @@
 		3FF3A6F7159D21D1000E33E3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF3A6F6159D21D1000E33E3 /* libz.dylib */; };
 		3FF3A6F9159D21D8000E33E3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF3A6F8159D21D8000E33E3 /* SystemConfiguration.framework */; };
 		3FF3A6FB159D21DF000E33E3 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF3A6FA159D21DF000E33E3 /* MessageUI.framework */; };
+		3FF3A701159DF3BB000E33E3 /* CommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FF3A700159DF3BB000E33E3 /* CommentView.m */; };
+		3FF3A704159DF52F000E33E3 /* CommentList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FF3A703159DF52F000E33E3 /* CommentList.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,10 @@
 		3FF3A6F6159D21D1000E33E3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3FF3A6F8159D21D8000E33E3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3FF3A6FA159D21DF000E33E3 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		3FF3A6FF159DF3BB000E33E3 /* CommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentView.h; sourceTree = "<group>"; };
+		3FF3A700159DF3BB000E33E3 /* CommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentView.m; sourceTree = "<group>"; };
+		3FF3A702159DF52F000E33E3 /* CommentList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentList.h; sourceTree = "<group>"; };
+		3FF3A703159DF52F000E33E3 /* CommentList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentList.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +110,7 @@
 		3FF3A6CE159D2017000E33E3 /* ExampleClient */ = {
 			isa = PBXGroup;
 			children = (
+				3FF3A6FE159DF390000E33E3 /* Controls */,
 				3FF3A6D7159D2017000E33E3 /* LFCAppDelegate.h */,
 				3FF3A6D8159D2017000E33E3 /* LFCAppDelegate.m */,
 				3FF3A6DA159D2017000E33E3 /* MainStoryboard.storyboard */,
@@ -125,6 +132,17 @@
 				3FF3A6D6159D2017000E33E3 /* ExampleClient-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3FF3A6FE159DF390000E33E3 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				3FF3A6FF159DF3BB000E33E3 /* CommentView.h */,
+				3FF3A700159DF3BB000E33E3 /* CommentView.m */,
+				3FF3A702159DF52F000E33E3 /* CommentList.h */,
+				3FF3A703159DF52F000E33E3 /* CommentList.m */,
+			);
+			name = Controls;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +212,8 @@
 				3FF3A6D9159D2017000E33E3 /* LFCAppDelegate.m in Sources */,
 				3FF3A6DF159D2017000E33E3 /* LFCMainViewController.m in Sources */,
 				3FF3A6E2159D2017000E33E3 /* LFCFlipsideViewController.m in Sources */,
+				3FF3A701159DF3BB000E33E3 /* CommentView.m in Sources */,
+				3FF3A704159DF52F000E33E3 /* CommentList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

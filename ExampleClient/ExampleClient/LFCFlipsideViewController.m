@@ -68,7 +68,7 @@
     [self validate:self.articleId label:self.articleLabel];
     if (!self.allValid) return;
 
-    self.client = [LivefyreClient clientWithDomain:self.bootstrapHost.text
+    self.client = [LivefyreClient clientWithDomain:self.network.text
                                        environment:self.environment.text
                                      bootstrapHost:self.bootstrapHost.text
                                          domainKey:nil];
