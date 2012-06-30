@@ -109,8 +109,6 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
 {
     if (!bootstrapRoot)
         bootstrapRoot = [defaultBootstrapHost copy];
-    if (environment)
-        bootstrapRoot = [NSString stringWithFormat:@"%@/%@", bootstrapRoot, environment, nil];
 
     LivefyreClient *client = [[LivefyreClient alloc] init];
     client->domain = domain;
@@ -274,8 +272,12 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
                         forUser:(User *)user
                   gotCollection:(RequestComplete)callback
 {
+    NSString *host = bootstrapRoot;
+    if ([environment length])
+        host = [NSString stringWithFormat:@"%@/%@", host, environment];
+
     NSString *url = [NSString stringWithFormat:@"https://%@/%@/%@/%@/init.json",
-                     bootstrapRoot,
+                     host,
                      domain,
                      siteId,
                      [NSString base64StringFromData:[articleId dataUsingEncoding:NSUTF8StringEncoding]]];

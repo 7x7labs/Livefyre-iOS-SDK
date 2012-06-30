@@ -84,6 +84,8 @@
                           gotPage:^(BOOL error, id resultOrError)
              {
                  STAssertFalse(error, nil);
+                 if (error) return;
+
                  STAssertEquals(collection.numberVisible, totalPosts, nil);
                  STAssertTrue([collection.posts count] >= postCount, @"Fetching a page removed data");
                  STAssertTrue([resultOrError count] >= [collection.posts count] - postCount, @"Not all new posts were returned");
