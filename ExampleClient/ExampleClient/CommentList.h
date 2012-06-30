@@ -11,4 +11,5 @@
 @interface CommentList : UIScrollView
 - (void)addComment:(Post *)post;
 - (void)clear;
+- (void)showNextPageButton:(void (^)())callback;
 @end

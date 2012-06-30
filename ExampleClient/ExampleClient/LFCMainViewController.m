@@ -14,6 +14,7 @@
 @property (strong, nonatomic) LivefyreClient *client;
 @property (strong, nonatomic) Collection *collection;
 @property (strong, nonatomic) RequestComplete gotData;
+@property (nonatomic) NSUInteger pagesFetched;
 
 @property (weak, nonatomic) IBOutlet CommentList *commentList;
 @end
@@ -23,6 +24,7 @@
 @synthesize collection = _collection;
 @synthesize gotData = _gotData;
 @synthesize commentList = _commentList;
+@synthesize pagesFetched = _pagesFetched;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -55,6 +57,7 @@
         [self.commentList clear];
     }
 
+    self.pagesFetched = 0;
     self.client = controller.client;
     self.collection = controller.collection;
     [self.collection fetchBootstrap:self.gotData];
@@ -62,6 +65,20 @@
                           pollFrequency:30
                          requestTimeout:30
                             gotNewPosts:self.gotData];
+    [self updateNextPageButton];
+}
+
+- (void)updateNextPageButton {
+    if (self.pagesFetched >= self.collection.numberOfPages) {
+        [self.commentList showNextPageButton:nil];
+    }
+    else {
+        [self.commentList showNextPageButton:^{
+            [self.collection fetchPage:self.pagesFetched
+                               gotPage:self.gotData];
+            ++self.pagesFetched;
+        }];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
