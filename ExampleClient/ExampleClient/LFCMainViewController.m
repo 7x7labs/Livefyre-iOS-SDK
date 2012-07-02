@@ -33,6 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    __weak LFCMainViewController *weakSelf = self;
     self.gotData = ^(BOOL error, id resultOrError) {
         if (error) {
             [[[UIAlertView alloc] initWithTitle:@"Error"
@@ -47,8 +48,10 @@
         for (Content *changedContent in resultOrError) {
             // Only process top-level comments for now
             if (!changedContent.parent && changedContent.contentType == ContentTypeMessage)
-                [self.commentList addComment:(Post *)changedContent];
+                [weakSelf.commentList addComment:(Post *)changedContent];
         }
+
+        [weakSelf updateNextPageButton];
     };
 
     [self.commentList addObserver:self
