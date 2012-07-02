@@ -10,6 +10,8 @@
 
 #import "CommentList.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @interface LFCMainViewController ()
 @property (strong, nonatomic) LivefyreClient *client;
 @property (strong, nonatomic) Collection *collection;
@@ -19,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet CommentList *commentList;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) UIButton *nextPage;
+@property (weak, nonatomic) IBOutlet UIView *commentBox;
+@property (weak, nonatomic) IBOutlet UITextView *commentBody;
 @end
 
 @implementation LFCMainViewController
@@ -27,6 +31,8 @@
 @synthesize gotData = _gotData;
 @synthesize commentList = _commentList;
 @synthesize scrollView = _scrollView;
+@synthesize commentBox = _commentBox;
+@synthesize commentBody = _commentBody;
 @synthesize pagesFetched = _pagesFetched;
 @synthesize nextPage = _nextPage;
 
@@ -45,10 +51,16 @@
             return;
         }
 
-        for (Content *changedContent in resultOrError) {
-            // Only process top-level comments for now
-            if (!changedContent.parent && changedContent.contentType == ContentTypeMessage)
-                [weakSelf.commentList addComment:(Post *)changedContent];
+        if ([resultOrError conformsToProtocol:@protocol(NSFastEnumeration)]) {
+            for (Content *changedContent in resultOrError) {
+                // Only process top-level comments for now
+                if (!changedContent.parent && changedContent.contentType == ContentTypeMessage)
+                    [weakSelf.commentList addComment:(Post *)changedContent];
+            }
+        }
+        else if ([resultOrError isKindOfClass:[Post class]]) {
+            if (![resultOrError parent] && [resultOrError contentType] == ContentTypeMessage)
+                [weakSelf.commentList addComment:resultOrError];
         }
 
         [weakSelf updateNextPageButton];
@@ -58,6 +70,16 @@
                        forKeyPath:@"frame"
                           options:0
                           context:nil];
+
+    self.commentBox.backgroundColor =
+    [UIColor colorWithRed:0.96 green:0.96 blue:0.97 alpha:1];
+    self.commentBox.layer.cornerRadius = 8.0;
+    self.commentBox.layer.shadowColor = [UIColor colorWithWhite:0.12 alpha:1].CGColor;
+    self.commentBox.layer.shadowOffset = CGSizeMake(0, 0.5);
+    self.commentBox.layer.shadowRadius = 2.5;
+    self.commentBox.layer.shadowOpacity = 1;
+    self.commentBox.layer.shouldRasterize = YES;
+    self.commentBox.layer.rasterizationScale = [UIScreen mainScreen].scale;
 }
 
 - (void)flipsideViewControllerDidFinish:(LFCFlipsideViewController *)controller {
@@ -77,6 +99,7 @@
                          requestTimeout:30
                             gotNewPosts:self.gotData];
     [self updateNextPageButton];
+    [self showCommentBox:!!self.collection.user];
 }
 
 - (void)updateNextPageButton {
@@ -107,6 +130,13 @@
                        gotPage:self.gotData];
 }
 
+- (IBAction)postComment {
+    [self.client createPost:self.commentBody.text
+               inCollection:self.collection
+                 onComplete:self.gotData];
+
+    self.commentBody.text = @"";
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
@@ -123,6 +153,13 @@
     self.scrollView.contentSize = CGSizeMake(self.commentList.frame.size.width, y);
 }
 
+- (void)showCommentBox:(BOOL)show {
+    CGRect frame = self.commentList.frame;
+    frame.origin.y = show ? 250 : 20;
+    self.commentList.frame = frame;
+    self.commentBox.hidden = !show;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"showAlternate"]) {
@@ -133,6 +170,8 @@
 - (void)viewDidUnload {
     [self setCommentList:nil];
     [self setScrollView:nil];
+    [self setCommentBox:nil];
+    [self setCommentBody:nil];
     [super viewDidUnload];
 }
 @end
