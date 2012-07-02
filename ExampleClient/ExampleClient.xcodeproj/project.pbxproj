@@ -335,6 +335,7 @@
 				3FF3A6E7159D2017000E33E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

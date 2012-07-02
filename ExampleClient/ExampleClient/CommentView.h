@@ -14,4 +14,5 @@
 @property (weak, nonatomic, readonly) Post *comment;
 
 - (void)loadFromPost:(Post *)post;
+- (void)destroy;
 @end

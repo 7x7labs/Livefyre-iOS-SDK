@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CommentList : UIScrollView
+@interface CommentList : UIView
 - (void)addComment:(Post *)post;
 - (void)clear;
-- (void)showNextPageButton:(void (^)())callback;
 @end

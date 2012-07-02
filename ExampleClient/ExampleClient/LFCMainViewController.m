@@ -17,6 +17,8 @@
 @property (nonatomic) NSUInteger pagesFetched;
 
 @property (weak, nonatomic) IBOutlet CommentList *commentList;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, strong) UIButton *nextPage;
 @end
 
 @implementation LFCMainViewController
@@ -24,7 +26,9 @@
 @synthesize collection = _collection;
 @synthesize gotData = _gotData;
 @synthesize commentList = _commentList;
+@synthesize scrollView = _scrollView;
 @synthesize pagesFetched = _pagesFetched;
+@synthesize nextPage = _nextPage;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -45,8 +49,12 @@
             if (!changedContent.parent && changedContent.contentType == ContentTypeMessage)
                 [self.commentList addComment:(Post *)changedContent];
         }
-
     };
+
+    [self.commentList addObserver:self
+                       forKeyPath:@"frame"
+                          options:0
+                          context:nil];
 }
 
 - (void)flipsideViewControllerDidFinish:(LFCFlipsideViewController *)controller {
@@ -70,15 +78,46 @@
 
 - (void)updateNextPageButton {
     if (self.pagesFetched >= self.collection.numberOfPages) {
-        [self.commentList showNextPageButton:nil];
+        [self.nextPage removeFromSuperview];
+        self.nextPage = nil;
+   }
+    else if (!self.nextPage) {
+        self.nextPage = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [self.nextPage addTarget:self
+                          action:@selector(nextPageTouched:)
+                forControlEvents:UIControlEventTouchUpInside];
+        [self.nextPage setTitle:@"Show More" forState:UIControlStateNormal];
+        self.nextPage.frame = CGRectMake(90, 0, 100, 37);
+        [self.scrollView addSubview:self.nextPage];
     }
     else {
-        [self.commentList showNextPageButton:^{
-            [self.collection fetchPage:self.pagesFetched
-                               gotPage:self.gotData];
-            ++self.pagesFetched;
-        }];
+        [self.nextPage setEnabled:YES];
+        [self.nextPage setAlpha:1.0];
     }
+}
+
+- (void)nextPageTouched:(id)sender {
+    [self.nextPage setEnabled:NO];
+    [self.nextPage setAlpha:0.5];
+
+    [self.collection fetchPage:self.pagesFetched++
+                       gotPage:self.gotData];
+}
+
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    CGFloat y = self.commentList.frame.size.height + self.commentList.frame.origin.y;
+
+    if (self.nextPage) {
+        self.nextPage.frame = CGRectMake(90, y, self.nextPage.frame.size.width, self.nextPage.frame.size.height);
+        y += self.nextPage.frame.size.height + 8;
+    }
+
+    self.scrollView.contentSize = CGSizeMake(self.commentList.frame.size.width, y);
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -90,6 +129,7 @@
 
 - (void)viewDidUnload {
     [self setCommentList:nil];
+    [self setScrollView:nil];
     [super viewDidUnload];
 }
 @end

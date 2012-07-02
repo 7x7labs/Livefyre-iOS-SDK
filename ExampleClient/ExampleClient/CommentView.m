@@ -142,9 +142,10 @@
     }
 }
 
-- (void)dealloc {
+- (void)destroy {
     [self.comment removeObserver:self forKeyPath:@"body"];
     [self.comment removeObserver:self forKeyPath:@"editedAt"];
+    [self removeFromSuperview];
 }
 
 @end
