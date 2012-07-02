@@ -110,15 +110,9 @@
     [self.body loadHTMLString:post.body baseURL:nil];
     self.timestamp.text = [self formatTime:post.editedAt];
 
-    [post addObserver:self
-           forKeyPath:@"body"
-              options:0
-              context:nil];
-
-    [post addObserver:self
-           forKeyPath:@"editedAt"
-              options:0
-              context:nil];
+    [post addObserver:self forKeyPath:@"body"     options:0 context:nil];
+    [post addObserver:self forKeyPath:@"editedAt" options:0 context:nil];
+    [post addObserver:self forKeyPath:@"deleted"  options:0 context:nil];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:post.author.avatarUrl]]];
@@ -134,10 +128,11 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-	if ([keyPath isEqual:@"body"]) {
+    if (self.comment.deleted) {
+        [self destroy];
+    }
+    else {
 	    [self.body loadHTMLString:self.comment.body baseURL:nil];
-	}
-	else if ([keyPath isEqual:@"editedAt"]) {
         self.timestamp.text = [self formatTime:self.comment.editedAt];
     }
 }
@@ -145,6 +140,7 @@
 - (void)destroy {
     [self.comment removeObserver:self forKeyPath:@"body"];
     [self.comment removeObserver:self forKeyPath:@"editedAt"];
+    [self.comment removeObserver:self forKeyPath:@"deleted"];
     [self removeFromSuperview];
 }
 

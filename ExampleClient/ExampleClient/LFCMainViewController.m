@@ -53,13 +53,12 @@
 
         if ([resultOrError conformsToProtocol:@protocol(NSFastEnumeration)]) {
             for (Content *changedContent in resultOrError) {
-                // Only process top-level comments for now
-                if (!changedContent.parent && changedContent.contentType == ContentTypeMessage)
+                if (changedContent.contentType == ContentTypeMessage)
                     [weakSelf.commentList addComment:(Post *)changedContent];
             }
         }
         else if ([resultOrError isKindOfClass:[Post class]]) {
-            if (![resultOrError parent] && [resultOrError contentType] == ContentTypeMessage)
+            if ([resultOrError contentType] == ContentTypeMessage)
                 [weakSelf.commentList addComment:resultOrError];
         }
 

@@ -20,6 +20,9 @@
 @synthesize comments = _comments;
 
 - (void)addComment:(Post *)post {
+    if (post.deleted || post.parent)
+        return;
+
     if (!self.comments)
         self.comments = [NSMutableArray array];
 
