@@ -20,6 +20,12 @@ typedef void (^ResponseBlock)(NSString *message, int statusCode);
            onError:(ResponseBlock)onError
          onSuccess:(ResponseBlock)onSuccess;
 
++ (void)getRequest:(NSString *)url
+         withQuery:(NSDictionary *)queryParameters
+           timeout:(NSTimeInterval)timeout
+           onError:(ResponseBlock)onError
+         onSuccess:(ResponseBlock)onSuccess;
+
 + (void)postRequest:(NSString *)url
             onError:(ResponseBlock)onError
           onSuccess:(ResponseBlock)onSuccess;

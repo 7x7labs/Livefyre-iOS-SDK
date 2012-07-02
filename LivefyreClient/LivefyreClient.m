@@ -466,6 +466,7 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
 
         [HttpRequest getRequest:url
                       withQuery:query
+                        timeout:timeout
                         onError:errorHandler(callback)
                       onSuccess:^(NSString *responseString, int statusCode)
          {

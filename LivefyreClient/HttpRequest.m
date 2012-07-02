@@ -38,6 +38,7 @@ static int pendingRequests = 0;
 }
 
 + (void)getRequest:(NSString *)url
+           timeout:(NSTimeInterval)timeout
            onError:(ResponseBlock)onError
          onSuccess:(ResponseBlock)onSuccess
 {
@@ -56,7 +57,15 @@ static int pendingRequests = 0;
         onError(weakReq.error.description, weakReq.responseStatusCode);
     }];
     [request setNumberOfTimesToRetryOnTimeout:2];
+    [request setTimeOutSeconds:timeout];
     [request startAsynchronous];
+}
+
++ (void)getRequest:(NSString *)url
+           onError:(ResponseBlock)onError
+         onSuccess:(ResponseBlock)onSuccess
+{
+    [self getRequest:url timeout:10 onError:onError onSuccess:onSuccess];
 }
 
 + (void)getRequest:(NSString *)url
@@ -65,6 +74,18 @@ static int pendingRequests = 0;
          onSuccess:(ResponseBlock)onSuccess
 {
     [self getRequest:[self buildQueryString:url withParamters:queryParameters]
+             onError:onError
+           onSuccess:onSuccess];
+}
+
++ (void)getRequest:(NSString *)url
+         withQuery:(NSDictionary *)queryParameters
+           timeout:(NSTimeInterval)timeout
+           onError:(ResponseBlock)onError
+         onSuccess:(ResponseBlock)onSuccess
+{
+    [self getRequest:[self buildQueryString:url withParamters:queryParameters]
+             timeout:timeout
              onError:onError
            onSuccess:onSuccess];
 }
