@@ -9,8 +9,7 @@
 #import "LFCMainViewController.h"
 
 #import "CommentList.h"
-
-#import <QuartzCore/QuartzCore.h>
+#import "CommentView.h"
 
 @interface LFCMainViewController ()
 @property (strong, nonatomic) LivefyreClient *client;
@@ -20,9 +19,9 @@
 
 @property (weak, nonatomic) IBOutlet CommentList *commentList;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, strong) UIButton *nextPage;
 @property (weak, nonatomic) IBOutlet UIView *commentBox;
 @property (weak, nonatomic) IBOutlet UITextView *commentBody;
+@property (weak, nonatomic) IBOutlet UIButton *nextPage;
 @end
 
 @implementation LFCMainViewController
@@ -33,56 +32,55 @@
 @synthesize scrollView = _scrollView;
 @synthesize commentBox = _commentBox;
 @synthesize commentBody = _commentBody;
-@synthesize pagesFetched = _pagesFetched;
 @synthesize nextPage = _nextPage;
+@synthesize pagesFetched = _pagesFetched;
+
+// General request completion handler which either displays the error message
+// in an alert view or sends the changed posts to the CommentList
+- (RequestComplete)gotData {
+    if (!_gotData) {
+        __weak LFCMainViewController *weakSelf = self;
+        _gotData = ^(BOOL error, id resultOrError) {
+            if (error) {
+                [[[UIAlertView alloc] initWithTitle:@"Error"
+                                            message:resultOrError
+                                           delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil,
+                  nil] show];
+                return;
+            }
+
+            if ([resultOrError conformsToProtocol:@protocol(NSFastEnumeration)]) {
+                for (Content *changedContent in resultOrError) {
+                    if (changedContent.contentType == ContentTypeMessage)
+                        [weakSelf.commentList addComment:(Post *)changedContent];
+                }
+            }
+            else if ([resultOrError isKindOfClass:[Post class]]) {
+                if ([resultOrError contentType] == ContentTypeMessage)
+                    [weakSelf.commentList addComment:resultOrError];
+            }
+
+            [weakSelf updateNextPageButton];
+        };
+    }
+
+    return _gotData;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    __weak LFCMainViewController *weakSelf = self;
-    self.gotData = ^(BOOL error, id resultOrError) {
-        if (error) {
-            [[[UIAlertView alloc] initWithTitle:@"Error"
-                                        message:resultOrError
-                                       delegate:nil
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil,
-              nil] show];
-            return;
-        }
-
-        if ([resultOrError conformsToProtocol:@protocol(NSFastEnumeration)]) {
-            for (Content *changedContent in resultOrError) {
-                if (changedContent.contentType == ContentTypeMessage)
-                    [weakSelf.commentList addComment:(Post *)changedContent];
-            }
-        }
-        else if ([resultOrError isKindOfClass:[Post class]]) {
-            if ([resultOrError contentType] == ContentTypeMessage)
-                [weakSelf.commentList addComment:resultOrError];
-        }
-
-        [weakSelf updateNextPageButton];
-    };
-
-    [self.commentList addObserver:self
-                       forKeyPath:@"frame"
-                          options:0
-                          context:nil];
-
-    self.commentBox.backgroundColor =
-    [UIColor colorWithRed:0.96 green:0.96 blue:0.97 alpha:1];
-    self.commentBox.layer.cornerRadius = 8.0;
-    self.commentBox.layer.shadowColor = [UIColor colorWithWhite:0.12 alpha:1].CGColor;
-    self.commentBox.layer.shadowOffset = CGSizeMake(0, 0.5);
-    self.commentBox.layer.shadowRadius = 2.5;
-    self.commentBox.layer.shadowOpacity = 1;
-    self.commentBox.layer.shouldRasterize = YES;
-    self.commentBox.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    [self.commentList addObserver:self forKeyPath:@"frame" options:0 context:nil];
+    [CommentView addBordersAndShadow:self.commentBox];
 }
 
 - (void)flipsideViewControllerDidFinish:(LFCFlipsideViewController *)controller {
     [self dismissModalViewControllerAnimated:YES];
+
+    if (!controller.client)
+        return;
 
     if (self.client) {
         [self.client stopPollingForUpdates:self.collection];
@@ -103,25 +101,16 @@
 
 - (void)updateNextPageButton {
     if (self.pagesFetched >= self.collection.numberOfPages) {
-        [self.nextPage removeFromSuperview];
-        self.nextPage = nil;
+        [self.nextPage setHidden:YES];
    }
-    else if (!self.nextPage) {
-        self.nextPage = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [self.nextPage addTarget:self
-                          action:@selector(nextPageTouched:)
-                forControlEvents:UIControlEventTouchUpInside];
-        [self.nextPage setTitle:@"Show More" forState:UIControlStateNormal];
-        self.nextPage.frame = CGRectMake(90, 0, 100, 37);
-        [self.scrollView addSubview:self.nextPage];
-    }
     else {
+        [self.nextPage setHidden:NO];
         [self.nextPage setEnabled:YES];
         [self.nextPage setAlpha:1.0];
     }
 }
 
-- (void)nextPageTouched:(id)sender {
+- (IBAction)nextPageTouched {
     [self.nextPage setEnabled:NO];
     [self.nextPage setAlpha:0.5];
 
@@ -137,6 +126,8 @@
     self.commentBody.text = @"";
 }
 
+// Update the position of the Show More button and the content size of the
+// scroll view whenever the comment list height changes
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
@@ -144,9 +135,11 @@
 {
     CGFloat y = self.commentList.frame.size.height + self.commentList.frame.origin.y;
 
-    if (self.nextPage) {
-        self.nextPage.frame = CGRectMake(90, y, self.nextPage.frame.size.width, self.nextPage.frame.size.height);
-        y += self.nextPage.frame.size.height + 8;
+    if (!self.nextPage.hidden) {
+        CGRect frame = self.nextPage.frame;
+        frame.origin.y = y;
+        self.nextPage.frame = frame;
+        y += frame.size.height + 8;
     }
 
     self.scrollView.contentSize = CGSizeMake(self.commentList.frame.size.width, y);
@@ -161,16 +154,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showAlternate"]) {
-        [[segue destinationViewController] setDelegate:self];
-    }
+    [[segue destinationViewController] setDelegate:self];
 }
 
-- (void)viewDidUnload {
-    [self setCommentList:nil];
-    [self setScrollView:nil];
-    [self setCommentBox:nil];
-    [self setCommentBody:nil];
-    [super viewDidUnload];
-}
 @end
