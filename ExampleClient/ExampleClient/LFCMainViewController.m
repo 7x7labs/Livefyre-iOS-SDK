@@ -76,6 +76,14 @@
     [CommentView addBordersAndShadow:self.commentBox];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    // Switch to the config screen if we don't have a valid client yet
+    if (!self.client)
+        [self performSegueWithIdentifier:@"showAlternate" sender:self];
+}
+
 - (void)flipsideViewControllerDidFinish:(LFCFlipsideViewController *)controller {
     [self dismissModalViewControllerAnimated:YES];
 
