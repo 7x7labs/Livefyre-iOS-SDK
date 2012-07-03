@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface CommentView : UIView
-+ (CommentView *)viewForPost:(Post *)post width:(CGFloat)width;
-
 @property (weak, nonatomic, readonly) Post *comment;
+
++ (CommentView *)viewForPost:(Post *)post width:(CGFloat)width;
++ (void)addBordersAndShadow:(UIView *)view;
 
 - (void)loadFromPost:(Post *)post;
 - (void)destroy;

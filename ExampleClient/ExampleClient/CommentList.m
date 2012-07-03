@@ -10,24 +10,17 @@
 
 #import "CommentView.h"
 
-#define COMMENT_PADDING_HEIGHT 10
-
-@interface CommentList ()
-@property (nonatomic, strong) NSMutableArray *comments;
-@end
+static const int CommentPaddingHeight = 10;
 
 @implementation CommentList
-@synthesize comments = _comments;
-
 - (void)addComment:(Post *)post {
     if (post.deleted || post.parent)
         return;
 
-    if (!self.comments)
-        self.comments = [NSMutableArray array];
-
     NSUInteger idx = 0;
-    for (CommentView *cv in self.comments) {
+    for (CommentView *cv in self.subviews) {
+        // Don't need to do anything if it's a change to an existing comment as
+        // the view handles that itself
         if (cv.comment == post)
             return;
 
@@ -36,16 +29,16 @@
         ++idx;
     }
 
-    CommentView *newPost = [CommentView viewForPost:post width:self.bounds.size.width];
-    [self.comments insertObject:newPost atIndex:idx];
-    [self addSubview:newPost];
+    [self insertSubview:[CommentView viewForPost:post width:self.bounds.size.width]
+                atIndex:idx];
+    [self setNeedsLayout];
 }
 
 - (void)layoutSubviews {
-    CGFloat y = COMMENT_PADDING_HEIGHT;
-    for (CommentView *cv in self.comments) {
+    CGFloat y = CommentPaddingHeight;
+    for (CommentView *cv in self.subviews) {
         cv.frame = CGRectMake(0, y, cv.frame.size.width, cv.frame.size.height);
-        y += cv.frame.size.height + COMMENT_PADDING_HEIGHT;
+        y += cv.frame.size.height + CommentPaddingHeight;
     }
 
     CGRect frame = self.frame;
@@ -55,7 +48,6 @@
 
 - (void)clear {
     [self.subviews makeObjectsPerformSelector:@selector(destroy)];
-    self.comments = nil;
 }
 
 @end

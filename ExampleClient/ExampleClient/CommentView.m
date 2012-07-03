@@ -10,6 +10,10 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+static const int AvatarSize = 50;
+static const int PaddingWidth = 8;
+static const int TextBoxHeight = 21;
+
 @interface CommentView () <UIWebViewDelegate>
 @property (strong, nonatomic) UILabel *authorName;
 @property (strong, nonatomic) UILabel *timestamp;
@@ -36,49 +40,50 @@
     return view;
 }
 
++ (void)addBordersAndShadow:(UIView *)view {
+    view.layer.cornerRadius = 8.0;
+    view.layer.shadowColor = [UIColor colorWithWhite:0.12 alpha:1].CGColor;
+    view.layer.shadowOffset = CGSizeMake(0, 0.5);
+    view.layer.shadowRadius = 2.5;
+    view.layer.shadowOpacity = 1;
+    view.layer.shouldRasterize = YES;
+    view.layer.rasterizationScale = [UIScreen mainScreen].scale;
+}
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (!self) return self;
 
-    self.authorName = [[UILabel alloc] initWithFrame:CGRectMake(66, 8, 190, 21)];
+    const int topBoxesX = AvatarSize + PaddingWidth * 2;
+    const int topBoxesWidth = frame.size.width - topBoxesX - PaddingWidth;
+
+    self.authorName = [[UILabel alloc] initWithFrame:CGRectMake(topBoxesX, PaddingWidth, topBoxesWidth, TextBoxHeight)];
     self.authorName.backgroundColor = [UIColor clearColor];
     [self addSubview:self.authorName];
 
-    self.timestamp = [[UILabel alloc] initWithFrame:CGRectMake(66, 37, 190, 21)];
+    self.timestamp = [[UILabel alloc] initWithFrame:CGRectMake(topBoxesX, TextBoxHeight + PaddingWidth * 2, topBoxesWidth, TextBoxHeight)];
     self.timestamp.backgroundColor = [UIColor clearColor];
     [self addSubview:self.timestamp];
 
-    self.body = [[UIWebView alloc] initWithFrame:CGRectMake(8, 66, 246, 66)];
+    self.body = [[UIWebView alloc] initWithFrame:CGRectMake(PaddingWidth, AvatarSize + PaddingWidth * 2, frame.size.width, 66)];
     self.body.backgroundColor = [UIColor clearColor];
     self.body.opaque = NO;
     self.body.delegate = self;
     [self addSubview:self.body];
 
-    self.avatar = [[UIImageView alloc] initWithFrame:CGRectMake(8, 8, 50, 50)];
+    self.avatar = [[UIImageView alloc] initWithFrame:CGRectMake(PaddingWidth, PaddingWidth, AvatarSize, AvatarSize)];
     [self addSubview:self.avatar];
 
     self.backgroundColor =
     [UIColor colorWithRed:0.94 green:0.94 blue:0.95 alpha:1];
-    self.layer.cornerRadius = 8.0;
-    self.layer.shadowColor = [UIColor colorWithWhite:0.12 alpha:1].CGColor;
-    self.layer.shadowOffset = CGSizeMake(0, 0.5);
-    self.layer.shadowRadius = 2.5;
-    self.layer.shadowOpacity = 1;
-    self.layer.shouldRasterize = YES;
-    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    [CommentView addBordersAndShadow:self];
 
     return self;
 }
 
-- (NSString *)formatTime:(time_t)time {
-    struct tm timeStruct;
-    localtime_r(&time, &timeStruct);
-    char buffer[80];
-    strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", &timeStruct);
-    return [NSString stringWithCString:buffer encoding:NSASCIIStringEncoding];
-}
-
+// Update the size of the view to fit the contents
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+    // sizeThatFits never returns a size smaller than the current size
     CGRect frame = webView.frame;
     frame.size.height = 1;
     webView.frame = frame;
@@ -87,13 +92,14 @@
     frame.size = fittingSize;
     webView.frame = frame;
 
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y,
-                            self.frame.size.width,
-                            self.body.frame.origin.y + self.body.frame.size.height + 8);
+    frame = self.frame;
+    frame.size.height = self.body.frame.origin.y + self.body.frame.size.height + PaddingWidth;
+    self.frame = frame;
 
     [[self superview] setNeedsLayout];
 }
 
+// Make any links clicked open in Safari rather than in the comment view
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     if (navigationType == UIWebViewNavigationTypeOther)
@@ -101,6 +107,14 @@
 
     [[UIApplication sharedApplication] openURL:[request URL]];
     return NO;
+}
+
+- (NSString *)formatTime:(time_t)time {
+    struct tm timeStruct;
+    localtime_r(&time, &timeStruct);
+    char buffer[80];
+    strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", &timeStruct);
+    return [NSString stringWithCString:buffer encoding:NSASCIIStringEncoding];
 }
 
 - (void)loadFromPost:(Post *)post {
@@ -114,11 +128,13 @@
     [post addObserver:self forKeyPath:@"editedAt" options:0 context:nil];
     [post addObserver:self forKeyPath:@"deleted"  options:0 context:nil];
 
+    // Fetch the avatar on a background thread to avoid blocking the UI
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:post.author.avatarUrl]]];
+        NSURL *avatarUrl = [NSURL URLWithString:post.author.avatarUrl];
+        NSData *imageData = [NSData dataWithContentsOfURL:avatarUrl];
 
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.avatar.image = image;
+            self.avatar.image = [UIImage imageWithData:imageData];
         });
 	});
 }
