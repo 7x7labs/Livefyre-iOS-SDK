@@ -25,7 +25,7 @@ static NSString *authToken(NSString *userName, NSString *domain, NSString *key) 
     return [ECJWT encodePayload:data secret:key];
 }
 
-static NSDictionary *tryToParseJSON(NSString *jsonString, RequestComplete callback) {
+static NSDictionary *tryToParseOnlyJSON(NSString *jsonString, RequestComplete callback) {
     id parsedObject = [jsonString objectFromJSONString];
     if (!parsedObject) {
         callback(YES, [@"Could not parse JSON: " stringByAppendingString:jsonString]);
@@ -36,6 +36,14 @@ static NSDictionary *tryToParseJSON(NSString *jsonString, RequestComplete callba
         callback(YES, [@"Got unexpected response: " stringByAppendingString:jsonString]);
         return nil;
     }
+
+    return parsedObject;
+}
+
+static NSDictionary *tryToParseJSON(NSString *jsonString, RequestComplete callback) {
+    NSDictionary *parsedObject = tryToParseOnlyJSON(jsonString, callback);
+    if (!parsedObject)
+        return nil;
 
     if ([[parsedObject objectForKey:@"status"] isEqualToString:@"error"]) {
         callback(YES, [NSString stringWithFormat:@"%@ %@: %@",
@@ -101,8 +109,6 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
 {
     if (!bootstrapRoot)
         bootstrapRoot = [defaultBootstrapHost copy];
-    if (environment)
-        bootstrapRoot = [NSString stringWithFormat:@"%@/%@", bootstrapRoot, environment, nil];
 
     LivefyreClient *client = [[LivefyreClient alloc] init];
     client->domain = domain;
@@ -266,8 +272,12 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
                         forUser:(User *)user
                   gotCollection:(RequestComplete)callback
 {
+    NSString *host = bootstrapRoot;
+    if ([environment length])
+        host = [NSString stringWithFormat:@"%@/%@", host, environment];
+
     NSString *url = [NSString stringWithFormat:@"https://%@/%@/%@/%@/init.json",
-                     bootstrapRoot,
+                     host,
                      domain,
                      siteId,
                      [NSString base64StringFromData:[articleId dataUsingEncoding:NSUTF8StringEncoding]]];
@@ -377,7 +387,8 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
                  callback:(RequestComplete)callback
 {
     responseString = [self fixAstralPlane:responseString];
-    NSDictionary *response = [responseString objectFromJSONString];
+    NSDictionary *response = tryToParseOnlyJSON(responseString, callback);
+    if (!response) return;
 
     __weak Collection *weakCollection = collection;
     __weak LivefyreClient *weakSelf = self;
@@ -455,6 +466,7 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
 
         [HttpRequest getRequest:url
                       withQuery:query
+                        timeout:timeout
                         onError:errorHandler(callback)
                       onSuccess:^(NSString *responseString, int statusCode)
          {
