@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'test-client' target in the 'test-client' project
+// Prefix header for all source files of the 'ExampleClient' target in the 'ExampleClient' project
 //
 
 #import <Availability.h>
@@ -12,3 +12,5 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+#import <LivefyreClient/LivefyreClient.h>

@@ -145,15 +145,13 @@ The SDK's API documentation can be accessed in three ways:
    directory, then run `appledoc .`. The documentation will be generated into
    the `doc` directory and registered with Xcode.
 
-The SDK has a very minimal sample client in the ExampleClient directory. To
-build it, place a copy of the SDK framework in the ExampleClient directory,
-then open ExampleClient.xcodeproj, set the target to ExampleClient > iPhone 5.1
-Simulator, and build.
-
-More interesting examples of using the API can be found in the tests.
-testTwoUserPostingAndStream in LivefyreClientTests/LivefyreClientTests.m covers
-much of the functionality of the library. The other files mostly have unit
-tests operating on mock data, and so will probably be less interesting.
+The SDK has a simple sample client in the ExampleClient directory, which
+supports displaying the comments for an article and making new comments if a
+user token is supplied. To build it, first get a copy of the SDK framework and
+place it in the ExampleClient directory. Then open ExampleClient.xcodeproj, set
+the target to ExampleClient > iPhone 5.1 Simulator, and click the Run button to
+build and run the app. Enter your Livefyre configuration paramters in the config
+screen, then touch Save to load the collection.
 
 ## Building the SDK
 

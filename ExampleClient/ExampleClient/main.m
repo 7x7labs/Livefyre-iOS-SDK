@@ -1,8 +1,8 @@
 //
 //  main.m
-//  jwt-test
+//  ExampleClient
 //
-//  Created by Thomas Goyne on 5/12/12.
+//  Created by Thomas Goyne on 6/28/12.
 //  Copyright (c) 2012 7x7 Labs. All rights reserved.
 //
 
