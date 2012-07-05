@@ -83,7 +83,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3F371454157040670069FCFB /* Pods.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 0249654425F946D89FEECA0F;
+			remoteGlobalIDString = A15DB2BAAA4C4ED0B8493BF4;
 			remoteInfo = Pods;
 		};
 /* End PBXContainerItemProxy section */
