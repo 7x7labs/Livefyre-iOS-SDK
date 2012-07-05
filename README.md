@@ -23,10 +23,11 @@ v0.1.0: Initial alpha version. Introduce `environment` and `bootstrapHost` param
 8. Add the following libraries to Link Binary With Libraries: (some may already
    be present)
     1. CFNetwork.framework
-    2. MobileCoreServices.framework
-    3. libz.dylib
+    2. MessageUI.framework
+    3. MobileCoreServices.framework
     4. SystemConfiguration.framework
-    5. MessageUI.framework
+    5. libxml2.dylib
+    6. libz.dylib
 9. Move the added libraries to the Frameworks group
 10. Import the SDK headers with #import <LivefyreClient/LivefyreClient.h> in
    either the prefix header or just the files which need it.
