@@ -15,10 +15,10 @@
 @implementation AuthTest
 - (void)testAuth
 {
-    [self.client authenticateUser:[Config objectForKey:@"moderator user"]
-                          forSite:[Config objectForKey:@"site"]
-                       forArticle:[Config objectForKey:@"existing article"]
-                          gotUser:^(BOOL error, id result)
+    [self.client authenticateUserWithToken:[self userToken:[Config objectForKey:@"moderator user"]]
+                                   forSite:[Config objectForKey:@"site"]
+                                forArticle:[Config objectForKey:@"existing article"]
+                                   gotUser:^(BOOL error, id result)
      {
          if (error) {
              STFail(result);
@@ -35,10 +35,10 @@
          }
      }];
 
-    [self.client authenticateUser:[Config objectForKey:@"non-moderator user"]
-                          forSite:[Config objectForKey:@"site"]
-                       forArticle:[Config objectForKey:@"existing article"]
-                          gotUser:^(BOOL error, id result)
+    [self.client authenticateUserWithToken:[self userToken:[Config objectForKey:@"non-moderator user"]]
+                                   forSite:[Config objectForKey:@"site"]
+                                forArticle:[Config objectForKey:@"existing article"]
+                                   gotUser:^(BOOL error, id result)
      {
          if (error) {
              STFail(result);

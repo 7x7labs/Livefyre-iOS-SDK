@@ -13,4 +13,5 @@
 @property (strong, nonatomic) LivefyreClient *client;
 
 - (void)waitForTests;
+- (NSString *)userToken:(NSString *)userName;
 @end
