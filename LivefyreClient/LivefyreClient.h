@@ -27,44 +27,23 @@
 /// Create a new Livefyre client.
 /// @param domain The Livefyre domain, including TLD, but not protocol (e.g.
 /// @"7x7-1.fyre.co").
-/// @param key The Livefyre API key for authenticating users on the domain.
-///
-/// The domain key is optional; if not supplied then authenticateUserWithToken
-/// must be used rather than authenticateUser. Not supplying the key is
-/// potentially more secure, as it makes it possible to avoid ever having the
-/// domain key on the user's device.
-+ (LivefyreClient *)clientWithDomain:(NSString *)domain
-                           domainKey:(NSString *)key;
++ (LivefyreClient *)clientWithDomain:(NSString *)domain;
 
 /// Create a new Livefyre client.
 /// @param domain The Livefyre domain, including TLD, but not protocol (e.g.
 /// @"7x7-1.fyre.co").
 /// @param bootstrapHost The server hostname for the bootstrap data. If `nil` or
 /// not specified, the standard production server is used.
-/// @param key The Livefyre API key for authenticating users on the domain.
-///
-/// The domain key is optional; if not supplied then authenticateUserWithToken
-/// must be used rather than authenticateUser. Not supplying the key is
-/// potentially more secure, as it makes it possible to avoid ever having the
-/// domain key on the user's device.
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
-                       bootstrapHost:(NSString *)bootstrapRoot
-                           domainKey:(NSString *)key;
+                       bootstrapHost:(NSString *)bootstrapRoot;
 
 /// Create a new Livefyre client.
 /// @param domain The Livefyre domain, including TLD, but not protocol (e.g.
 /// @"7x7-1.fyre.co").
 /// @param environment The server environment to use. If not specified the
 /// standard production environment is used.
-/// @param key The Livefyre API key for authenticating users on the domain.
-///
-/// The domain key is optional; if not supplied then authenticateUserWithToken
-/// must be used rather than authenticateUser. Not supplying the key is
-/// potentially more secure, as it makes it possible to avoid ever having the
-/// domain key on the user's device.
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
-                         environment:(NSString *)environment
-                           domainKey:(NSString *)key;
+                         environment:(NSString *)environment;
 
 /// Create a new Livefyre client.
 /// @param domain The Livefyre domain, including TLD, but not protocol (e.g.
@@ -73,16 +52,9 @@
 /// not specified, the standard production server is used.
 /// @param environment The server environment to use. If `nil` or not specified
 /// the standard production environment is used.
-/// @param key The Livefyre API key for authenticating users on the domain.
-///
-/// The domain key is optional; if not supplied then authenticateUserWithToken
-/// must be used rather than authenticateUser. Not supplying the key is
-/// potentially more secure, as it makes it possible to avoid ever having the
-/// domain key on the user's device.
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
                          environment:(NSString *)environment
-                       bootstrapHost:(NSString *)bootstrapHost
-                           domainKey:(NSString *)key;
+                       bootstrapHost:(NSString *)bootstrapHost;
 
 
 /// Are there currently any running asynchronous requests triggered by this
@@ -93,24 +65,6 @@
 @property (nonatomic, readonly, strong) NSString *environment;
 
 /// @name User Authentication
-
-/// Authenticate a user for accessing and posting to a collection.
-/// @param userName The user's ID.
-/// @param collectionId The ID of the collection to get access to.
-/// @param callback Block to call with the `User` object.
-- (void)authenticateUser:(NSString *)userName
-           forCollection:(NSString *)collectionId
-                 gotUser:(RequestComplete)callback;
-
-/// Authenticate a user for accessing and posting to a collection.
-/// @param userName The user's ID.
-/// @param siteId The site containing the desired collection.
-/// @param articleId The article which the collection is for.
-/// @param callback Block to call with the `User` object.
-- (void)authenticateUser:(NSString *)userName
-                 forSite:(NSString *)siteId
-              forArticle:(NSString *)articleId
-                 gotUser:(RequestComplete)callback;
 
 /// Authenticate a user for accessing and posting to a collection.
 /// @param userToken The user's Livefyre token.
@@ -185,26 +139,6 @@
 - (void)getCollectionForArticle:(NSString *)articleId
                          inSite:(NSString *)siteId
                         forUser:(User *)user
-                  gotCollection:(RequestComplete)callback;
-
-/// Get the collection for an article.
-/// @param articleId The ID of the article to get the collection for.
-/// @param siteId    The ID of the site the article is in.
-/// @param userName  The ID of the user to get the collection for. Must not be nil.
-/// @param callback Callback called with the Collection once the metadata has
-/// been retrieved.
-///
-/// This method cannot be used for anonymous access; use
-/// -[LivefyreClient getCollectionForArticle:inSite:forUser:gotCollection:] for
-/// that.
-///
-/// This method does not get any of the contents of the Collection; only the
-/// metadata and information need to retrieve the contents. To fetch the posts,
-/// see -[Collection fetchBootstrap:], -[Collection fetchPage:gotPage:], and
-/// -[Collection fetchRange:gotRange:].
-- (void)getCollectionForArticle:(NSString *)articleId
-                         inSite:(NSString *)siteId
-                    forUserName:(NSString *)userName
                   gotCollection:(RequestComplete)callback;
 
 /// Get the collection for an article.

@@ -114,9 +114,9 @@
 
 - (User *)authUser:(NSString*)userId collectionId:(NSString *)collectionId {
     __block User *user = nil;
-    [self.client authenticateUser:userId
-                    forCollection:collectionId
-                          gotUser:SetOrFail(user)];
+    [self.client authenticateUserWithToken:[self userToken:userId]
+                             forCollection:collectionId
+                                   gotUser:SetOrFail(user)];
     [self waitForTests];
     return user;
 }
@@ -322,7 +322,7 @@
     __block Collection *likeUserCollection = nil;
     [self.client getCollectionForArticle:articleId
                                   inSite:[Config objectForKey:@"site"]
-                             forUserName:@"dev01"
+                            forUserToken:[self userToken:@"dev01"]
                            gotCollection:SetOrFail(likeUserCollection)];
 
     [self waitForTests];

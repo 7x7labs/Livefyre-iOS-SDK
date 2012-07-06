@@ -15,16 +15,6 @@
 
 static const NSString *defaultBootstrapHost = @"bootstrap-json.s3.amazonaws.com";
 
-static NSString *authToken(NSString *userName, NSString *domain, NSString *key) {
-    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:domain, @"domain",
-                          userName, @"user_id",
-                          [NSNumber numberWithInt:(time(0) + 360000)], @"expires",
-                          @"test", @"display_name",
-                          nil];
-
-    return [ECJWT encodePayload:data secret:key];
-}
-
 static NSDictionary *tryToParseOnlyJSON(NSString *jsonString, RequestComplete callback) {
     id parsedObject = [jsonString objectFromJSONString];
     if (!parsedObject) {
@@ -75,7 +65,6 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
 @implementation LivefyreClient {
     NSString *domain;
     NSString *bootstrapRoot;
-    NSString *key;
     NSMutableDictionary *pollingCollections;
     NSString *uuid;
 }
@@ -83,29 +72,25 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
 @synthesize environment;
 
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
-                           domainKey:(NSString *)key
 {
-    return [self clientWithDomain:domain environment:nil bootstrapHost:nil domainKey:key];
+    return [self clientWithDomain:domain environment:nil bootstrapHost:nil];
 }
 
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
                        bootstrapHost:(NSString *)bootstrapRoot
-                           domainKey:(NSString *)key
 {
-    return [self clientWithDomain:domain environment:nil bootstrapHost:bootstrapRoot domainKey:key];
+    return [self clientWithDomain:domain environment:nil bootstrapHost:bootstrapRoot];
 }
 
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
                          environment:(NSString *)environment
-                           domainKey:(NSString *)key
 {
-    return [self clientWithDomain:domain environment:environment bootstrapHost:nil domainKey:key];
+    return [self clientWithDomain:domain environment:environment bootstrapHost:nil];
 }
 
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
                          environment:(NSString *)environment
                        bootstrapHost:(NSString *)bootstrapRoot
-                           domainKey:(NSString *)key
 {
     if (!bootstrapRoot)
         bootstrapRoot = [defaultBootstrapHost copy];
@@ -114,7 +99,6 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
     client->domain = domain;
     client->bootstrapRoot = bootstrapRoot;
     client->environment = environment;
-    client->key = key;
     client->pollingCollections = [[NSMutableDictionary alloc] init];
 
     CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
@@ -143,38 +127,6 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
                       else
                           callback(NO, user);
                   }];
-}
-
-- (void)authenticateUser:(NSString *)userName
-           forCollection:(NSString *)collectionId
-                 gotUser:(RequestComplete)callback
-{
-    if (!key) {
-        callback(YES, @"Cannot authenticate with a user name without a domain key");
-        return;
-    }
-
-    [self authenticateUser:[NSDictionary dictionaryWithObjectsAndKeys:authToken(userName, domain, key), @"lftoken",
-                            collectionId, @"collectionId",
-                            nil]
-                   gotUser:callback];
-}
-
-- (void)authenticateUser:(NSString *)userName
-                 forSite:(NSString *)siteId
-              forArticle:(NSString *)articleId
-                 gotUser:(RequestComplete)callback
-{
-    if (!key) {
-        callback(YES, @"Cannot authenticate with a user name without a domain key");
-        return;
-    }
-
-    [self authenticateUser:[NSDictionary dictionaryWithObjectsAndKeys:authToken(userName, domain, key), @"lftoken",
-                            siteId, @"siteId",
-                            [NSString base64StringFromData:[articleId dataUsingEncoding:NSUTF8StringEncoding]], @"articleId",
-                            nil]
-                   gotUser:callback];
 }
 
 - (void)authenticateUserWithToken:(NSString *)userToken
@@ -306,27 +258,6 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
                                      lastEvent:[[responseData objectForKey:@"event"] longLongValue]
                                      bootstrap:[self pageRequest:[responseData objectForKey:@"bootstrapUrl"]]
                                additionalPages:additionalPages]);
-     }];
-}
-
-- (void)getCollectionForArticle:(NSString *)articleId
-                         inSite:(NSString *)siteId
-                    forUserName:(NSString *)userName
-                  gotCollection:(RequestComplete)callback
-{
-    [self authenticateUser:userName
-                   forSite:siteId
-                forArticle:articleId
-                   gotUser:^(BOOL error, id resultOrError)
-     {
-         if (error)
-             callback(YES, resultOrError);
-         else {
-             [self getCollectionForArticle:articleId
-                                    inSite:siteId
-                                   forUser:resultOrError
-                             gotCollection:callback];
-         }
      }];
 }
 
