@@ -10,6 +10,7 @@
 
 #import "Author.h"
 #import "Content.h"
+#import "LFLivefyreViewController.h"
 #import "User.h"
 
 #include <sys/time.h>
@@ -431,4 +432,18 @@
     }
 }
 
+- (UINavigationController *)newNavigationController {
+    UINavigationController *navigationController = [[UIStoryboard storyboardWithName:@"LivefyreStoryboard" bundle:nil] instantiateInitialViewController];
+    LFLivefyreViewController *livefyreViewController = (LFLivefyreViewController *)navigationController.topViewController;
+    livefyreViewController.collection = self;
+    livefyreViewController.client = self.client;
+    return navigationController;
+}
+
+- (UIViewController *)newViewController {
+    LFLivefyreViewController *livefyreViewController = [[UIStoryboard storyboardWithName:@"LivefyreStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"LFLivefyreViewController"];
+    livefyreViewController.collection = self;
+    livefyreViewController.client = self.client;
+    return livefyreViewController;
+}
 @end

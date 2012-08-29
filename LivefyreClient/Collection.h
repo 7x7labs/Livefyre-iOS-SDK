@@ -10,6 +10,9 @@
 
 @class Author;
 @class Content;
+@class LivefyreClient;
+@class UINavigationController;
+@class UIViewController;
 @class User;
 
 /// A pair of a start and end date
@@ -111,9 +114,14 @@ typedef void (^RequestComplete)(BOOL error, id resultOrError);
 /// Fetching the bootstrap data multiple times is an error.
 - (void)fetchBootstrap:(RequestComplete)callback;
 
+/// Get a stock view controller which displays this collection.
+- (UIViewController *)newViewController;
+- (UINavigationController *)newNavigationController;
+
 // Below this point are implementation details
 
 @property (nonatomic, readonly) int64_t lastEvent;
+@property (nonatomic, weak) LivefyreClient *client;
 
 + (Collection *)collectionWithId:(NSString *)collectionId
                             user:(User *)user

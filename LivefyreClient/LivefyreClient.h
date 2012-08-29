@@ -64,6 +64,37 @@
 /// The Livefyre environment this client was created for.
 @property (nonatomic, readonly, strong) NSString *environment;
 
+/// @name Simple UI
+
+/// Present a new view controller showing a collection
+/// @param viewController Parent view controller which will present the new
+/// view controller.
+/// @param articleId The unique ID of the article to get the collection for.
+/// @param site The ID of the site the article is in.
+/// @param domain The Livefyre domain, including TLD, but not protocol (e.g.
+/// @"7x7-1.fyre.co").
+/// @param environment The server environment to use. If `nil` or not specified
+/// the standard production environment is used.
+/// @param bootstrapHost The protocol and server hostname for the bootstrap
+/// data. If `nil` or not specified, the standard production server is used.
+/// @param userToken A signed Livefyre token for the user to get the collection
+/// for, or `nil` to access the collection anonymously.
+///
+/// This opens the requested collection and displays it to the user with a
+/// stock UI. If the parent view controller is a UINavigationController it is
+/// pushed onto that navigation controller's view controller stack; otherwise
+/// it is displayed modally.
+///
+/// To customize how the view controller is presented, instead use -[Collection
+/// newViewController].
++ (void)showModalUIInViewController:(UIViewController *)viewController
+                            article:(NSString *)articleId
+                               site:(NSString *)site
+                             domain:(NSString *)domain
+                        environment:(NSString *)environment
+                      bootstrapHost:(NSString *)bootstrapHost
+                          userToken:(NSString *)userToken;
+
 /// @name User Authentication
 
 /// Authenticate a user for accessing and posting to a collection.

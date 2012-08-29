@@ -4,4 +4,18 @@
 
 #ifdef __OBJC__
     #import <Foundation/Foundation.h>
+
+    #import "NSDate+Relative.h"
+
+    #ifndef __IPHONE_6_0
+        #import "NSDictionary+Indexing.h"
+        #import "NSArray+Indexing.h"
+
+        #if __has_feature(objc_bool)
+            #undef YES
+            #undef NO
+            #define YES __objc_yes
+            #define NO __objc_no
+        #endif
+    #endif
 #endif

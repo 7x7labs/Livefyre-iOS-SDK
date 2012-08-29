@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="e5F-Ig-3Km">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="jf5-6H-bhq">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="z7R-GR-fxZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController definesPresentationContext="YES" id="e5F-Ig-3Km" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="O6H-j5-Hhz">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="KG3-48-bml" kind="relationship" relationship="rootViewController" id="KWo-zf-gmc"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="-69" y="179"/>
+        </scene>
+        <!--Dummy View Controller - Close-->
+        <scene sceneID="RYG-F3-kxz">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rQX-89-1g2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController title="Close" id="KG3-48-bml" customClass="LFDummyViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dqL-Jg-IbD">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Close" id="zVt-VB-Xo8">
+                        <barButtonItem key="backBarButtonItem" title="Close" id="aus-Yg-3fw"/>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="3Yp-0Y-RGp" kind="custom" identifier="initial" customClass="LFNonAnimatedPush" id="V3k-Aa-MGz"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="417" y="619"/>
+        </scene>
+        <!--Livefyre View Controller - Livefyre Mobile!-->
+        <scene sceneID="HNJ-My-7T7">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0oV-6f-deH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="LFLivefyreViewController" id="3Yp-0Y-RGp" customClass="LFLivefyreViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Wic-0H-60e">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="ZHw-ng-DwO" userLabel="Top label background">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tap any comment to reply." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Rdx-ro-Pct">
+                                        <rect key="frame" x="10" y="4" width="250" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="livefyre-logo.png" id="bSE-kQ-q0v">
+                                        <rect key="frame" x="262" y="7" width="53" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.31764705882352939" green="0.38431372549019605" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" id="goX-fa-qOB">
+                                <rect key="frame" x="0.0" y="30" width="320" height="430"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell autoresizesSubviews="NO" clipsSubviews="YES" contentMode="center" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="2" indentationWidth="8" reuseIdentifier="comment" rowHeight="100" id="Zzf-iC-WeV" customClass="LFCommentTableViewCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="99"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" id="xPU-Ve-oIi" userLabel="Border">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" id="iRA-0l-qUr" userLabel="Background">
+                                                            <rect key="frame" x="1" y="0.0" width="319" height="99"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <webView contentMode="scaleToFill" id="MVb-8d-jfp">
+                                                    <rect key="frame" x="9" y="34" width="285" height="65"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <dataDetectorType key="dataDetectorTypes"/>
+                                                </webView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="b26-qD-cHh">
+                                                    <rect key="frame" x="38" y="10" width="262" height="12"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" red="0.090196078431372548" green="0.50980392156862742" blue="0.88627450980392153" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="timestamp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="uZq-eT-DjJ">
+                                                    <rect key="frame" x="38" y="25" width="262" height="12"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
+                                                    <color key="textColor" red="0.49803921568627452" green="0.49803921568627452" blue="0.49803921568627452" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="X6G-Uh-cHV">
+                                                    <rect key="frame" x="9" y="9" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                                        <connections>
+                                            <outlet property="authorName" destination="b26-qD-cHh" id="IZo-Jt-Ux4"/>
+                                            <outlet property="avatar" destination="X6G-Uh-cHV" id="fVM-39-kZ6"/>
+                                            <outlet property="background" destination="iRA-0l-qUr" id="NoS-TL-iht"/>
+                                            <outlet property="body" destination="MVb-8d-jfp" id="ema-6O-MCv"/>
+                                            <outlet property="border" destination="xPU-Ve-oIi" id="vkM-DM-oz8"/>
+                                            <outlet property="timestamp" destination="uZq-eT-DjJ" id="gHw-xI-C0B"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Livefyre Mobile!" id="YMD-pp-fWg">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="eUH-kE-KoN">
+                            <color key="tintColor" red="0.090196078430000007" green="0.50980392159999999" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="d14-l8-tqW" kind="push" identifier="reply" id="91P-AB-Gof"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="closeButton" destination="YMD-pp-fWg" id="HP1-XM-shK"/>
+                        <outlet property="headerLabel" destination="Rdx-ro-Pct" id="co4-dM-IDf"/>
+                        <outlet property="replyButton" destination="YMD-pp-fWg" id="hHE-UZ-VFc"/>
+                        <outlet property="tableView" destination="goX-fa-qOB" id="Rm9-MA-H9a"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="960" y="297"/>
+        </scene>
+        <!--Reply View Controller - New Comment-->
+        <scene sceneID="Vkc-x3-M5q">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RH1-Wh-3xi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="d14-l8-tqW" customClass="LFReplyViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="wSd-4o-aay">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="U1b-NM-5gl" userLabel="Header">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="nZa-ng-UUS" userLabel="Avatar">
+                                    <rect key="frame" x="10" y="6" width="25" height="25"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="BobJohnson" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="qiy-zu-Flu" userLabel="User name">
+                                    <rect key="frame" x="40" y="6" width="280" height="25"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                    <color key="textColor" red="0.23137254901960785" green="0.32941176470588235" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                        <sections>
+                            <tableViewSection id="dzd-va-1XN">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="150" id="bcU-pr-55X">
+                                        <rect key="frame" x="0.0" y="41" width="320" height="152"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="149"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="chV-sg-Dly">
+                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="149"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="d14-l8-tqW" id="N1e-KO-A16"/>
+                            <outlet property="delegate" destination="d14-l8-tqW" id="dOF-iV-HDL"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="New Comment" id="D1h-Vr-ALI">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="Fhu-RF-9lt">
+                            <color key="tintColor" red="0.090196078430000007" green="0.50980392159999999" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="postTouched:" destination="d14-l8-tqW" id="rS6-pY-QVR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="avatar" destination="nZa-ng-UUS" id="CTe-67-DCh"/>
+                        <outlet property="backgroundView" destination="wSd-4o-aay" id="eSi-7p-le0"/>
+                        <outlet property="textView" destination="chV-sg-Dly" id="2c2-ek-Vbv"/>
+                        <outlet property="userName" destination="qiy-zu-Flu" id="GQe-Mo-NWb"/>
+                    </connections>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="1313" y="310"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="livefyre-logo.png" width="53" height="15"/>
+    </resources>
+    <classes>
+        <class className="LFCommentTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LFCommentTableViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="authorName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="avatar" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="background" candidateClass="UIView"/>
+                <relationship kind="outlet" name="body" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="border" candidateClass="UIView"/>
+                <relationship kind="outlet" name="timestamp" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LFDummyViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LFDummyViewController.h"/>
+        </class>
+        <class className="LFLivefyreViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LFLivefyreViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="closeButton" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="headerLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="replyButton" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="LFReplyViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LFReplyViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="avatar" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="backgroundView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="userName" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+    </classes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>

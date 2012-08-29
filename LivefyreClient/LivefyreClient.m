@@ -13,6 +13,8 @@
 #import "MEJWT.h"
 #import "NSString+Base64StringFromData.h"
 
+#import <UIKit/UIKit.h>
+
 static const NSString *defaultBootstrapHost = @"http://bootstrap-json.s3.amazonaws.com";
 
 static NSDictionary *tryToParseOnlyJSON(NSString *jsonString, RequestComplete callback) {
@@ -543,6 +545,35 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
              callback(NO, (Post *)content);
          }
      }];
+}
+
++ (void)showModalUIInViewController:(UIViewController *)viewController
+                            article:(NSString *)articleId
+                               site:(NSString *)site
+                             domain:(NSString *)domain
+                        environment:(NSString *)environment
+                      bootstrapHost:(NSString *)bootstrapHost
+                          userToken:(NSString *)userToken
+{
+    LivefyreClient *client = [self clientWithDomain:domain environment:environment bootstrapHost:bootstrapHost];
+    [client getCollectionForArticle:articleId inSite:site forUserToken:userToken gotCollection:^(BOOL error, id resultOrError) {
+        if (error) {
+            [[[UIAlertView alloc] initWithTitle:@"Error"
+                                        message:@"Could not open the collection"
+                                       delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil] show];
+            return;
+        }
+
+        [resultOrError setClient:client];
+        if ([viewController respondsToSelector:@selector(pushViewController:animated:)]) {
+            [(id)viewController pushViewController:[resultOrError newViewController] animated:YES];
+        }
+        else {
+            [viewController presentModalViewController:[resultOrError newNavigationController] animated:YES];
+        }
+    }];
 }
 
 @end

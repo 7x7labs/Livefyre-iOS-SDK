@@ -32,6 +32,17 @@
 		3F4C54C91575471900854F2D /* FopenBugWorkaround.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F4C54C81575471900854F2D /* FopenBugWorkaround.m */; };
 		3F7963D61575AA470096E6EB /* LivefyreClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F7963D51575AA470096E6EB /* LivefyreClientTests.m */; };
 		3F7963E11576E7BB0096E6EB /* init-sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F7963E01576E7BB0096E6EB /* init-sample.json */; };
+		3FA3025515EE778600C70BC6 /* LFLivefyreViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FA3025315EE778600C70BC6 /* LFLivefyreViewController.h */; };
+		3FB62EBB160A7A54004EE99F /* LFAvatarCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA302AF15EE950200C70BC6 /* LFAvatarCache.m */; };
+		3FB62EBC160A7A5D004EE99F /* LFLivefyreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA3025415EE778600C70BC6 /* LFLivefyreViewController.m */; };
+		3FB62EC3160A7AD1004EE99F /* NSArray+Indexing.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FB62EBD160A7AD1004EE99F /* NSArray+Indexing.h */; };
+		3FB62EC4160A7AD1004EE99F /* NSArray+Indexing.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB62EBE160A7AD1004EE99F /* NSArray+Indexing.m */; };
+		3FB62EC5160A7AD1004EE99F /* NSDate+Relative.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FB62EBF160A7AD1004EE99F /* NSDate+Relative.h */; };
+		3FB62EC6160A7AD1004EE99F /* NSDate+Relative.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB62EC0160A7AD1004EE99F /* NSDate+Relative.m */; };
+		3FB62EC7160A7AD1004EE99F /* NSDictionary+Indexing.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FB62EC1160A7AD1004EE99F /* NSDictionary+Indexing.h */; };
+		3FB62EC8160A7AD1004EE99F /* NSDictionary+Indexing.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB62EC2160A7AD1004EE99F /* NSDictionary+Indexing.m */; };
+		3FB62ECB160A7AE1004EE99F /* LFCommentTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FB62EC9160A7ADF004EE99F /* LFCommentTableViewCell.h */; };
+		3FB62ECC160A7AE1004EE99F /* LFCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB62ECA160A7AE0004EE99F /* LFCommentTableViewCell.m */; };
 		3FD7290A156EA47B006DD6A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD72909156EA47B006DD6A1 /* Foundation.framework */; };
 		3FD72910156EA47B006DD6A1 /* LivefyreClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD7290F156EA47B006DD6A1 /* LivefyreClient.m */; };
 		3FD72918156EA47B006DD6A1 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD72917156EA47B006DD6A1 /* SenTestingKit.framework */; };
@@ -52,8 +63,12 @@
 		3FD72949156EA54B006DD6A1 /* User.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FD7293D156EA54B006DD6A1 /* User.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3FD7294A156EA54B006DD6A1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD7293E156EA54B006DD6A1 /* User.m */; };
 		3FDFEFDA15754BB2009CBB7E /* ContentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FDFEFD915754BB2009CBB7E /* ContentTests.m */; };
+		3FECD9E3160BDD6B005926FA /* LFDummyViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FECD9E1160BDD6B005926FA /* LFDummyViewController.h */; };
+		3FECD9E4160BDD6B005926FA /* LFDummyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FECD9E2160BDD6B005926FA /* LFDummyViewController.m */; };
 		3FF2151F1572FD36009B5C95 /* TestConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FF2151E1572FD36009B5C95 /* TestConfig.plist */; };
 		3FF2152A1572FDBF009B5C95 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FF215291572FDBF009B5C95 /* Config.m */; };
+		3FF2817D16038D8F003AC19E /* LFReplyViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FF2817B16038D8F003AC19E /* LFReplyViewController.h */; };
+		3FF2817E16038D8F003AC19E /* LFReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FF2817C16038D8F003AC19E /* LFReplyViewController.m */; };
 		DCA97B3D99BC4C0A9A32018B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E44B9A040ABF4BA7B99D158A /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -83,13 +98,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3F371454157040670069FCFB /* Pods.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 395AACD8E87A47BD8A2768E7;
+			remoteGlobalIDString = E8CC4EF0DAF344DDBCF9EE11;
 			remoteInfo = Pods;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3F371454157040670069FCFB /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
+		3F3A557F160BC8C700DECAC6 /* LivefyreStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LivefyreStoryboard.storyboard; sourceTree = "<group>"; };
 		3F4439961573D42400B41B22 /* AuthTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthTest.h; sourceTree = "<group>"; };
 		3F4439971573D42400B41B22 /* AuthTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthTest.m; sourceTree = "<group>"; };
 		3F4439991573D4F200B41B22 /* AsyncTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncTestBase.h; sourceTree = "<group>"; };
@@ -106,7 +122,22 @@
 		3F7963D41575AA470096E6EB /* LivefyreClientTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LivefyreClientTests.h; sourceTree = "<group>"; };
 		3F7963D51575AA470096E6EB /* LivefyreClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LivefyreClientTests.m; sourceTree = "<group>"; };
 		3F7963E01576E7BB0096E6EB /* init-sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "init-sample.json"; sourceTree = "<group>"; };
+		3FA3023815EE76D700C70BC6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3FA3025315EE778600C70BC6 /* LFLivefyreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFLivefyreViewController.h; path = LivefyreClient/UI/LFLivefyreViewController.h; sourceTree = "<group>"; };
+		3FA3025415EE778600C70BC6 /* LFLivefyreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LFLivefyreViewController.m; path = LivefyreClient/UI/LFLivefyreViewController.m; sourceTree = "<group>"; };
+		3FA302AE15EE950200C70BC6 /* LFAvatarCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFAvatarCache.h; path = LivefyreClient/UI/LFAvatarCache.h; sourceTree = "<group>"; };
+		3FA302AF15EE950200C70BC6 /* LFAvatarCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LFAvatarCache.m; path = LivefyreClient/UI/LFAvatarCache.m; sourceTree = "<group>"; };
+		3FAA7400160BFA150064FE85 /* livefyre-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livefyre-logo@2x.png"; sourceTree = "<group>"; };
+		3FAA7401160BFA150064FE85 /* livefyre-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livefyre-logo.png"; sourceTree = "<group>"; };
 		3FB0370F6D78411889D31B65 /* Pods.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		3FB62EBD160A7AD1004EE99F /* NSArray+Indexing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+Indexing.h"; path = "LivefyreClient/Categories/NSArray+Indexing.h"; sourceTree = "<group>"; };
+		3FB62EBE160A7AD1004EE99F /* NSArray+Indexing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+Indexing.m"; path = "LivefyreClient/Categories/NSArray+Indexing.m"; sourceTree = "<group>"; };
+		3FB62EBF160A7AD1004EE99F /* NSDate+Relative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Relative.h"; path = "LivefyreClient/Categories/NSDate+Relative.h"; sourceTree = "<group>"; };
+		3FB62EC0160A7AD1004EE99F /* NSDate+Relative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Relative.m"; path = "LivefyreClient/Categories/NSDate+Relative.m"; sourceTree = "<group>"; };
+		3FB62EC1160A7AD1004EE99F /* NSDictionary+Indexing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+Indexing.h"; path = "LivefyreClient/Categories/NSDictionary+Indexing.h"; sourceTree = "<group>"; };
+		3FB62EC2160A7AD1004EE99F /* NSDictionary+Indexing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+Indexing.m"; path = "LivefyreClient/Categories/NSDictionary+Indexing.m"; sourceTree = "<group>"; };
+		3FB62EC9160A7ADF004EE99F /* LFCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFCommentTableViewCell.h; path = LivefyreClient/UI/LFCommentTableViewCell.h; sourceTree = "<group>"; };
+		3FB62ECA160A7AE0004EE99F /* LFCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LFCommentTableViewCell.m; path = LivefyreClient/UI/LFCommentTableViewCell.m; sourceTree = "<group>"; };
 		3FD2DE78157D7D66008F7E25 /* AppledocSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AppledocSettings.plist; sourceTree = "<group>"; };
 		3FD72906156EA47B006DD6A1 /* libLivefyreClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLivefyreClient.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD72909156EA47B006DD6A1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -132,9 +163,13 @@
 		3FD7293E156EA54B006DD6A1 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		3FDFEFD815754BB2009CBB7E /* ContentTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentTests.h; sourceTree = "<group>"; };
 		3FDFEFD915754BB2009CBB7E /* ContentTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentTests.m; sourceTree = "<group>"; };
+		3FECD9E1160BDD6B005926FA /* LFDummyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFDummyViewController.h; path = LivefyreClient/UI/LFDummyViewController.h; sourceTree = "<group>"; };
+		3FECD9E2160BDD6B005926FA /* LFDummyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LFDummyViewController.m; path = LivefyreClient/UI/LFDummyViewController.m; sourceTree = "<group>"; };
 		3FF2151E1572FD36009B5C95 /* TestConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TestConfig.plist; sourceTree = "<group>"; };
 		3FF215281572FDBF009B5C95 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		3FF215291572FDBF009B5C95 /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
+		3FF2817B16038D8F003AC19E /* LFReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFReplyViewController.h; path = LivefyreClient/UI/LFReplyViewController.h; sourceTree = "<group>"; };
+		3FF2817C16038D8F003AC19E /* LFReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LFReplyViewController.m; path = LivefyreClient/UI/LFReplyViewController.m; sourceTree = "<group>"; };
 		E44B9A040ABF4BA7B99D158A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -170,6 +205,52 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3F3A557E160BC8C700DECAC6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA7400160BFA150064FE85 /* livefyre-logo@2x.png */,
+				3FAA7401160BFA150064FE85 /* livefyre-logo.png */,
+				3F3A557F160BC8C700DECAC6 /* LivefyreStoryboard.storyboard */,
+			);
+			name = Resources;
+			path = LivefyreClient/UI/Resources;
+			sourceTree = "<group>";
+		};
+		3FA3022715EE6D0E00C70BC6 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				3FB62EBD160A7AD1004EE99F /* NSArray+Indexing.h */,
+				3FB62EBE160A7AD1004EE99F /* NSArray+Indexing.m */,
+				3FB62EBF160A7AD1004EE99F /* NSDate+Relative.h */,
+				3FB62EC0160A7AD1004EE99F /* NSDate+Relative.m */,
+				3FB62EC1160A7AD1004EE99F /* NSDictionary+Indexing.h */,
+				3FB62EC2160A7AD1004EE99F /* NSDictionary+Indexing.m */,
+			);
+			name = Categories;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		3FB62EBA160A78E4004EE99F /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				3FD72933156EA54B006DD6A1 /* ARC4.h */,
+				3FD72934156EA54B006DD6A1 /* ARC4.m */,
+				3FD72935156EA54B006DD6A1 /* Author.h */,
+				3FD72936156EA54B006DD6A1 /* Author.m */,
+				3FD72937156EA54B006DD6A1 /* Collection.h */,
+				3FD72938156EA54B006DD6A1 /* Collection.m */,
+				3FD72939156EA54B006DD6A1 /* Content.h */,
+				3FD7293A156EA54B006DD6A1 /* Content.m */,
+				3FD7293B156EA54B006DD6A1 /* HttpRequest.h */,
+				3FD7293C156EA54B006DD6A1 /* HttpRequest.m */,
+				3FD7293D156EA54B006DD6A1 /* User.h */,
+				3FD7293E156EA54B006DD6A1 /* User.m */,
+				3FD7290E156EA47B006DD6A1 /* LivefyreClient.h */,
+				3FD7290F156EA47B006DD6A1 /* LivefyreClient.m */,
+			);
+			name = Client;
+			sourceTree = "<group>";
+		};
 		3FD728FB156EA47B006DD6A1 = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +280,7 @@
 				3FD72917156EA47B006DD6A1 /* SenTestingKit.framework */,
 				3FD72919156EA47B006DD6A1 /* UIKit.framework */,
 				E44B9A040ABF4BA7B99D158A /* libPods.a */,
+				3FA3023815EE76D700C70BC6 /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -206,21 +288,10 @@
 		3FD7290B156EA47B006DD6A1 /* LivefyreClient */ = {
 			isa = PBXGroup;
 			children = (
-				3FD72933156EA54B006DD6A1 /* ARC4.h */,
-				3FD72934156EA54B006DD6A1 /* ARC4.m */,
-				3FD72935156EA54B006DD6A1 /* Author.h */,
-				3FD72936156EA54B006DD6A1 /* Author.m */,
-				3FD72937156EA54B006DD6A1 /* Collection.h */,
-				3FD72938156EA54B006DD6A1 /* Collection.m */,
-				3FD72939156EA54B006DD6A1 /* Content.h */,
-				3FD7293A156EA54B006DD6A1 /* Content.m */,
-				3FD7293B156EA54B006DD6A1 /* HttpRequest.h */,
-				3FD7293C156EA54B006DD6A1 /* HttpRequest.m */,
-				3FD7293D156EA54B006DD6A1 /* User.h */,
-				3FD7293E156EA54B006DD6A1 /* User.m */,
-				3FD7290E156EA47B006DD6A1 /* LivefyreClient.h */,
-				3FD7290F156EA47B006DD6A1 /* LivefyreClient.m */,
+				3FA3022715EE6D0E00C70BC6 /* Categories */,
+				3FB62EBA160A78E4004EE99F /* Client */,
 				3FD7290C156EA47B006DD6A1 /* Supporting Files */,
+				3FE3E84015EE57A70088C5F9 /* UI */,
 			);
 			path = LivefyreClient;
 			sourceTree = "<group>";
@@ -265,6 +336,25 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		3FE3E84015EE57A70088C5F9 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				3F3A557E160BC8C700DECAC6 /* Resources */,
+				3FA302AE15EE950200C70BC6 /* LFAvatarCache.h */,
+				3FA302AF15EE950200C70BC6 /* LFAvatarCache.m */,
+				3FB62EC9160A7ADF004EE99F /* LFCommentTableViewCell.h */,
+				3FB62ECA160A7AE0004EE99F /* LFCommentTableViewCell.m */,
+				3FECD9E1160BDD6B005926FA /* LFDummyViewController.h */,
+				3FECD9E2160BDD6B005926FA /* LFDummyViewController.m */,
+				3FA3025315EE778600C70BC6 /* LFLivefyreViewController.h */,
+				3FA3025415EE778600C70BC6 /* LFLivefyreViewController.m */,
+				3FF2817B16038D8F003AC19E /* LFReplyViewController.h */,
+				3FF2817C16038D8F003AC19E /* LFReplyViewController.m */,
+			);
+			name = UI;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		3FF215271572FDA5009B5C95 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +383,13 @@
 				3FD72949156EA54B006DD6A1 /* User.h in Headers */,
 				3FD7293F156EA54B006DD6A1 /* ARC4.h in Headers */,
 				3FD72947156EA54B006DD6A1 /* HttpRequest.h in Headers */,
+				3FA3025515EE778600C70BC6 /* LFLivefyreViewController.h in Headers */,
+				3FF2817D16038D8F003AC19E /* LFReplyViewController.h in Headers */,
+				3FB62EC3160A7AD1004EE99F /* NSArray+Indexing.h in Headers */,
+				3FB62EC5160A7AD1004EE99F /* NSDate+Relative.h in Headers */,
+				3FB62EC7160A7AD1004EE99F /* NSDictionary+Indexing.h in Headers */,
+				3FB62ECB160A7AE1004EE99F /* LFCommentTableViewCell.h in Headers */,
+				3FECD9E3160BDD6B005926FA /* LFDummyViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,7 +519,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\nset +u\n# Avoid recursively calling this script.\nif [[ $SF_MASTER_SCRIPT_RUNNING ]]\nthen\nexit 0\nfi\nset -u\nexport SF_MASTER_SCRIPT_RUNNING=1\n\nSF_TARGET_NAME=${PROJECT_NAME}\nSF_EXECUTABLE_PATH=\"lib${SF_TARGET_NAME}.a\"\nSF_WRAPPER_NAME=\"${SF_TARGET_NAME}.framework\"\n\n# The following conditionals come from\n# https://github.com/kstenerud/iOS-Universal-Framework\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\nSF_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\necho \"Could not find platform name from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\nSF_SDK_VERSION=${BASH_REMATCH[1]}\nelse\necho \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SF_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\nSF_OTHER_PLATFORM=iphonesimulator\nelse\nSF_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$SF_SDK_PLATFORM$ ]]\nthen\nSF_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${SF_OTHER_PLATFORM}\"\nelse\necho \"Could not find platform name from build products directory: $BUILT_PRODUCTS_DIR\"\nexit 1\nfi\n\n# Build the other platform.\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${SF_OTHER_PLATFORM}${SF_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" OBJROOT=\"${OBJROOT}\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# Smash the two static libraries into one fat binary and store it in the .framework\nlipo -create \"${BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" -output \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n\n# Copy the binary to the other architecture folder to have a complete framework in both.\ncp -a \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n";
+			shellScript = "set -e\nset +u\n# Avoid recursively calling this script.\nif [[ $SF_MASTER_SCRIPT_RUNNING ]]\nthen\nexit 0\nfi\nset -u\nexport SF_MASTER_SCRIPT_RUNNING=1\n\nSF_TARGET_NAME=${PROJECT_NAME}\nSF_EXECUTABLE_PATH=\"lib${SF_TARGET_NAME}.a\"\nSF_WRAPPER_NAME=\"${SF_TARGET_NAME}.framework\"\nSF_EMBED_NAME=\"${SF_TARGET_NAME}.embeddedframework\"\n\n# The following conditionals come from\n# https://github.com/kstenerud/iOS-Universal-Framework\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\nSF_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\necho \"Could not find platform name from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\nSF_SDK_VERSION=${BASH_REMATCH[1]}\nelse\necho \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SF_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\nSF_OTHER_PLATFORM=iphonesimulator\nelse\nSF_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$SF_SDK_PLATFORM$ ]]\nthen\nSF_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${SF_OTHER_PLATFORM}\"\nelse\necho \"Could not find platform name from build products directory: $BUILT_PRODUCTS_DIR\"\nexit 1\nfi\n\n# Build the other platform.\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${SF_OTHER_PLATFORM}${SF_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" OBJROOT=\"${OBJROOT}\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# Smash the two static libraries into one fat binary and store it in the .framework\nlipo -create \"${BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" -output \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n\n# Copy the binary to the other architecture folder to have a complete framework in both.\ncp -a \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n\n# Create the embeddedframework with resources\nrm -rf \"${BUILT_PRODUCTS_DIR}/${SF_EMBED_NAME}\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${SF_EMBED_NAME}\"\ncp -aR \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${SF_EMBED_NAME}\"\ncp -aR \"${PROJECT_DIR}/LivefyreClient/UI/Resources\" \"${BUILT_PRODUCTS_DIR}/${SF_EMBED_NAME}\"\n";
 		};
 		3FD72914156EA47B006DD6A1 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -465,6 +562,14 @@
 				3FD72946156EA54B006DD6A1 /* Content.m in Sources */,
 				3FD72948156EA54B006DD6A1 /* HttpRequest.m in Sources */,
 				3FD7294A156EA54B006DD6A1 /* User.m in Sources */,
+				3FF2817E16038D8F003AC19E /* LFReplyViewController.m in Sources */,
+				3FB62EBB160A7A54004EE99F /* LFAvatarCache.m in Sources */,
+				3FB62EBC160A7A5D004EE99F /* LFLivefyreViewController.m in Sources */,
+				3FB62EC4160A7AD1004EE99F /* NSArray+Indexing.m in Sources */,
+				3FB62EC6160A7AD1004EE99F /* NSDate+Relative.m in Sources */,
+				3FB62EC8160A7AD1004EE99F /* NSDictionary+Indexing.m in Sources */,
+				3FB62ECC160A7AE1004EE99F /* LFCommentTableViewCell.m in Sources */,
+				3FECD9E4160BDD6B005926FA /* LFDummyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
