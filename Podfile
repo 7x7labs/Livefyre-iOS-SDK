@@ -1,6 +1,6 @@
 platform :ios, :deployment_target => '5.0'
 
-dependency 'ASIHTTPRequest'
-dependency 'ECJWT', :podspec => 'ECJWT/ECJWT.podspec'
-dependency 'A2DynamicDelegate', '~> 1.0.0'
-dependency 'BlocksKit', '~> 1.0.6'
+pod 'ASIHTTPRequest'
+pod 'ECJWT', :podspec => 'ECJWT/ECJWT.podspec'
+pod 'A2DynamicDelegate', '~> 1.0.0'
+pod 'BlocksKit', '~> 1.0.6'
