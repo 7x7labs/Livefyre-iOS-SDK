@@ -65,7 +65,7 @@ static int pendingRequests = 0;
            onError:(ResponseBlock)onError
          onSuccess:(ResponseBlock)onSuccess
 {
-    [self getRequest:url timeout:10 onError:onError onSuccess:onSuccess];
+    [self getRequest:url timeout:30 onError:onError onSuccess:onSuccess];
 }
 
 + (void)getRequest:(NSString *)url
