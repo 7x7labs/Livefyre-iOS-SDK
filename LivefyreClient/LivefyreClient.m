@@ -13,7 +13,7 @@
 #import "MEJWT.h"
 #import "NSString+Base64StringFromData.h"
 
-static const NSString *defaultBootstrapHost = @"bootstrap-json.s3.amazonaws.com";
+static const NSString *defaultBootstrapHost = @"http://bootstrap-json.s3.amazonaws.com";
 
 static NSDictionary *tryToParseOnlyJSON(NSString *jsonString, RequestComplete callback) {
     id parsedObject = [jsonString objectFromJSONString];
@@ -228,7 +228,7 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
     if ([environment length])
         host = [NSString stringWithFormat:@"%@/%@", host, environment];
 
-    NSString *url = [NSString stringWithFormat:@"https://%@/%@/%@/%@/init.json",
+    NSString *url = [NSString stringWithFormat:@"%@/%@/%@/%@/init.json",
                      host,
                      domain,
                      siteId,
@@ -283,7 +283,7 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
 }
 
 - (void (^)(Collection *collection, RequestComplete callback))pageRequest:(NSString *)url {
-    url = [NSString stringWithFormat:@"https://%@%@", bootstrapRoot, url];
+    url = [NSString stringWithFormat:@"%@%@", bootstrapRoot, url];
     __weak LivefyreClient *weakSelf = self;
     return ^(Collection *collection, RequestComplete callback) {
         [HttpRequest getRequest:url

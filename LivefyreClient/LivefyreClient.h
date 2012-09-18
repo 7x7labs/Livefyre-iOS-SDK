@@ -32,8 +32,8 @@
 /// Create a new Livefyre client.
 /// @param domain The Livefyre domain, including TLD, but not protocol (e.g.
 /// @"7x7-1.fyre.co").
-/// @param bootstrapHost The server hostname for the bootstrap data. If `nil` or
-/// not specified, the standard production server is used.
+/// @param bootstrapHost The protocol and server hostname for the bootstrap
+/// data. If `nil` or not specified, the standard production server is used.
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
                        bootstrapHost:(NSString *)bootstrapRoot;
 
@@ -48,8 +48,8 @@
 /// Create a new Livefyre client.
 /// @param domain The Livefyre domain, including TLD, but not protocol (e.g.
 /// @"7x7-1.fyre.co").
-/// @param bootstrapHost The server hostname for the bootstrap data. If `nil` or
-/// not specified, the standard production server is used.
+/// @param bootstrapHost The protocol and server hostname for the bootstrap
+/// data. If `nil` or not specified, the standard production server is used.
 /// @param environment The server environment to use. If `nil` or not specified
 /// the standard production environment is used.
 + (LivefyreClient *)clientWithDomain:(NSString *)domain
