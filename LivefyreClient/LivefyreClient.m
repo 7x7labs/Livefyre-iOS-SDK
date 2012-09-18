@@ -395,7 +395,7 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
 {
     __weak LivefyreClient *weakSelf = self;
     void (^poll)() = ^{
-        NSString *url = [NSString stringWithFormat:@"http://stream.%@/v3.0/collection/%@/%lld/",
+        NSString *url = [NSString stringWithFormat:@"http://stream1.%@/v3.0/collection/%@/%lld/",
                          domain, collection.collectionId, collection.lastEvent];
 
         NSDictionary *query = nil;
