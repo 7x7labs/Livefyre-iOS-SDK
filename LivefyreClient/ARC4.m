@@ -1,6 +1,6 @@
 //
 //  ARC4.m
-//  jwt-test
+//  LivefyreClient
 //
 //  Created by Thomas Goyne on 5/17/12.
 //  Copyright (c) 2012 7x7 Labs. All rights reserved.
@@ -12,7 +12,7 @@
 
 static NSData *hexStringToBytes(NSString *string) {
     NSMutableData *data = [NSMutableData data];
-    for (int i = 0; i + 2 <= string.length; i += 2) {
+    for (NSUInteger i = 0; i + 2 <= string.length; i += 2) {
         uint8_t value = (uint8_t)strtol([[string substringWithRange:NSMakeRange(i, 2)] UTF8String], 0, 16);
         [data appendBytes:&value length:1];
     }

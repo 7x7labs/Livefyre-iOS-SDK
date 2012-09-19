@@ -1,6 +1,6 @@
 //
 //  ARC4.h
-//  jwt-test
+//  LivefyreClient
 //
 //  Created by Thomas Goyne on 5/17/12.
 //  Copyright (c) 2012 7x7 Labs. All rights reserved.
