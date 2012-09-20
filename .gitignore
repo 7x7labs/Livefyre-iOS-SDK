@@ -16,3 +16,4 @@ profile
 DerivedData
 *.lock
 Pods
+LivefyreClient.embeddedframework

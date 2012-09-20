@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E2620" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
         <!--Main View Controller-->
@@ -123,6 +122,11 @@
                                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="14">
                                             <connections>
                                                 <action selector="cancel:" destination="6" id="oPU-SA-33c"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Default UI" id="by7-BD-ZXw">
+                                            <connections>
+                                                <action selector="openDefaultUI:" destination="6" id="kGg-9Q-8Ma"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -284,6 +288,8 @@
         <class className="LFCFlipsideViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LFCFlipsideViewController.h"/>
             <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="openDefaultUI:"/>
                 <relationship kind="outlet" name="articleId" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="articleLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="bootstrapHost" candidateClass="UITextField"/>

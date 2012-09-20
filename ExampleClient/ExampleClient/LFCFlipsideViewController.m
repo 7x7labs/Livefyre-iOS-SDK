@@ -70,8 +70,7 @@
 
     self.client = [LivefyreClient clientWithDomain:self.network.text
                                        environment:self.environment.text
-                                     bootstrapHost:self.bootstrapHost.text
-                                         domainKey:nil];
+                                     bootstrapHost:self.bootstrapHost.text];
 
     void (^gotCollection)(BOOL, id) = ^(BOOL error, id collectionOrError) {
         if (error) {
@@ -102,4 +101,20 @@
     }
 }
 
+- (IBAction)openDefaultUI:(id)sender {
+    self.allValid = YES;
+    [self validate:self.bootstrapHost label:self.bootstrapHostLabel];
+    [self validate:self.network label:self.networkLabel];
+    [self validate:self.siteId label:self.siteLabel];
+    [self validate:self.articleId label:self.articleLabel];
+    if (!self.allValid) return;
+
+    [LivefyreClient showModalUIInViewController:self
+                                        article:self.articleId.text
+                                           site:self.siteId.text
+                                         domain:self.network.text
+                                    environment:self.environment.text
+                                  bootstrapHost:self.bootstrapHost.text
+                                      userToken:self.userToken.text];
+}
 @end

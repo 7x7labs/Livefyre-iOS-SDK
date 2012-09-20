@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3FAA742C160C08320064FE85 /* LivefyreClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAA7427160C08320064FE85 /* LivefyreClient.framework */; };
+		3FAA742D160C08320064FE85 /* livefyre-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FAA7429160C08320064FE85 /* livefyre-logo.png */; };
+		3FAA742E160C08320064FE85 /* livefyre-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FAA742A160C08320064FE85 /* livefyre-logo@2x.png */; };
+		3FAA742F160C08320064FE85 /* LivefyreStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FAA742B160C08320064FE85 /* LivefyreStoryboard.storyboard */; };
 		3FB07C4F15A5F45F0081A04A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FB07C4E15A5F45F0081A04A /* libxml2.dylib */; };
 		3FF3A6C9159D2017000E33E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF3A6C8159D2017000E33E3 /* UIKit.framework */; };
 		3FF3A6CB159D2017000E33E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF3A6CA159D2017000E33E3 /* Foundation.framework */; };
@@ -17,7 +21,6 @@
 		3FF3A6DC159D2017000E33E3 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FF3A6DA159D2017000E33E3 /* MainStoryboard.storyboard */; };
 		3FF3A6DF159D2017000E33E3 /* LFCMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FF3A6DE159D2017000E33E3 /* LFCMainViewController.m */; };
 		3FF3A6E2159D2017000E33E3 /* LFCFlipsideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FF3A6E1159D2017000E33E3 /* LFCFlipsideViewController.m */; };
-		3FF3A6F1159D2166000E33E3 /* LivefyreClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF3A6F0159D2166000E33E3 /* LivefyreClient.framework */; };
 		3FF3A6F3159D21C6000E33E3 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF3A6F2159D21C6000E33E3 /* CFNetwork.framework */; };
 		3FF3A6F5159D21CD000E33E3 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF3A6F4159D21CD000E33E3 /* MobileCoreServices.framework */; };
 		3FF3A6F7159D21D1000E33E3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF3A6F6159D21D1000E33E3 /* libz.dylib */; };
@@ -28,6 +31,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3FAA7427160C08320064FE85 /* LivefyreClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LivefyreClient.framework; sourceTree = "<group>"; };
+		3FAA7429160C08320064FE85 /* livefyre-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livefyre-logo.png"; sourceTree = "<group>"; };
+		3FAA742A160C08320064FE85 /* livefyre-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livefyre-logo@2x.png"; sourceTree = "<group>"; };
+		3FAA742B160C08320064FE85 /* LivefyreStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LivefyreStoryboard.storyboard; sourceTree = "<group>"; };
 		3FB07C4E15A5F45F0081A04A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		3FF3A6C4159D2017000E33E3 /* ExampleClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FF3A6C8159D2017000E33E3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -44,7 +51,6 @@
 		3FF3A6DE159D2017000E33E3 /* LFCMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LFCMainViewController.m; sourceTree = "<group>"; };
 		3FF3A6E0159D2017000E33E3 /* LFCFlipsideViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LFCFlipsideViewController.h; sourceTree = "<group>"; };
 		3FF3A6E1159D2017000E33E3 /* LFCFlipsideViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LFCFlipsideViewController.m; sourceTree = "<group>"; };
-		3FF3A6F0159D2166000E33E3 /* LivefyreClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LivefyreClient.framework; sourceTree = "<group>"; };
 		3FF3A6F2159D21C6000E33E3 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		3FF3A6F4159D21CD000E33E3 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		3FF3A6F6159D21D1000E33E3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -70,13 +76,32 @@
 				3FF3A6C9159D2017000E33E3 /* UIKit.framework in Frameworks */,
 				3FF3A6CB159D2017000E33E3 /* Foundation.framework in Frameworks */,
 				3FF3A6CD159D2017000E33E3 /* CoreGraphics.framework in Frameworks */,
-				3FF3A6F1159D2166000E33E3 /* LivefyreClient.framework in Frameworks */,
+				3FAA742C160C08320064FE85 /* LivefyreClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3FAA7426160C08320064FE85 /* LivefyreClient.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA7427160C08320064FE85 /* LivefyreClient.framework */,
+				3FAA7428160C08320064FE85 /* Resources */,
+			);
+			path = LivefyreClient.embeddedframework;
+			sourceTree = "<group>";
+		};
+		3FAA7428160C08320064FE85 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA7429160C08320064FE85 /* livefyre-logo.png */,
+				3FAA742A160C08320064FE85 /* livefyre-logo@2x.png */,
+				3FAA742B160C08320064FE85 /* LivefyreStoryboard.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		3FF3A6B9159D2017000E33E3 = {
 			isa = PBXGroup;
 			children = (
@@ -97,12 +122,12 @@
 		3FF3A6C7159D2017000E33E3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3FB07C4E15A5F45F0081A04A /* libxml2.dylib */,
-				3FF3A6F6159D21D1000E33E3 /* libz.dylib */,
+				3FAA7426160C08320064FE85 /* LivefyreClient.embeddedframework */,
 				3FF3A6F2159D21C6000E33E3 /* CFNetwork.framework */,
 				3FF3A6CC159D2017000E33E3 /* CoreGraphics.framework */,
 				3FF3A6CA159D2017000E33E3 /* Foundation.framework */,
-				3FF3A6F0159D2166000E33E3 /* LivefyreClient.framework */,
+				3FB07C4E15A5F45F0081A04A /* libxml2.dylib */,
+				3FF3A6F6159D21D1000E33E3 /* libz.dylib */,
 				3FF3A6FA159D21DF000E33E3 /* MessageUI.framework */,
 				3FF3A6F4159D21CD000E33E3 /* MobileCoreServices.framework */,
 				3FF3A6F8159D21D8000E33E3 /* SystemConfiguration.framework */,
@@ -202,6 +227,9 @@
 			files = (
 				3FF3A6D3159D2017000E33E3 /* InfoPlist.strings in Resources */,
 				3FF3A6DC159D2017000E33E3 /* MainStoryboard.storyboard in Resources */,
+				3FAA742D160C08320064FE85 /* livefyre-logo.png in Resources */,
+				3FAA742E160C08320064FE85 /* livefyre-logo@2x.png in Resources */,
+				3FAA742F160C08320064FE85 /* LivefyreStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +322,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/LivefyreClient.embeddedframework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleClient/ExampleClient-Prefix.pch";
@@ -310,6 +339,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/LivefyreClient.embeddedframework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleClient/ExampleClient-Prefix.pch";
