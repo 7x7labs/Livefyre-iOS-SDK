@@ -8,7 +8,7 @@
 
 #import "LFCFlipsideViewController.h"
 
-@interface LFCFlipsideViewController ()
+@interface LFCFlipsideViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *bootstrapHost;
 @property (weak, nonatomic) IBOutlet UITextField *environment;
 @property (weak, nonatomic) IBOutlet UITextField *network;
@@ -20,28 +20,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *networkLabel;
 @property (weak, nonatomic) IBOutlet UILabel *siteLabel;
 @property (weak, nonatomic) IBOutlet UILabel *articleLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (nonatomic) BOOL allValid;
 @end
 
 @implementation LFCFlipsideViewController
-@synthesize articleId = _articleId;
-@synthesize articleLabel = _articleLabel;
-@synthesize bootstrapHost = _bootstrapHost;
-@synthesize bootstrapHostLabel = _bootstrapHostLabel;
-@synthesize environment = _environment;
-@synthesize network = _network;
-@synthesize networkLabel = _networkLabel;
-@synthesize siteId = _siteId;
-@synthesize siteLabel = _siteLabel;
-@synthesize userToken = _userToken;
-
-@synthesize delegate = _delegate;
-@synthesize client = _client;
-@synthesize collection = _collection;
-
-@synthesize allValid = _allValid;
-
 - (void)validate:(UITextField *)textField label:(UILabel *)label {
     if ([textField.text length] == 0) {
         label.textColor = [UIColor redColor];
@@ -54,6 +38,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.scrollView.contentSize = self.scrollView.frame.size;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (IBAction)cancel:(id)sender {
@@ -116,5 +117,29 @@
                                     environment:self.environment.text
                                   bootstrapHost:self.bootstrapHost.text
                                       userToken:self.userToken.text];
+}
+
+#pragma mark - UITextFieldDelegate
+-(void)keyboardDidShow:(NSNotification *)notification  {
+    CGRect keyboardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGSize size = self.view.frame.size;
+
+    self.scrollView.contentSize = CGSizeMake(size.width, size.height + keyboardFrame.size.height);
+    self.scrollView.bounces = YES;
+
+    for (UIView *subView in self.scrollView.subviews) {
+        if ([subView isFirstResponder]) {
+            if (CGRectIntersectsRect(subView.frame, keyboardFrame)) {
+                [self.scrollView setContentOffset:CGPointMake(0, keyboardFrame.size.height) animated:YES];
+            }
+            break;
+        }
+    }
+}
+
+-(void)keyboardDidHide:(NSNotification *)notification  {
+    [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+    self.scrollView.contentSize = self.scrollView.frame.size;
+    self.scrollView.bounces = NO;
 }
 @end
