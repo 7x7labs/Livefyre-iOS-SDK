@@ -268,6 +268,11 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
                     forUserToken:(NSString *)userToken
                   gotCollection:(RequestComplete)callback
 {
+    if ([userToken length] == 0) {
+        [self getCollectionForArticle:articleId inSite:siteId forUser:nil gotCollection:callback];
+        return;
+    }
+    
     [self authenticateUserWithToken:userToken
                             forSite:siteId
                          forArticle:articleId

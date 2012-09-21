@@ -176,13 +176,13 @@
 /// @param articleId The ID of the article to get the collection for.
 /// @param siteId    The ID of the site the article is in.
 /// @param userToken A signed Livefyre token for the user to get the collection
-/// for. Must not be nil.
+/// for, or nil to access the collection anonymously.
 /// @param callback Callback called with the Collection once the metadata has
 /// been retrieved.
 ///
-/// This method cannot be used for anonymous access; use
-/// -[LivefyreClient getCollectionForArticle:inSite:forUser:gotCollection:] for
-/// that.
+/// If no user is supplied, it will not be possible to create new posts or
+/// (un)like existing posts, and only publicly-visible comments will be
+/// displayed.
 ///
 /// This method does not get any of the contents of the Collection; only the
 /// metadata and information need to retrieve the contents. To fetch the posts,
