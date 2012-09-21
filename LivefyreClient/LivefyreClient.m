@@ -559,6 +559,7 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
                         environment:(NSString *)environment
                       bootstrapHost:(NSString *)bootstrapHost
                           userToken:(NSString *)userToken
+                     customizations:(NSDictionary *)customiations
 {
     LivefyreClient *client = [self clientWithDomain:domain environment:environment bootstrapHost:bootstrapHost];
     [client getCollectionForArticle:articleId inSite:site forUserToken:userToken gotCollection:^(BOOL error, id resultOrError) {
@@ -573,12 +574,16 @@ static void(^errorHandler(RequestComplete callback))(NSString *, int) {
 
         [resultOrError setClient:client];
         if ([viewController respondsToSelector:@selector(pushViewController:animated:)]) {
-            [(id)viewController pushViewController:[resultOrError newViewController] animated:YES];
+            [(id)viewController pushViewController:[resultOrError newViewControllerWithCustomizations:customiations] animated:YES];
         }
         else {
-            [viewController presentModalViewController:[resultOrError newNavigationController] animated:YES];
+            [viewController presentModalViewController:[resultOrError newNavigationControllerWithCustomizations:customiations] animated:YES];
         }
     }];
 }
 
 @end
+
+NSString * const LFUICustomizationTitle = @"_LFUICustomizationTitle";
+NSString * const LFUICustomizationTopBar = @"_LFUICustomizationTopBar";
+NSString * const LFUICustomizationLivefyreLogo = @"_LFUICustomizationLivefyreLogo";

@@ -10,13 +10,10 @@
 		3F119BBC160CC43E000782B6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F119BB9160CC43E000782B6 /* Default-568h@2x.png */; };
 		3F119BBD160CC43E000782B6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F119BBA160CC43E000782B6 /* Default.png */; };
 		3F119BBE160CC43E000782B6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F119BBB160CC43E000782B6 /* Default@2x.png */; };
-		3F273D16160CCA1E00C2082E /* LivefyreClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F273D11160CCA1E00C2082E /* LivefyreClient.framework */; };
-		3F273D17160CCA1E00C2082E /* livefyre-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F273D13160CCA1E00C2082E /* livefyre-logo.png */; };
-		3F273D18160CCA1E00C2082E /* livefyre-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F273D14160CCA1E00C2082E /* livefyre-logo@2x.png */; };
-		3F273D19160CCA1E00C2082E /* LivefyreStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F273D15160CCA1E00C2082E /* LivefyreStoryboard.storyboard */; };
-		3FAA745B160CADB20064FE85 /* livefyre-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FAA7457160CADB10064FE85 /* livefyre-logo.png */; };
-		3FAA745C160CADB20064FE85 /* livefyre-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FAA7458160CADB10064FE85 /* livefyre-logo@2x.png */; };
-		3FAA745D160CADB20064FE85 /* LivefyreStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FAA7459160CADB10064FE85 /* LivefyreStoryboard.storyboard */; };
+		3F71FE57160CCF3C003D6B5B /* LivefyreClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F71FE52160CCF3C003D6B5B /* LivefyreClient.framework */; };
+		3F71FE58160CCF3C003D6B5B /* livefyre-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F71FE54160CCF3C003D6B5B /* livefyre-logo.png */; };
+		3F71FE59160CCF3C003D6B5B /* livefyre-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F71FE55160CCF3C003D6B5B /* livefyre-logo@2x.png */; };
+		3F71FE5A160CCF3C003D6B5B /* LivefyreStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F71FE56160CCF3C003D6B5B /* LivefyreStoryboard.storyboard */; };
 		3FB07C4F15A5F45F0081A04A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FB07C4E15A5F45F0081A04A /* libxml2.dylib */; };
 		3FF3A6C9159D2017000E33E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF3A6C8159D2017000E33E3 /* UIKit.framework */; };
 		3FF3A6CB159D2017000E33E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF3A6CA159D2017000E33E3 /* Foundation.framework */; };
@@ -40,13 +37,10 @@
 		3F119BB9160CC43E000782B6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		3F119BBA160CC43E000782B6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		3F119BBB160CC43E000782B6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
-		3F273D11160CCA1E00C2082E /* LivefyreClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LivefyreClient.framework; sourceTree = "<group>"; };
-		3F273D13160CCA1E00C2082E /* livefyre-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livefyre-logo.png"; sourceTree = "<group>"; };
-		3F273D14160CCA1E00C2082E /* livefyre-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livefyre-logo@2x.png"; sourceTree = "<group>"; };
-		3F273D15160CCA1E00C2082E /* LivefyreStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LivefyreStoryboard.storyboard; sourceTree = "<group>"; };
-		3FAA7457160CADB10064FE85 /* livefyre-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livefyre-logo.png"; sourceTree = "<group>"; };
-		3FAA7458160CADB10064FE85 /* livefyre-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livefyre-logo@2x.png"; sourceTree = "<group>"; };
-		3FAA7459160CADB10064FE85 /* LivefyreStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LivefyreStoryboard.storyboard; sourceTree = "<group>"; };
+		3F71FE52160CCF3C003D6B5B /* LivefyreClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LivefyreClient.framework; sourceTree = "<group>"; };
+		3F71FE54160CCF3C003D6B5B /* livefyre-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livefyre-logo.png"; sourceTree = "<group>"; };
+		3F71FE55160CCF3C003D6B5B /* livefyre-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livefyre-logo@2x.png"; sourceTree = "<group>"; };
+		3F71FE56160CCF3C003D6B5B /* LivefyreStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LivefyreStoryboard.storyboard; sourceTree = "<group>"; };
 		3FB07C4E15A5F45F0081A04A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		3FF3A6C4159D2017000E33E3 /* ExampleClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FF3A6C8159D2017000E33E3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -88,28 +82,28 @@
 				3FF3A6C9159D2017000E33E3 /* UIKit.framework in Frameworks */,
 				3FF3A6CB159D2017000E33E3 /* Foundation.framework in Frameworks */,
 				3FF3A6CD159D2017000E33E3 /* CoreGraphics.framework in Frameworks */,
-				3F273D16160CCA1E00C2082E /* LivefyreClient.framework in Frameworks */,
+				3F71FE57160CCF3C003D6B5B /* LivefyreClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3F273D10160CCA1E00C2082E /* LivefyreClient.embeddedframework */ = {
+		3F71FE51160CCF3C003D6B5B /* LivefyreClient.embeddedframework */ = {
 			isa = PBXGroup;
 			children = (
-				3F273D11160CCA1E00C2082E /* LivefyreClient.framework */,
-				3F273D12160CCA1E00C2082E /* Resources */,
+				3F71FE52160CCF3C003D6B5B /* LivefyreClient.framework */,
+				3F71FE53160CCF3C003D6B5B /* Resources */,
 			);
 			path = LivefyreClient.embeddedframework;
 			sourceTree = "<group>";
 		};
-		3F273D12160CCA1E00C2082E /* Resources */ = {
+		3F71FE53160CCF3C003D6B5B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3F273D13160CCA1E00C2082E /* livefyre-logo.png */,
-				3F273D14160CCA1E00C2082E /* livefyre-logo@2x.png */,
-				3F273D15160CCA1E00C2082E /* LivefyreStoryboard.storyboard */,
+				3F71FE54160CCF3C003D6B5B /* livefyre-logo.png */,
+				3F71FE55160CCF3C003D6B5B /* livefyre-logo@2x.png */,
+				3F71FE56160CCF3C003D6B5B /* LivefyreStoryboard.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -134,7 +128,7 @@
 		3FF3A6C7159D2017000E33E3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3F273D10160CCA1E00C2082E /* LivefyreClient.embeddedframework */,
+				3F71FE51160CCF3C003D6B5B /* LivefyreClient.embeddedframework */,
 				3FF3A6F2159D21C6000E33E3 /* CFNetwork.framework */,
 				3FF3A6CC159D2017000E33E3 /* CoreGraphics.framework */,
 				3FF3A6CA159D2017000E33E3 /* Foundation.framework */,
@@ -242,15 +236,12 @@
 			files = (
 				3FF3A6D3159D2017000E33E3 /* InfoPlist.strings in Resources */,
 				3FF3A6DC159D2017000E33E3 /* MainStoryboard.storyboard in Resources */,
-				3FAA745B160CADB20064FE85 /* livefyre-logo.png in Resources */,
-				3FAA745C160CADB20064FE85 /* livefyre-logo@2x.png in Resources */,
-				3FAA745D160CADB20064FE85 /* LivefyreStoryboard.storyboard in Resources */,
 				3F119BBC160CC43E000782B6 /* Default-568h@2x.png in Resources */,
 				3F119BBD160CC43E000782B6 /* Default.png in Resources */,
 				3F119BBE160CC43E000782B6 /* Default@2x.png in Resources */,
-				3F273D17160CCA1E00C2082E /* livefyre-logo.png in Resources */,
-				3F273D18160CCA1E00C2082E /* livefyre-logo@2x.png in Resources */,
-				3F273D19160CCA1E00C2082E /* LivefyreStoryboard.storyboard in Resources */,
+				3F71FE58160CCF3C003D6B5B /* livefyre-logo.png in Resources */,
+				3F71FE59160CCF3C003D6B5B /* livefyre-logo@2x.png in Resources */,
+				3F71FE5A160CCF3C003D6B5B /* LivefyreStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

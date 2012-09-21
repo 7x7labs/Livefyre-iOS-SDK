@@ -432,18 +432,20 @@
     }
 }
 
-- (UINavigationController *)newNavigationController {
+- (UINavigationController *)newNavigationControllerWithCustomizations:customizations {
     UINavigationController *navigationController = [[UIStoryboard storyboardWithName:@"LivefyreStoryboard" bundle:nil] instantiateInitialViewController];
     LFLivefyreViewController *livefyreViewController = (LFLivefyreViewController *)navigationController.topViewController;
     livefyreViewController.collection = self;
     livefyreViewController.client = self.client;
+    livefyreViewController.customizations = customizations;
     return navigationController;
 }
 
-- (UIViewController *)newViewController {
+- (UIViewController *)newViewControllerWithCustomizations:customizations {
     LFLivefyreViewController *livefyreViewController = [[UIStoryboard storyboardWithName:@"LivefyreStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"LFLivefyreViewController"];
     livefyreViewController.collection = self;
     livefyreViewController.client = self.client;
+    livefyreViewController.customizations = customizations;
     return livefyreViewController;
 }
 @end

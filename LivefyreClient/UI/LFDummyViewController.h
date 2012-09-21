@@ -14,6 +14,7 @@
 @interface LFDummyViewController : UIViewController
 @property (nonatomic, strong) LivefyreClient *client;
 @property (nonatomic, strong) Collection *collection;
+@property (nonatomic, strong) NSDictionary *customizations;
 @end
 
 @interface LFNonAnimatedPush : UIStoryboardSegue

@@ -79,6 +79,8 @@
 /// data. If `nil` or not specified, the standard production server is used.
 /// @param userToken A signed Livefyre token for the user to get the collection
 /// for, or `nil` to access the collection anonymously.
+/// @param customizations An optional dictionary of customizations to the UI.
+/// See the LFUICustomization constants for information on the valid keys.
 ///
 /// This opens the requested collection and displays it to the user with a
 /// stock UI. If the parent view controller is a UINavigationController it is
@@ -86,14 +88,15 @@
 /// it is displayed modally.
 ///
 /// To customize how the view controller is presented, instead use -[Collection
-/// newViewController].
+/// newViewControllerWithCustomizations:].
 + (void)showModalUIInViewController:(UIViewController *)viewController
                             article:(NSString *)articleId
                                site:(NSString *)site
                              domain:(NSString *)domain
                         environment:(NSString *)environment
                       bootstrapHost:(NSString *)bootstrapHost
-                          userToken:(NSString *)userToken;
+                          userToken:(NSString *)userToken
+                     customizations:(NSDictionary *)customiations;
 
 /// @name User Authentication
 
@@ -262,5 +265,14 @@
 - (void)createPost:(NSString *)body
          inReplyTo:(Post *)parent
         onComplete:(RequestComplete)callback;
-
 @end
+
+/// The title of the main comments view shown in the navigation bar (normally
+/// "Livefyre Mobile!"). Must be a NSString if present.
+extern NSString * const LFUICustomizationTitle;
+/// The text shown in the bar under the navigation bar, normally "Tap any
+/// comment to reply. Must be a NSString if present.
+extern NSString * const LFUICustomizationTopBar;
+/// If set to @NO, the Livefyre logo in the main comments view is hidden. Only
+/// set this if your agreement with Livefyre allows you to hide the logo.
+extern NSString * const LFUICustomizationLivefyreLogo;

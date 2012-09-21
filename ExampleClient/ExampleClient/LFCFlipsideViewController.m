@@ -116,7 +116,8 @@
                                          domain:self.network.text
                                     environment:self.environment.text
                                   bootstrapHost:self.bootstrapHost.text
-                                      userToken:self.userToken.text];
+                                      userToken:self.userToken.text
+                                 customizations:nil];
 }
 
 #pragma mark - UITextFieldDelegate

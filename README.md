@@ -71,7 +71,8 @@ UI:
                                      domain:livefyreDomain
                                 environment:environment
                               bootstrapHost:boostrapHost
-                                  userToken:userToken];
+                                  userToken:userToken
+                             customizations:nil];
 }
 @end
 ```

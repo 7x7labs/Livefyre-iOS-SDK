@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UINavigationItem *replyButton;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UILabel *topLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *logo;
 
 @property (nonatomic, strong) NSMutableArray *posts;
 @property (nonatomic, strong) NSMutableArray *rowHeights;
@@ -50,6 +52,16 @@
     _postHeights = [NSMutableDictionary new];
     _postIndex = [NSMutableDictionary new];
     _bodyFont = [UIFont fontWithName:@"HelveticaNeue" size:14];
+
+    if (self.customizations[LFUICustomizationTitle]) {
+        self.navigationItem.title = self.customizations[LFUICustomizationTitle];
+    }
+    if (self.customizations[LFUICustomizationTopBar]) {
+        self.topLabel.text = self.customizations[LFUICustomizationTopBar];
+    }
+    if (self.customizations[LFUICustomizationTitle]) {
+        self.logo.hidden = ![self.customizations[LFUICustomizationLivefyreLogo] boolValue];
+    }
 
     self.tableView.dataSource = self;
     self.tableView.delegate = self;

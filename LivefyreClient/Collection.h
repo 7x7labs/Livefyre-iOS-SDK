@@ -115,8 +115,8 @@ typedef void (^RequestComplete)(BOOL error, id resultOrError);
 - (void)fetchBootstrap:(RequestComplete)callback;
 
 /// Get a stock view controller which displays this collection.
-- (UIViewController *)newViewController;
-- (UINavigationController *)newNavigationController;
+- (UIViewController *)newViewControllerWithCustomizations:customizations;
+- (UINavigationController *)newNavigationControllerWithCustomizations:customizations;
 
 // Below this point are implementation details
 

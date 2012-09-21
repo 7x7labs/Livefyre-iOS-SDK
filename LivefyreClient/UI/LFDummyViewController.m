@@ -24,6 +24,7 @@
     LFLivefyreViewController *targetController = segue.destinationViewController;
     targetController.client = self.client;
     targetController.collection = self.collection;
+    targetController.customizations = self.customizations;
     self.hasSegued = YES;
 }
 

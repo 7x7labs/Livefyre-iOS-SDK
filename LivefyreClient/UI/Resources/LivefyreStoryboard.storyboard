@@ -147,8 +147,10 @@
                     <connections>
                         <outlet property="closeButton" destination="YMD-pp-fWg" id="HP1-XM-shK"/>
                         <outlet property="headerLabel" destination="Rdx-ro-Pct" id="co4-dM-IDf"/>
+                        <outlet property="logo" destination="bSE-kQ-q0v" id="bd0-gA-dRX"/>
                         <outlet property="replyButton" destination="YMD-pp-fWg" id="hHE-UZ-VFc"/>
                         <outlet property="tableView" destination="goX-fa-qOB" id="Rm9-MA-H9a"/>
+                        <outlet property="topLabel" destination="Rdx-ro-Pct" id="eQD-9e-E6m"/>
                     </connections>
                 </viewController>
             </objects>
@@ -253,8 +255,10 @@
             <relationships>
                 <relationship kind="outlet" name="closeButton" candidateClass="UINavigationItem"/>
                 <relationship kind="outlet" name="headerLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="logo" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="replyButton" candidateClass="UINavigationItem"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="topLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="LFReplyViewController" superclassName="UITableViewController">
