@@ -14,7 +14,7 @@ v0.1.0: Initial alpha version. Introduce `environment` and `bootstrapHost` param
 1. Download a recent release of the SDK framework.
 2. Open or create an iOS Xcode project
 3. Switch to the Project Navigator (⌘1).
-3. Drag the downloaded copy of LivefyreClient.framework into the Frameworks
+3. Drag the downloaded copy of LivefyreClient.embeddedframework into the Frameworks
    group in the project.
 4. Click on the project in the Project Navigator.
 5. Click on the Build Settings tab
@@ -35,8 +35,51 @@ v0.1.0: Initial alpha version. Introduce `environment` and `bootstrapHost` param
 
 ### Using the SDK
 
-A short example which initializes a collection for an anonymous user then logs
-the most recent posts in the collection:
+The simplest way to use the SDK is to simply use the standard Livefyre
+UI:
+
+```Objective-C
+// First import the SDK headers
+#import <LivefyreClient/LivefyreClient.h>
+
+// The view controller which will open the Livefyre comments screen
+@implementation YourViewController
+- (void)showLivefyre {
+    // The ID of the article to show the comments of
+    NSString *articleId = @"my-awesome-article";
+    // The signed livefyre user token for the current user. Can be nil,
+    // which will result in the user being unable to post their own comments.
+    NSString *userToken = nil;
+
+    // The following parameters are supplied by Livefyre when you sign up
+
+    // The Livefyre network to use
+    NSString *livefyreDomain = @"7x7-1.livefyre.co";
+    // The ID of the site within the network
+    NSString *siteId = @"303643"
+
+    // The name of the environment to use
+    NSString *environment = @"t402.livefyre.com";
+    // The hostname for the bootstrap data
+    NSString *bootstrapHost = @"http://bootstrap-json-dev.s3.amazonaws.com";
+    // The above two may be nil for production environments
+
+    // Display the modal view
+    [LivefyreClient showModalUIInViewController:self
+                                    article:articleId
+                                       site:siteId
+                                     domain:livefyreDomain
+                                environment:environment
+                              bootstrapHost:boostrapHost
+                                  userToken:userToken];
+}
+@end
+```
+
+For more control, you can instead use the SDK to get access to the Livefyre
+data and present it in a manner of your choice. A short example which
+initializes a collection for an anonymous user then logs the most recent posts
+in the collection:
 
 ```Objective-C
 // First import the SDK headers
@@ -49,23 +92,18 @@ the most recent posts in the collection:
 - (void)entry {
     // The Livefyre network to use
     NSString *livefyreDomain = @"7x7-1.livefyre.co";
-    // The secret key for the Livefyre network. If this is supplied, the client
-    // can generate Livefyre user tokens for you. In this case, we're assuming
-    // that the tokens are generated elsewhere.
-    NSString *domainKey = nil;
 
     // The name of the environment to use
     NSString *environment = @"t402.livefyre.com";
-    // The hostname for the bootstarp data
+    // The hostname for the bootstrap data
     // Either or both of these can be set to nil or left out entirely to simply
     // use the production servers.
-    NSString *bootstrapHost = @"bootstrap-json-dev.s3.amazonaws.com";
+    NSString *bootstrapHost = @"http://bootstrap-json-dev.s3.amazonaws.com";
 
     // First create an instance of the client
     LivefyreClient *client = [LivefyreClient clientWithDomain:livefyreDomain
                                                 bootstrapHost:boostrapHost
-                                                  environment:environment
-                                                    domainKey:domainKey];
+                                                  environment:environment];
 
     // As most of the client's operations require hitting the Livefyre servers
     // at some point, they all operate asynchronously, and rather than returning
@@ -156,7 +194,7 @@ screen, then touch Save to load the collection.
 
 ## Building the SDK
 
-Building the SDK requires Xcode 4.3 and [CocoaPods](http://cocoapods.org/),
+Building the SDK requires Xcode 4.4 and [CocoaPods](http://cocoapods.org/),
 which can be installed with the following commands:
 
     $ sudo gem install cocoapods
@@ -212,19 +250,21 @@ Open the workspace. Select the Pods project, and under Build Settings set iOS
 Deployment Target to iOS 5.0 or iOS 5.1. Build.
 
 ## License
-Copyright (c) 2012, Livefyre Inc>
+Copyright (c) 2012, Livefyre Inc
+
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of the <organization> nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+* Neither the name of the <organization> nor the names of its contributors may
+  be used to endorse or promote products derived from this software without
+  specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
