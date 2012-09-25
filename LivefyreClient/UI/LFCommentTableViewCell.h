@@ -14,6 +14,7 @@
 @protocol LFCommentTableViewCellDelegate <NSObject>
 - (void)postWithId:(NSString *)contentId hasHeight:(CGFloat)height;
 - (void)setImageView:(UIImageView *)view toImageAtURL:(NSString *)url;
+- (void)didReceieveTapOnPost:(NSString *)postId;
 @end
 
 @interface LFCommentTableViewCell : UITableViewCell

@@ -237,6 +237,11 @@
     [self.imageCache setImageView:view toImageAtURL:url];
 }
 
+- (void)didReceieveTapOnPost:(NSString *)postId {
+    self.replyParent = self.posts[[self.postIndex[postId] unsignedIntegerValue]];
+    [self performSegueWithIdentifier:@"reply" sender:self];
+}
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.posts count];

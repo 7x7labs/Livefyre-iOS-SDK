@@ -88,7 +88,20 @@
                 </style>\
             </head>\
             <body>\
-                %@\
+                <div id='wrapper'>\
+                    %@\
+                </div>\
+                <script type='text/javascript'>\
+                document.getElementById('wrapper').onclick = function(e) {\
+                    for (var node = e.target; node; node = node.parentNode) {\
+                        if (node.nodeName == 'A') {\
+                            return true;\
+                        }\
+                    }\
+                    window.location = 'click://body';\
+                    return false;\
+                }\
+                </script>\
             </body>\
         </html>";
 
@@ -134,6 +147,11 @@
 // Make any links touched open in Safari rather than in the comment view
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    if ([[[request URL] scheme] isEqualToString:@"click"]) {
+        [self.delegate didReceieveTapOnPost:self.contentId];
+        return NO;
+    }
+
     if (navigationType == UIWebViewNavigationTypeOther)
         return YES;
 
